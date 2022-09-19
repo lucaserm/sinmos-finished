@@ -1,0 +1,39 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-10 my-3">
+      <h1 class="text-center">Sistema Integrado de Segurança</h1>
+      <p class="text-center lead">Registre a Disciplina abaixo.</p>
+      <form action="/cadastro/disciplinasalvo" method="POST">
+        <div class="form-group">
+          <label>Curso</label>
+          <select name="select" class="form-control" required>
+            <% cursos.forEach(curso => { %>
+              <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo%></option>
+            <% }); %>
+          </select>
+          <br>
+          <label>Nome da Disciplina</label>
+          <input type="text" class="form-control" name="nome_disciplina" required>
+          <label>Turma</label>
+          <input type="text" class="form-control" name="turma" required>
+          <label>Semestre</label>
+          <input type="text" class="form-control" name="semestre" required>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Disciplina</button>
+        <hr>
+      </form>
+      <form action="/cadastro">
+        <button class="btn btn-dark">Voltar</button>
+      </form>
+      <hr>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

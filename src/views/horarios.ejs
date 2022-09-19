@@ -1,0 +1,48 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 my-3">
+      <h1 class="text-center">Horários</h1>
+      <p class="text-center lead">Os horários do aluno estão abaixo.</p>
+
+      <% if (horarios.length > 0){ %>
+      <div class="responsive-table">
+        <table class="table" color>
+          <tr>
+            <td>RA</td><td>Estudante</td><td>Disciplina</td><td>Período</td><td>Dia da Semana</td><td>Início</td><td>Fim</td>
+          </tr>
+          <% horarios.forEach(horario => { %>
+          <tr>
+            <td><%= ra = horario.ra%></td><td><%= horario.nome_estudante%></td><td><%= horario.nome_disciplina%></td>
+            <td><%= horario.periodo%></td><td><%= horario.dia_semana%></td><td><%= horario.tempo_inicio%>° Tempo</td>
+            <td><%= horario.tempo_fim%>° Tempo</td>
+          </tr>
+          <% }); %>
+        </table>
+        <hr>
+        <form action="/administracao/responsavel" method="POST">
+          <input type="text" id="ra" name="ra" value="<%= ra%>" hidden>
+          <button class="btn btn-danger">Advertência</button>
+        </form>
+        <hr>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="nome_acesso" value="root" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn btn-dark">Voltar</button>
+        </form>
+      </div>
+      <% } else { %>
+        <hr>
+        <p class="text-center lead">Não existem horários registrados à esse aluno.</p>
+        <hr>
+        <form action="/">
+          <button class="btn btn-dark">Voltar</button>
+        </form>
+      <% } %>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+<%- include('includes/footer');%>

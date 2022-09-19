@@ -1,0 +1,68 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-10 my-3">
+      <h1 class="text-center">Sistema Integrado de Segurança</h1>
+      <p class="text-center lead">Registre o Horário da Disciplina abaixo.</p>
+      <form action="/cadastro/horariosalvo" method="POST">
+        <div class="form-group">
+          <label>Disciplina</label>
+          <select name="disciplina" class="form-control" required>
+            <% disciplinas.forEach(disciplina => { %>
+              <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
+            <% }); %>
+          </select>
+          <br>
+          <label>Período da Disciplina</label>
+          <select name="periodo" class="form-control" required>
+            <option value="Matutino">Matutino</option>
+            <option value="Vespertino">Vespertino</option>
+            <option value="Noturno">Noturno</option>
+          </select>
+          <br>
+          <label>Dia da Semana</label>
+          <select name="dia_semana" class="form-control" required>
+            <option value="Segunda-Feira">Segunda-Feira</option>
+            <option value="Terça-Feira">Terça-Feira</option>
+            <option value="Quarta-Feira">Quarta-Feira</option>
+            <option value="Quinta-Feira">Quinta-Feira</option>
+            <option value="Sexta-Feira">Sexta-Feira</option>
+          </select>
+          <br>
+          <label>Tempo que Começa a Aula</label>
+          <select name="tempo_inicio" class="form-control" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+          <br>
+          <label>Tempo que Termina a Aula</label>
+          <select name="tempo_fim" class="form-control" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Horário</button>
+        <hr>
+      </form>
+      <form action="/cadastro">
+        <button class="btn btn-dark">Voltar</button>
+      </form>
+      <hr>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

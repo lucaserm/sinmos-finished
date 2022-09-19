@@ -1,0 +1,30 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-10 my-3">
+      <h1 class="text-center">Sistema Integrado de Segurança</h1>
+      <p class="text-center lead">Registre o Responsável abaixo.</p>
+      <form action="/cadastro/responsavelsalvo" method="POST">
+        <div class="form-group">
+          <label>Nome do Responsável</label>
+          <input type="text" class="form-control" name="nome_responsavel" required>
+          <label>Email do Responsável</label>
+          <input type="email" class="form-control" name="email_responsavel" required>
+          <button type="submit" class="btn btn-success">Salvar Responsável</button>
+        </div>
+        <hr>
+      </form>
+      <form action="/cadastro">
+        <button class="btn btn-dark">Voltar</button>
+      </form>
+      <hr>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

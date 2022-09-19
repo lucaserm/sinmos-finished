@@ -1,0 +1,37 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-10 my-3">
+      <h1 class="text-center">Sistema Integrado de Segurança</h1>
+      <p class="text-center lead">Registre o Estudante abaixo.</p>
+      <form action="/administracao/salvo" method="POST">
+        <div class="form-group">
+          <% estudantes.forEach( estudante => { %>
+          <label>Nome do Estudante</label>
+          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudante.nome_estudante%>" required>
+          <label>CPF</label>
+          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudante.cpf%>" autocomplete="off" required>
+          <label>RA</label>
+          <input type="text" class="form-control" name="ra" value="<%= estudante.ra%>" autocomplete="off" required>
+          <input type="text" class="form-control" name="ra2" value="<%= estudante.ra%>" autocomplete="off" hidden>
+          <% });%>
+          <button type="submit" class="btn btn-success">Salvar Estudante</button>
+        </div>
+        <hr>
+        <hr>
+      </form>
+      <form action="/administracao/paginainicial" method="post">
+        <input type="text" name="nome_acesso" value="root" hidden>
+        <input type="text" name="senha" value="123456" hidden>
+        <button class="btn btn-dark">Voltar</button>
+      </form>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>

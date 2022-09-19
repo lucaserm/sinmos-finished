@@ -1,0 +1,55 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 my-3">
+      <h1 class="text-center">Estudantes</h1>
+      <p class="text-center lead">Todos os alunos registrados: </p>
+
+      <% if (estudantes.length > 0){ %>
+      <div class="responsive-table">
+        <table class="table my-3" color>
+          <tr>
+            <td>Id</td><td>Nome</td><td>RA</td><td>CPF</td><td>Foto</td>
+          </tr>
+          <% estudantes.forEach(estudante => { %>
+          <tr>
+            <td><%= estudante.id%></td><td><%= estudante.nome_estudante%></td>
+            <td><%= estudante.ra%></td><td><%= estudante.cpf%></td>
+            <td><%= estudante.foto%></td>
+          </tr>
+          <tr>
+            <td colspan="5">
+              <form action="/administracao/editar" method="post">
+                <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
+                <button class="btn btn-info" style="margin: 0;">Editar</button>
+              </form></td>
+            </td>
+          </tr>
+          <% }); %>
+        </table>
+        <hr>
+        <form action="/administracao/horarios" method="POST">
+          <label for="ra">Insira o RA do aluno para ver todos os dados:</label>
+          <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
+          <button class="btn btn-success small" style="margin: 0;">Ver</button>
+        </form>
+        <hr>
+        <form action="/">
+          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+        </form>
+      </div>
+      <% } else { %>
+        <hr>
+        <p class="text-center lead">Não existem estudantes registrados.</p>
+        <hr>
+        <form action="/">
+          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+        </form>
+      <% } %>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+<%- include('includes/footer');%>

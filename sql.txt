@@ -1,0 +1,81 @@
+CREATE TABLE Cursos (
+    nome_curso varchar(30),
+    periodo varchar(40),
+    id serial PRIMARY KEY
+);
+CREATE TABLE Responsaveis (
+    email_responsavel varchar(50),
+    nome_responsavel varchar(50),
+    id serial PRIMARY KEY
+);
+CREATE TABLE Disciplinas (
+    id_cursos integer references cursos(id),
+    nome_disciplina varchar(30),
+    turma varchar(10),
+    semestre varchar(10),
+    id serial PRIMARY KEY
+);
+CREATE TABLE Horarios (
+    id_disciplinas integer references disciplinas(id),
+    periodo varchar(20),
+    dia_semana varchar(20),
+    tempo_inicio integer,
+    tempo_fim integer,
+    id serial PRIMARY KEY
+);
+CREATE TABLE Estudantes (
+    id_responsaveis integer references responsaveis(id),
+    id_cursos integer references cursos(id),
+    cpf varchar(14),
+    ra varchar(6),
+    foto varchar,
+    nome_estudante varchar(50),
+    id serial PRIMARY KEY
+);
+
+CREATE TABLE HorariosEstudantes(
+	id_horarios integer references horarios(id),
+	id_estudantes integer references estudantes(id),
+	id serial primary key
+);
+
+INSERT INTO cursos(nome_curso, periodo) VALUES('Técnico em Informática', 'Matutino');
+INSERT INTO cursos(nome_curso, periodo) VALUES('Técnico em Eletrotécnica', 'Vespertino');
+INSERT INTO cursos(nome_curso, periodo) VALUES('Técnico em Mecânica', 'Vespertino');
+INSERT INTO cursos(nome_curso, periodo) VALUES('Ensino Médio Regular', 'Matutino');
+INSERT INTO cursos(nome_curso, periodo) VALUES('Ensino Médio Regular', 'Vespertino');
+INSERT INTO responsaveis(email_responsavel, nome_responsavel) VALUES('joao@gmail.com', 'João Silva');
+INSERT INTO responsaveis(email_responsavel, nome_responsavel) VALUES('maria@gmail.com', 'Maria Joaquina');
+INSERT INTO responsaveis(email_responsavel, nome_responsavel) VALUES('paulo@gmail.com', 'Paulo Andrade');
+INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES(1, 'TLP2', '128', '5');
+INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES(2, 'Eletricidade Técnica', '2110', '5');
+INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES(3, 'Soldagem', '2410', '5');
+INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES(4, 'Matemática', '128', '5');
+INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES(5, 'Matemática', '2110', '5');
+INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES(5, 'Matemática', '2410', '5');
+INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES(1, 'Matutino', 'Segunda-Feira', 1, 3);
+INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES(2, 'Vespertino', 'Terça-Feira', 1, 3);
+INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES(3, 'Vespertino', 'Quarta-Feira', 1, 3);
+INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES(4, 'Matutino', 'Segunda-Feira', 4, 6);
+INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES(5, 'Vespertino', 'Terça-Feira', 4, 6);
+INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES(5, 'Vespertino', 'Quarta-Feira', 4, 6);
+INSERT INTO estudantes(nome_estudante, cpf, ra, foto, id_responsaveis, id_cursos) VALUES('Julio Silva', '01234567890', '000001', 'link.com', 1, 1);
+INSERT INTO estudantes(nome_estudante, cpf, ra, foto, id_responsaveis, id_cursos) VALUES('Julia Joaquina', '11111111111', '000002', 'link.com', 2, 2);
+INSERT INTO estudantes(nome_estudante, cpf, ra, foto, id_responsaveis, id_cursos) VALUES('Carlos Andrade', '22222222222', '000003', 'link.com', 3, 3);
+INSERT INTO horariosestudantes(id_estudantes, id_horarios) VALUES(1, 1);
+INSERT INTO horariosestudantes(id_estudantes, id_horarios) VALUES(1, 4);
+INSERT INTO horariosestudantes(id_estudantes, id_horarios) VALUES(2, 2);
+INSERT INTO horariosestudantes(id_estudantes, id_horarios) VALUES(2, 5);
+INSERT INTO horariosestudantes(id_estudantes, id_horarios) VALUES(3, 3);
+INSERT INTO horariosestudantes(id_estudantes, id_horarios) VALUES(3, 6);
+
+/* SELECT de Todas as Aulas do Aluno por RA */
+
+SELECT nome_estudante, nome_disciplina, horarios.periodo, dia_semana, tempo_inicio, tempo_fim
+FROM estudantes, horarios, disciplinas, horariosestudantes
+WHERE ra = '000001' 
+AND id_estudantes = estudantes.id
+AND id_horarios = horarios.id
+AND id_disciplinas = disciplinas.id
+
+SELECT CURRENT_TIMESTAMP

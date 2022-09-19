@@ -1,0 +1,36 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-10 my-3">
+      <h1 class="text-center">Sistema Integrado de Segurança</h1>
+      <p class="text-center lead">Registre o curso abaixo.</p>
+
+      <form action="/cadastro/cursosalvo" method="POST">
+        <div class="form-group">
+          <label>Nome do Curso</label>
+          <input type="text" class="form-control" name="nome_curso" required>
+          <label>Período</label>
+          <select name="periodo" class="form-control select" required>
+            <option value="Matutino">Matutino</option>
+            <option value="Vespertino">Vespertino</option>
+            <option value="Noturno">Noturno</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Curso</button>
+        <hr>
+      </form>
+      <hr>
+      <form action="/cadastro">
+        <button class="btn btn-dark">Voltar</button>
+      </form>
+    </div>
+    
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+
+<%- include('includes/footer') %>
