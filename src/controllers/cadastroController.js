@@ -3,6 +3,7 @@ const Disciplina = require('../models/DisciplinasModel');
 const Estudante = require('../models/EstudantesModel');
 const Horario = require('../models/HorariosModel');
 const Responsavel = require('../models/ResponsaveisModel');
+const HorarioEstudante = require('../models/HorariosEstudantesModel')
 
 exports.cadastros = (req, res) => {
     res.render('cadastros');
@@ -27,6 +28,11 @@ exports.cadastroEstudante = async(req, res) => {
 exports.cadastroResponsavel = (req, res) => {
     res.render('cadastro_responsavel');
 };
+exports.cadastroHorarioEstudante = async(req,res) => {
+    const estudantes = await Estudante.buscaEstudantes();
+    const horarios = await Horario.buscaHorarios();
+    res.render('cadastro_horariosestudantes', { estudantes, horarios });
+}
 
 exports.trataPost = async(req, res) => {
     if(req.url == '/cadastro/cursosalvo'){
@@ -39,6 +45,8 @@ exports.trataPost = async(req, res) => {
         Estudante.save(req.body);
     }else if(req.url == '/cadastro/responsavelsalvo'){
         Responsavel.save(req.body);
+    }else if(req.url == '/cadastro/horarioestudante'){
+        HorarioEstudante.save(req.body);
     }
     res.render('salvo');
     return;

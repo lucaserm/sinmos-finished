@@ -11,7 +11,7 @@
       <form action="/cadastro/horariosalvo" method="POST">
         <div class="form-group">
           <label>Disciplina</label>
-          <select name="disciplina" class="form-control" required>
+          <select name="id_disciplina" class="form-control" required>
             <% disciplinas.forEach(disciplina => { %>
               <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
             <% }); %>

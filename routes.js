@@ -14,12 +14,14 @@ route.get('/cadastro/disciplina', cadastroController.cadastroDisciplina);
 route.get('/cadastro/horario', cadastroController.cadastroHorario);
 route.get('/cadastro/estudante', cadastroController.cadastroEstudante);
 route.get('/cadastro/responsavel', cadastroController.cadastroResponsavel);
+route.get('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstudante);
 //Salvando
 route.post('/cadastro/cursosalvo', cadastroController.trataPost);
 route.post('/cadastro/disciplinasalvo', cadastroController.trataPost);
 route.post('/cadastro/horariosalvo', cadastroController.trataPost);
 route.post('/cadastro/estudantesalvo', cadastroController.trataPost);
 route.post('/cadastro/responsavelsalvo', cadastroController.trataPost);
+route.post('/cadastro/horarioestudantesalvo', cadastroController.trataPost);
 
 //Rotas do administrador
 //Login do Administrador
