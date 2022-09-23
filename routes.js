@@ -29,8 +29,10 @@ route.get('/administracao/login', administracaoController.login);
 //Horários de todos os alunos cadastrados
 route.post('/administracao/paginainicial', administracaoController.paginaAdm);
 route.post('/administracao/editar', administracaoController.editar);
+route.post('/administracao/editarSaidaEstudantes', administracaoController.editarSaidaEstudante);
 route.post('/administracao/horarios', administracaoController.horarios);
 route.post('/administracao/responsavel', administracaoController.responsavel);
-route.post('/administracao/salvo', administracaoController.editado);
+route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
+route.post('/administracao/editadoSaida', administracaoController.trataEditado);
 
 module.exports = route;

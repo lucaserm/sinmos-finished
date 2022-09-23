@@ -1,0 +1,23 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 my-3">
+      <h1 class="text-center">Estudantes</h1>
+      <p class="text-center lead">Insira o RA do aluno que deseja verificar:</p>
+      <div class="responsive-table">
+        <form action="/administracao/editarSaidaEstudantes" method="POST">
+          <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
+          <button class="btn btn-success small" style="margin: 0;">Ver</button>
+        </form>
+        <hr>
+        <form action="/">
+          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+<%- include('includes/footer');%>

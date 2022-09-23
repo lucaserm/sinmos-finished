@@ -6,7 +6,19 @@ function Estudante(body){
 
 Estudante.save = async (body) => {
   try{
-    await client.query('INSERT INTO estudantes(nome_estudante, cpf, ra, foto, id_responsaveis, id_cursos) VALUES($1,$2,$3,link.com,$4,$5)', [body.nome_estudante, body.cpf, body.ra, body.id_responsaveis, body.id_cursos]);
+    let foto = 'link.com'; 
+    await client.query('INSERT INTO estudantes(nome_estudante, cpf, ra, foto, id_responsaveis, id_cursos) VALUES($1,$2,$3,$4,$5,$6)', [body.nome_estudante, body.cpf, body.ra, foto,body.id_responsaveis, body.id_cursos]);
+  }catch(e){
+    console.log(`Houve um erro ${e}`);
+  }
+}
+
+Estudante.salvarSaida = async (body) => {
+  try{
+    let horario = await client.query('SELECT CURRENT_TIMESTAMP');
+    if(body.liberacao == 'on'){
+      await client.query('UPDATE estudantes SET saida_anormal = $1', [horario]);
+    }
   }catch(e){
     console.log(`Houve um erro ${e}`);
   }
