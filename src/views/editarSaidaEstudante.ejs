@@ -6,22 +6,29 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-10 my-3">
       <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Registre o Estudante abaixo.</p>
+      <p class="text-center lead">Dados do Estudante abaixo.</p>
       <% if (estudantes.length > 0){ %>
       <form action="/administracao/editadoSaida" method="POST">
         <div class="form-group">
-          <% estudantes.forEach( estudante => { %>
           <label>Nome do Estudante</label>
-          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudante.nome_estudante%>" disabled>
+          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
           <label>CPF</label>
-          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudante.cpf%>" autocomplete="off" disabled>
+          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0][0].cpf%>" autocomplete="off" disabled>
           <label>RA</label>
-          <input type="text" class="form-control" name="ra" value="<%= estudante.ra%>" autocomplete="off" disabled>
-          <% });%>
-          <button type="submit" class="btn btn-success">Liberar Estudante</button>
+          <input type="text" class="form-control" name="ra" value="<%= estudantes[0][0].ra%>" autocomplete="off" disabled>
+          <% if (estudantes[1].aula == 'Estudante em aula!'){ %>
+            <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+              <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+            </div>
+          <% }else{%>
+            <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+              <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+            </div>
+          <%}%>
+          <hr>
+          <button type="submit" class="btn btn-success" style="margin: 0;">Liberar Estudante</button>
+          <hr>
         </div>
-        <hr>
-        <hr>
       </form>
       <form action="/administracao/paginainicial" method="post">
         <input type="text" name="nome_acesso" value="portaria" hidden>

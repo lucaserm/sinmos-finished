@@ -15,6 +15,7 @@ exports.paginaAdm = async(req, res) => {
     else if (req.body.nome_acesso == 'coordenacao' && req.body.senha == '123456'){
         const estudantes = await Estudantes.buscaEstudantes();
         res.render('estudantes', { estudantes } );
+      //Portaria
     } else if (req.body.nome_acesso == 'portaria' && req.body.senha == '123456'){
         const estudantes = await Estudantes.buscaEstudantes();
         res.render('portaria', { estudantes });
@@ -30,7 +31,7 @@ exports.editar = async(req, res) => {
 }
 
 exports.editarSaidaEstudante = async(req, res) => {
-    const estudantes = await Estudantes.buscaPorRA(req.body);
+    const estudantes = await Estudantes.liberacaoPorRA(req.body);
     res.render('editarSaidaEstudante', { estudantes });
 }
 

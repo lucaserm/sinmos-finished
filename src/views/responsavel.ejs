@@ -1,36 +1,48 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="container">
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 my-3">
       <h1 class="text-center">Advertência</h1>
-      <p class="text-center lead">Segue responsável e formas de contato abaixo.</p>
+      <p class="text-center lead">
+        Segue responsável e formas de contato abaixo.
+      </p>
       <% if (responsaveis.length > 0){ %>
       <div class="responsive-table">
         <table class="table my-3" color>
           <tr>
-            <td>Id</td><td>Nome</td><td>Email</td>
+            <td>Nome</td>
+            <td>Email</td>
+            <td>Contato</td>
           </tr>
           <% responsaveis.forEach(responsavel => { %>
           <tr>
-            <td><%= responsavel.id%></td><td><%= responsavel.nome_responsavel%></td>
-            <td><%= responsavel.email_responsavel%></tr>
-          <% }); %>
+            <td><%= responsavel.nome_responsavel%></td>
+            <td><%= responsavel.email_responsavel%></td>
+            <td>
+              <a
+                href="mailto:<%= responsavel.email_responsavel%>?subject=Assunto do email&amp;body=Olá,%0D%0A%0D%0A[corpo do email]%0D%0A%0D%0AAtenciosamente,%0D%0A[nome do usuário]"
+                class="btn btn-danger"
+                style="margin-top: 0"
+                >Notificar</a>
+            </td>
+            <% }); %>
+          </tr>
+          <tr><td></td><td></td><td></td></tr>
         </table>
-        <hr>
+
         <form action="/administracao/horarios" method="post">
-          <input type="text" id="ra" name="ra" value="<%= ra%>" hidden>
+          <input type="text" id="ra" name="ra" value="<%= ra%>" hidden />
           <button class="btn btn-dark">Voltar</button>
         </form>
       </div>
       <% } else { %>
-        <hr>
-        <p class="text-center lead">Não existem responsáveis nos seus dados.</p>
-        <hr>
-        <form action="/">
-          <button class="btn btn-dark">Voltar</button>
-        </form>
+      <hr />
+      <p class="text-center lead">Não existem responsáveis nos seus dados.</p>
+      <hr />
+      <form action="/">
+        <button class="btn btn-dark">Voltar</button>
+      </form>
       <% } %>
     </div>
     <div class="col-lg-2"></div>
