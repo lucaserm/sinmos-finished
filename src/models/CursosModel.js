@@ -15,7 +15,7 @@ Curso.buscarCursos = async () => {
 
 Curso.save = async (body) => {
   try{
-    await client.query('INSERT INTO cursos(nome_curso, periodo) VALUES($1, $2);', [body.nome_curso, body.periodo]);
+    await client.query('INSERT INTO cursos(nome_curso, periodo_cursos) VALUES($1, $2);', [body.nome_curso, body.periodo]);
   }catch(e){
     console.log(`Houve um erro ${e}`);
   }

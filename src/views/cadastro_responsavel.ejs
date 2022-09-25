@@ -9,9 +9,11 @@
       <form action="/cadastro/responsavelsalvo" method="POST">
         <div class="form-group">
           <label>Nome do Responsável</label>
-          <input type="text" class="form-control" name="nome_responsavel" required>
+          <input type="text" class="form-control" name="nome_responsavel" required autocomplete="off">
           <label>Email do Responsável</label>
-          <input type="email" class="form-control" name="email_responsavel" required>
+          <input type="email" class="form-control" name="email_responsavel" required autocomplete="off">
+          <label>Telefone do Responsável</label>
+          <input type="tel" class="form-control" name="telefone_responsavel" required autocomplete="off">
           <button type="submit" class="btn btn-success">Salvar Responsável</button>
         </div>
         <hr>

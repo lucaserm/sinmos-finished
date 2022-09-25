@@ -5,18 +5,19 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-10 my-3">
       <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Registre o Estudante abaixo.</p>
+      <p class="text-center lead">Altere o Estudante abaixo.</p>
       <form action="/administracao/editadoEstudante" method="POST">
-        <div class="form-group">
-          <% estudantes.forEach( estudante => { %>
+        <div class="form-group " >
           <label>Nome do Estudante</label>
-          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudante.nome_estudante%>" required>
+          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0].nome_estudante%>" required>
           <label>CPF</label>
-          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudante.cpf%>" autocomplete="off" required>
+          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0].cpf%>" autocomplete="off" required>
           <label>RA</label>
-          <input type="text" class="form-control" name="ra" value="<%= estudante.ra%>" autocomplete="off" required>
-          <input type="text" class="form-control" name="ra2" value="<%= estudante.ra%>" autocomplete="off" hidden>
-          <% });%>
+          <input type="text" class="form-control" name="ra" value="<%= estudantes[0].ra%>" autocomplete="off" required>
+          <div align="center">
+            <img src="<%= estudantes[0].foto%>" height="300" class="lead">
+          </div>
+          <input type="text" class="form-control" name="ra2" value="<%= estudantes[0].ra%>" autocomplete="off" hidden>
           <button type="submit" class="btn btn-success">Salvar Estudante</button>
         </div>
         <hr>

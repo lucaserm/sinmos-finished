@@ -16,6 +16,9 @@
           <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0][0].cpf%>" autocomplete="off" disabled>
           <label>RA</label>
           <input type="text" class="form-control" name="ra" value="<%= estudantes[0][0].ra%>" autocomplete="off" disabled>
+          <div align="center">
+            <img src="<%=estudantes[0][0].foto%>" height="300">
+          </div>
           <% if (estudantes[1].aula == 'Estudante em aula!'){ %>
             <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
               <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>

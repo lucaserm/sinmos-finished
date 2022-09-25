@@ -11,20 +11,21 @@
           <label>Nome do Estudante</label>
           <select name="id_estudantes" class="form-control">
             <% estudantes.forEach( estudante => { %>
-              <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+              <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
             <% });%>
           </select>
+          <br>
           <label>Disciplina</label>
           <select name="id_horarios" class="form-control">
             <% horarios.forEach( horario => { %>
-              <option value="<%= horario.id %>"><%= horario.nome_disciplina%>, <%= horario.turma %>, <%= horario.periodo %>, <%= horario.dia_semana%>, <%= horario.tempo_inicio%>° Tempo até o <%= horario.tempo_fim%>° Tempo</option>
+              <option value="<%= horario.id %>"><%= horario.nome_disciplina%>, <%= horario.turma %>, <%= horario.periodo_horarios %>, <%= horario.dia_semana%>, <%= horario.tempo_inicio%>° Tempo até o <%= horario.tempo_fim%>° Tempo</option>
             <% });%>
           </select>
         </div>
-        <button type="submit" class="btn btn-success">Salvar Curso</button>
+        <hr>
+        <button type="submit" class="btn btn-success" style="margin: 0;">Salvar Horário ao Estudante</button>
         <hr>
       </form>
-      <hr>
       <form action="/cadastro">
         <button class="btn btn-dark">Voltar</button>
       </form>

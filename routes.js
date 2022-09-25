@@ -1,4 +1,19 @@
 const express = require('express');
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/assets/img')
+    },
+    filename: function (req, file, cb) {
+        const extensaoArquivo = file.originalname.split('.')[1];
+        const novoNomeArquivo = require('crypto')
+            .randomBytes(64)
+            .toString('hex');
+        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+    }
+});
+
+const upload = multer({ storage });
 const route = express.Router();
 const homesController = require('./src/controllers/homesController');
 const cadastroController = require('./src/controllers/cadastroController'); 
@@ -10,6 +25,7 @@ route.get('/', homesController.paginaInicial);
 route.get('/cadastro', cadastroController.cadastros);
 // Cadastros
 route.get('/cadastro/curso', cadastroController.cadastroCurso);
+route.get('/cadastro/matricula', cadastroController.cadastroMatricula);
 route.get('/cadastro/disciplina', cadastroController.cadastroDisciplina);
 route.get('/cadastro/horario', cadastroController.cadastroHorario);
 route.get('/cadastro/estudante', cadastroController.cadastroEstudante);
@@ -19,7 +35,8 @@ route.get('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstuda
 route.post('/cadastro/cursosalvo', cadastroController.trataPost);
 route.post('/cadastro/disciplinasalvo', cadastroController.trataPost);
 route.post('/cadastro/horariosalvo', cadastroController.trataPost);
-route.post('/cadastro/estudantesalvo', cadastroController.trataPost);
+route.post('/cadastro/matriculasalvo', cadastroController.trataPost);
+route.post('/cadastro/estudantesalvo', upload.single('avatar'), cadastroController.trataPost);
 route.post('/cadastro/responsavelsalvo', cadastroController.trataPost);
 route.post('/cadastro/horarioestudantesalvo', cadastroController.trataPost);
 

@@ -11,16 +11,16 @@
           <label>Curso</label>
           <select name="select" class="form-control" required>
             <% cursos.forEach(curso => { %>
-              <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo%></option>
+              <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
             <% }); %>
           </select>
           <br>
           <label>Nome da Disciplina</label>
-          <input type="text" class="form-control" name="nome_disciplina" required>
+          <input type="text" class="form-control" name="nome_disciplina" required autocomplete="off">
           <label>Turma</label>
-          <input type="text" class="form-control" name="turma" required>
+          <input type="text" class="form-control" name="turma" required autocomplete="off">
           <label>Semestre</label>
-          <input type="text" class="form-control" name="semestre" required>
+          <input type="text" class="form-control" name="semestre" required autocomplete="off">
         </div>
         <button type="submit" class="btn btn-success">Salvar Disciplina</button>
         <hr>

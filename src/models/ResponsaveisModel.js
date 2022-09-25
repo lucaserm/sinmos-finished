@@ -6,7 +6,7 @@ function Responsavel(body) {
 
 Responsavel.save = async(body) =>{
   try{
-    await client.query('INSERT INTO responsaveis(nome_responsavel, email_responsavel) VALUES($1, $2)', [body.nome_responsavel, body.email_responsavel]);
+    await client.query('INSERT INTO responsaveis(nome_responsavel, email_responsavel, telefone_responsavel) VALUES($1, $2, $3)', [body.nome_responsavel, body.email_responsavel, body.telefone_responsavel]);
   }catch (e){
     console.log(`Houve um erro ${e}`);
   }
@@ -21,14 +21,12 @@ Responsavel.buscaResponsaveis = async () => {
   }
 };
 
-Responsavel.buscaResponsavelPorID = async (body) => {
+Responsavel.buscaResponsavelPorRA = async (body) => {
   try {
-    const ra = [body.ra];
     const responsavel = await client.query(
-      "SELECT responsaveis.id, nome_responsavel, email_responsavel FROM estudantes, responsaveis WHERE estudantes.ra = $1 AND id_responsaveis = responsaveis.id",
-      ra
-    );
-    return responsavel.rows;
+      "SELECT responsaveis.* FROM estudantes, responsaveis WHERE estudantes.ra = $1 AND id_responsaveis = responsaveis.id", [body.ra]);
+    let responsavelRA = [responsavel.rows, body.ra]
+    return responsavelRA;
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }

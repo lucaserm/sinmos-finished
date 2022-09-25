@@ -4,10 +4,10 @@ function Estudante(body){
   this.body = body;
 }
 
-Estudante.save = async (body) => {
+Estudante.save = async (body, filename) => {
   try{
-    let foto = 'link.com'; 
-    await client.query('INSERT INTO estudantes(nome_estudante, cpf, ra, foto, id_responsaveis, id_cursos) VALUES($1,$2,$3,$4,$5,$6)', [body.nome_estudante, body.cpf, body.ra, foto,body.id_responsaveis, body.id_cursos]);
+    filename = '/assets/img/' + filename;
+    await client.query('INSERT INTO estudantes(nome_estudante, email_institucional, cpf, ra, foto, id_responsaveis) VALUES($1,$2,$3,$4,$5,$6)', [body.nome_estudante, body.email_institucional ,body.cpf, body.ra, filename, body.id_responsaveis]);
   }catch(e){
     console.log(`Houve um erro ${e}`);
   }
@@ -34,7 +34,7 @@ Estudante.update = async(body) => {
 
 Estudante.buscaPorRA = async(body) => {
   try{
-    const estudante = await client.query(`SELECT * FROM estudantes WHERE ra = $1`, [body.ra]);
+    const estudantes = await client.query(`SELECT * FROM estudantes WHERE ra = $1`, [body.ra]);
     return estudantes.rows;
   }catch(e){
     console.log(`Houve um erro ${e}`);
@@ -53,7 +53,7 @@ Estudante.buscaEstudantes = async () => {
 Estudante.buscaHorariosPorRA = async (body) => {
   try{
     const estudantes = await client.query(`
-    SELECT ra, cpf, nome_estudante, nome_disciplina, horarios.periodo, dia_semana, tempo_inicio, tempo_fim
+    SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM estudantes, horarios, disciplinas, horariosestudantes
     WHERE ra = $1 
     AND id_estudantes = estudantes.id
@@ -69,7 +69,7 @@ Estudante.buscaHorariosPorRA = async (body) => {
 Estudante.liberacaoPorRA = async (body) => {
   try{
     const estudantes = await client.query(`
-    SELECT ra, cpf, nome_estudante, nome_disciplina, horarios.periodo, dia_semana, tempo_inicio, tempo_fim
+    SELECT ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM estudantes, horarios, disciplinas, horariosestudantes
     WHERE ra = $1 
     AND id_estudantes = estudantes.id
@@ -95,27 +95,118 @@ Estudante.liberacaoPorRA = async (body) => {
     { hora: 16, minuto: 20 },
     { hora: 17, minuto: 05 },
     { hora: 17, minuto: 50 }];
+    let listaNoturno = [
+    { hora: 19, minuto: 00 }, 
+    { hora: 19, minuto: 45 }, 
+    { hora: 20, minuto: 30 },
+    { hora: 21, minuto: 15 },
+    { hora: 22, minuto: 20 },
+    { hora: 23, minuto: 05 },
+    { hora: 23, minuto: 50 }];
 
     estudantes.rows.forEach( estudante => {
       if(hoje.getDay() == 1 && estudante.dia_semana == 'Segunda-Feira'){
-        if(estudante.periodo == 'Matutino'){
+        if(estudante.periodo_horarios == 'Matutino'){
           if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
             if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
               status = [estudantes.rows, { aula: 'Estudante em aula!' }];
             }
           }
-        }else{
+        }else if(estudante.periodo_horarios == 'Vespertino'){
           if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
             if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
               status = [estudantes.rows, { aula: 'Estudante em aula!' }];
             }
           }
+        }else if(estudante.periodo_horarios == 'Noturno'){
+          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
         }
-      } 
-
+      } else if(hoje.getDay() == 2 && estudante.dia_semana == 'Terça-Feira'){
+        if(estudante.periodo_horarios == 'Matutino'){
+          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Vespertino'){
+          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Noturno'){
+          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }
+      } else if(hoje.getDay() == 3 && estudante.dia_semana == 'Quarta-Feira'){
+        if(estudante.periodo_horarios == 'Matutino'){
+          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Vespertino'){
+          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Noturno'){
+          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }
+      } else if(hoje.getDay() == 4 && estudante.dia_semana == 'Quinta-Feira'){
+        if(estudante.periodo_horarios == 'Matutino'){
+          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Vespertino'){
+          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Noturno'){
+          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }
+      } else if(hoje.getDay() == 5 && estudante.dia_semana == 'Sexta-Feira'){
+        if(estudante.periodo_horarios == 'Matutino'){
+          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Vespertino'){
+          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }else if(estudante.periodo_horarios == 'Noturno'){
+          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
+            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
+              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+            }
+          }
+        }
+      }
     });
-
-    console.log(hoje.toLocaleTimeString())
     return status;
   }catch(e){
     console.log(`Houve um erro ${e}`);

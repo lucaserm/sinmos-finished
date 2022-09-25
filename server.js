@@ -29,7 +29,7 @@ app.use(flash());
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
-app.use(middlewareGlobal);
+
 app.use(routes);
 
 app.on('Pronto.', () => {

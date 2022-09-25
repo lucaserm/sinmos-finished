@@ -6,7 +6,7 @@ function Horario(body){
 
 Horario.save = async(body) => {
   try{
-    await client.query('INSERT INTO horarios(id_disciplinas, periodo, dia_semana, tempo_inicio, tempo_fim) VALUES($1, $2, $3, $4, $5)', [body.id_disciplinas, body.periodo, body.dia_semana, body.tempo_inicio, body.tempo_fim])
+    await client.query('INSERT INTO horarios(id_disciplinas, periodo_horarios, dia_semana, tempo_inicio, tempo_fim) VALUES($1, $2, $3, $4, $5)', [body.id_disciplinas, body.periodo, body.dia_semana, body.tempo_inicio, body.tempo_fim])
   }catch(e){
     console.log(`Houve um erro ${e}`)
   }
@@ -15,7 +15,7 @@ Horario.save = async(body) => {
 Horario.buscaHorarios= async () => {
   try{
     const horarios = await client.query(`
-    SELECT nome_disciplina, turma, horarios.periodo, dia_semana, tempo_inicio, tempo_fim
+    SELECT horarios.id, nome_disciplina, turma, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM horarios, disciplinas
     WHERE id_disciplinas = disciplinas.id
     `);

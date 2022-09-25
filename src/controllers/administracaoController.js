@@ -45,7 +45,7 @@ exports.trataEditado = async(req, res) => {
 }
 
 exports.responsavel = async(req, res) => {
-    const responsaveis = await Responsavel.buscaResponsavelPorID(req.body);
+    const responsaveis = await Responsavel.buscaResponsavelPorRA(req.body);
     res.render('responsavel', { responsaveis });
 }
 

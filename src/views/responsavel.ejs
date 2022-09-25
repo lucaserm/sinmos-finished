@@ -13,26 +13,19 @@
           <tr>
             <td>Nome</td>
             <td>Email</td>
-            <td>Contato</td>
+            <td>Telefone</td>
           </tr>
-          <% responsaveis.forEach(responsavel => { %>
+          <% responsaveis[0].forEach(responsavel => { %>
           <tr>
             <td><%= responsavel.nome_responsavel%></td>
             <td><%= responsavel.email_responsavel%></td>
-            <td>
-              <a
-                href="mailto:<%= responsavel.email_responsavel%>?subject=Assunto do email&amp;body=Olá,%0D%0A%0D%0A[corpo do email]%0D%0A%0D%0AAtenciosamente,%0D%0A[nome do usuário]"
-                class="btn btn-danger"
-                style="margin-top: 0"
-                >Notificar</a>
-            </td>
-            <% }); %>
+            <td><%= responsavel.telefone_responsavel%></td>
           </tr>
+          <% }); %>
           <tr><td></td><td></td><td></td></tr>
         </table>
-
         <form action="/administracao/horarios" method="post">
-          <input type="text" id="ra" name="ra" value="<%= ra%>" hidden />
+          <input type="text" name="ra" value="<%= responsaveis[1]%>" hidden>
           <button class="btn btn-dark">Voltar</button>
         </form>
       </div>

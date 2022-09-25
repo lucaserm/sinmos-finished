@@ -13,10 +13,10 @@
             <td>Id</td><td>Nome</td><td>RA</td><td>CPF</td><td>Foto</td>
           </tr>
           <% estudantes.forEach(estudante => { %>
-          <tr>
+          <tr class="vertival-align-center">
             <td><%= estudante.id%></td><td><%= estudante.nome_estudante%></td>
             <td><%= estudante.ra%></td><td><%= estudante.cpf%></td>
-            <td><%= estudante.foto%></td>
+            <td><img src="<%= estudante.foto%>" height="100"></td>
           </tr>
           <tr>
             <td colspan="5">
