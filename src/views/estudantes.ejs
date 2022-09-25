@@ -29,8 +29,15 @@
           <% }); %>
         </table>
         <hr>
+        <p class="text-center lead">Requisições para Liberação</p>
+        <form action="/administracao/requisicoes" method="POST">
+          <input type="text" name="nome_acesso" value="portaria" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn btn-info small" style="margin: 0;">Ver</button>
+        </form>
+        <hr>
         <form action="/administracao/horarios" method="POST">
-          <label for="ra">Insira o RA do aluno para ver todos os dados:</label>
+          <p class="text-center lead">Insira o RA do aluno para ver todos os dados</p>
           <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
           <button class="btn btn-success small" style="margin: 0;">Ver</button>
         </form>

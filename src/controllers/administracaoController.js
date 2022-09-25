@@ -1,5 +1,7 @@
-const Estudantes = require('../models/EstudantesModel');
-const Responsavel = require('../models/ResponsaveisModel')
+const Estudante = require('../models/EstudantesModel');
+const Responsavel = require('../models/ResponsaveisModel');
+const Registro = require('../models/RegistrosModel');
+const Advertencia = require('../models/AdvertenciasModel');
 
 exports.login = (req, res) => {
     res.render('administrador');
@@ -8,16 +10,16 @@ exports.login = (req, res) => {
 exports.paginaAdm = async(req, res) => {
     //Super ADM
     if(req.body.nome_acesso == 'root' && req.body.senha == '123456'){
-        const estudantes = await Estudantes.buscaEstudantes();
+        const estudantes = await Estudante.buscaEstudantes();
         res.render('estudantes', { estudantes } );
     }
     //Coordenação
     else if (req.body.nome_acesso == 'coordenacao' && req.body.senha == '123456'){
-        const estudantes = await Estudantes.buscaEstudantes();
+        const estudantes = await Estudante.buscaEstudantes();
         res.render('estudantes', { estudantes } );
       //Portaria
     } else if (req.body.nome_acesso == 'portaria' && req.body.senha == '123456'){
-        const estudantes = await Estudantes.buscaEstudantes();
+        const estudantes = await Estudante.buscaEstudantes();
         res.render('portaria', { estudantes });
     }
     else{
@@ -26,30 +28,38 @@ exports.paginaAdm = async(req, res) => {
 };
 
 exports.editar = async(req, res) => {
-    const estudantes = await Estudantes.buscaPorRA(req.body);
+    const estudantes = await Estudante.buscaPorRA(req.body);
     res.render('editar', { estudantes });
 }
 
 exports.editarSaidaEstudante = async(req, res) => {
-    const estudantes = await Estudantes.liberacaoPorRA(req.body);
-    res.render('editarSaidaEstudante', { estudantes });
+    const estudantes = await Estudante.liberacaoPorRA(req.body);
+    const id = req.body.id;
+    res.render('editarSaidaEstudante', { estudantes, id });
 }
 
 exports.trataEditado = async(req, res) => {
     if(req.url == '/administracao/editadoEstudante'){
-        Estudantes.update(req.body);
+        Estudante.update(req.body);
     }else if(req.url == '/administracao/editadoSaida'){
-        Estudantes.salvarSaida(req.body);
+        Registro.update(req.body);
     }
-    res.render('salvo')
+    const id = req.body.id;
+    res.render('salvo', {req, id})
 }
 
 exports.responsavel = async(req, res) => {
     const responsaveis = await Responsavel.buscaResponsavelPorRA(req.body);
-    res.render('responsavel', { responsaveis });
+    const advertencias = await Advertencia.buscaAdvertenciaPorRA(req.body);
+    res.render('responsavel', { responsaveis, advertencias });
 }
 
 exports.horarios = async(req, res) => {
-    const horarios = await Estudantes.buscaHorariosPorRA(req.body);
+    const horarios = await Estudante.buscaHorariosPorRA(req.body);
     res.render('horarios', { horarios })
+}
+
+exports.requisicoes = async(req, res) => {
+    const registros = await Registro.buscaRegistros();
+    res.render('requisicoes', { registros });
 }

@@ -7,9 +7,10 @@
     <div class="col-lg-10 my-3">
       <h1 class="text-center">Sistema Integrado de Segurança</h1>
       <p class="text-center lead">Dados do Estudante abaixo.</p>
-      <% if (estudantes.length > 0){ %>
+      <% if (estudantes[0].length > 0 ){%>
       <form action="/administracao/editadoSaida" method="POST">
         <div class="form-group">
+          <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
           <label>Nome do Estudante</label>
           <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
           <label>CPF</label>
@@ -19,17 +20,18 @@
           <div align="center">
             <img src="<%=estudantes[0][0].foto%>" height="300">
           </div>
-          <% if (estudantes[1].aula == 'Estudante em aula!'){ %>
+          <% if(estudantes[1].aula == 'Estudante em aula!'){%>
             <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
               <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
             </div>
+            <hr>
+            <input type="number" name="id" value="<%= id%>" hidden>
+            <button type="submit" class="btn btn-success" style="margin: 0;">Liberar Estudante</button>
           <% }else{%>
             <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
               <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
             </div>
           <%}%>
-          <hr>
-          <button type="submit" class="btn btn-success" style="margin: 0;">Liberar Estudante</button>
           <hr>
         </div>
       </form>

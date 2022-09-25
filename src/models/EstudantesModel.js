@@ -69,7 +69,7 @@ Estudante.buscaHorariosPorRA = async (body) => {
 Estudante.liberacaoPorRA = async (body) => {
   try{
     const estudantes = await client.query(`
-    SELECT ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+    SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM estudantes, horarios, disciplinas, horariosestudantes
     WHERE ra = $1 
     AND id_estudantes = estudantes.id
@@ -77,7 +77,7 @@ Estudante.liberacaoPorRA = async (body) => {
     AND id_disciplinas = disciplinas.id
     `, [body.ra]);
     
-    const hoje = new Date();
+    const hoje = new Date("2022-09-28T23:00:00Z");
     let status = [estudantes.rows, { aula: 'Estudante sem aula!' }];
     let listaMatutino = [
     { hora: 07, minuto: 00 }, 

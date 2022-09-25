@@ -7,7 +7,15 @@
       <h1 class="text-center">Sistema Integrado de Segurança</h1>
       <br>
       <hr>
-      <h4 class="text-center">Salvo com sucesso!</h4>
+      <% if(req.url == '/administracao/editadoSaida'){%>
+        <%if(id > 0){%>
+          <h4 class="text-center">Salvo com sucesso!</h4>
+          <% } else {%>
+          <h4 class="text-center">Tentativa de saída em horário de aula, advertência registrada!</h4>
+        <% }%>  
+      <% } else {%>
+        <h4 class="text-center">Salvo com sucesso!</h4>
+      <% }%>  
       <hr>
       <br>
       <form action="/">

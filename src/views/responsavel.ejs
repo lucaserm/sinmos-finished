@@ -1,25 +1,45 @@
-<%- include('includes/head') %> <%- include('includes/nav') %>
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
 <div class="container">
   <div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 my-3">
       <h1 class="text-center">Advertência</h1>
       <p class="text-center lead">
-        Segue responsável e formas de contato abaixo.
+        Responsável e formas de Contato.
       </p>
       <% if (responsaveis.length > 0){ %>
-      <div class="responsive-table">
-        <table class="table my-3" color>
+        <div class="responsive-table">
+          <table class="table my-3" color>
+            <tr>
+              <td>Nome</td>
+              <td>Email</td>
+              <td>Telefone</td>
+            </tr>
+            <% responsaveis[0].forEach(responsavel => { %>
+              <tr>
+                <td><%= responsavel.nome_responsavel%></td>
+                <td><%= responsavel.email_responsavel%></td>
+                <td><%= responsavel.telefone_responsavel%></td>
+              </tr>
+          <% }) %>
+          <tr><td></td><td></td><td></td></tr>
+        </table>
+        <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">
+          Advertências
+        </p>
+        <br>
+        <table class="table my-2" color>
           <tr>
-            <td>Nome</td>
-            <td>Email</td>
-            <td>Telefone</td>
+            <td>Id</td>
+            <td>Descrição</td>
+            <td>Data da Advertência</td>
           </tr>
-          <% responsaveis[0].forEach(responsavel => { %>
+          <% advertencias.forEach(advertencia => { %>
           <tr>
-            <td><%= responsavel.nome_responsavel%></td>
-            <td><%= responsavel.email_responsavel%></td>
-            <td><%= responsavel.telefone_responsavel%></td>
+            <td><%= advertencia.id%></td>
+            <td><%= advertencia.descricao%></td>
+            <td><%= advertencia.data_advertencia%></td>
           </tr>
           <% }); %>
           <tr><td></td><td></td><td></td></tr>
@@ -41,4 +61,4 @@
     <div class="col-lg-2"></div>
   </div>
 </div>
-<%- include('includes/footer');%>
+<%- include('includes/footer') %>

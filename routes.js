@@ -31,6 +31,7 @@ route.get('/cadastro/horario', cadastroController.cadastroHorario);
 route.get('/cadastro/estudante', cadastroController.cadastroEstudante);
 route.get('/cadastro/responsavel', cadastroController.cadastroResponsavel);
 route.get('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstudante);
+route.get('/cadastro/registro', cadastroController.cadastroRegistro);
 //Salvando
 route.post('/cadastro/cursosalvo', cadastroController.trataPost);
 route.post('/cadastro/disciplinasalvo', cadastroController.trataPost);
@@ -39,16 +40,18 @@ route.post('/cadastro/matriculasalvo', cadastroController.trataPost);
 route.post('/cadastro/estudantesalvo', upload.single('avatar'), cadastroController.trataPost);
 route.post('/cadastro/responsavelsalvo', cadastroController.trataPost);
 route.post('/cadastro/horarioestudantesalvo', cadastroController.trataPost);
+route.post('/cadastro/registrosalvo', cadastroController.trataPost);
 
 //Rotas do administrador
 //Login do Administrador
 route.get('/administracao/login', administracaoController.login);
 //Horários de todos os alunos cadastrados
 route.post('/administracao/paginainicial', administracaoController.paginaAdm);
+route.post('/administracao/horarios', administracaoController.horarios);
+route.post('/administracao/requisicoes', administracaoController.requisicoes);
+route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editar', administracaoController.editar);
 route.post('/administracao/editarSaidaEstudantes', administracaoController.editarSaidaEstudante);
-route.post('/administracao/horarios', administracaoController.horarios);
-route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
 
