@@ -6,18 +6,28 @@
     <div class="col-lg-10 my-3"
       style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
       <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Selecione seu cargo dentro da instituição</p>
-      <a href="/cadastro" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn btn-dark"  style="width: 100%; height: 5rem; text-align: center;" >
-          Cadastros
-        </button>
-      </a>
-      <br>
-      <a href="/administracao/login" style="width: 70%; height: 5rem; text-align: center;">
-        <button type="submit" class="btn btn-dark"  style="width: 100%; height: 5rem; text-align: center;">
-          Acessar Alunos
-        </button>
-      </a>
+      <p class="text-center lead">Bem vindo ao <i>Sistema Integrado de Monitoramento e Segurança</i></p>
+      <div class=" my-2" style="display: flex; width: 90%; align-items: center; justify-content: space-around;">
+        <a href="/administracao/login" style="width: 50%; height: 5rem; text-align: center;">
+          <button type="submit" class="btn btn-dark"  style="width: 100%; height: 5rem; text-align: center;">
+            Acessar Alunos
+          </button>
+        </a>
+        <div class="col-lg-1" style="display: flex; align-self: flex-end; border-left: 1px solid black;"></div>
+
+        <form action="/administracao/paginainicial" method="POST"style="width: 50%;">
+          <div class="form-group">
+            <label>Nome de Acesso</label>
+            <input type="text" class="form-control" name="nome_acesso">
+            <label>Senha</label>
+            <input type="password" class="form-control" name="senha">
+          </div>
+          <div class="form-group">
+            <a href="/"><p class="text-left lead small">Esqueci minha senha</p></a>
+          </div>
+          <button type="submit" class="btn btn-dark">Entrar</button>
+        </form>
+      </div>
       <br>
       <br>
       <br>
