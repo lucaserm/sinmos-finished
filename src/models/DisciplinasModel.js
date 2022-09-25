@@ -5,7 +5,7 @@ function Disciplina(body) {
 }
 
 Disciplina.buscarDisciplinas = async () => {
-  const disciplinas = await client.query("SELECT * FROM disciplinas");
+  const disciplinas = await client.query("SELECT * FROM disciplinas ORDER BY id");
   return disciplinas.rows;
 };
 

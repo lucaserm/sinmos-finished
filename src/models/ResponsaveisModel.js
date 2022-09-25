@@ -14,7 +14,7 @@ Responsavel.save = async(body) =>{
 
 Responsavel.buscaResponsaveis = async () => {
   try {
-    const responsaveis = await client.query('SELECT * FROM responsaveis');
+    const responsaveis = await client.query('SELECT * FROM responsaveis ORDER BY id');
     return responsaveis.rows;
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -24,7 +24,7 @@ Responsavel.buscaResponsaveis = async () => {
 Responsavel.buscaResponsavelPorRA = async (body) => {
   try {
     const responsavel = await client.query(
-      "SELECT responsaveis.* FROM estudantes, responsaveis WHERE estudantes.ra = $1 AND id_responsaveis = responsaveis.id", [body.ra]);
+      "SELECT responsaveis.* FROM estudantes, responsaveis WHERE estudantes.ra = $1 AND id_responsaveis = responsaveis.id ORDER BY id", [body.ra]);
     let responsavelRA = [responsavel.rows, body.ra]
     return responsavelRA;
   } catch (e) {

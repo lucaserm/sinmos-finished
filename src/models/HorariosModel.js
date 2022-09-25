@@ -18,6 +18,7 @@ Horario.buscaHorarios= async () => {
     SELECT horarios.id, nome_disciplina, turma, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM horarios, disciplinas
     WHERE id_disciplinas = disciplinas.id
+    ORDER BY id
     `);
     return horarios.rows;
   }catch(e){

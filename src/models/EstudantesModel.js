@@ -34,7 +34,7 @@ Estudante.update = async(body) => {
 
 Estudante.buscaPorRA = async(body) => {
   try{
-    const estudantes = await client.query(`SELECT * FROM estudantes WHERE ra = $1`, [body.ra]);
+    const estudantes = await client.query(`SELECT * FROM estudantes WHERE ra = $1 ORDER BY id`, [body.ra]);
     return estudantes.rows;
   }catch(e){
     console.log(`Houve um erro ${e}`);
@@ -59,6 +59,7 @@ Estudante.buscaHorariosPorRA = async (body) => {
     AND id_estudantes = estudantes.id
     AND id_horarios = horarios.id
     AND id_disciplinas = disciplinas.id
+    ORDER BY id
     `, [body.ra]);
     return estudantes.rows;
   }catch(e){
@@ -75,6 +76,7 @@ Estudante.liberacaoPorRA = async (body) => {
     AND id_estudantes = estudantes.id
     AND id_horarios = horarios.id
     AND id_disciplinas = disciplinas.id
+    ORDER BY id
     `, [body.ra]);
     
     const hoje = new Date("2022-09-28T23:00:00Z");

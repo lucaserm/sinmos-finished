@@ -14,7 +14,7 @@ Advertencia.save = async(body) => {
 
 Advertencia.buscaAdvertenciaPorRA = async(body) =>{
   try{
-    const advertencias = await client.query('SELECT advertencias.* FROM advertencias, estudantes WHERE ra = $1 AND id_estudantes = estudantes.id', [body.ra]);
+    const advertencias = await client.query('SELECT advertencias.* FROM advertencias, estudantes WHERE ra = $1 AND id_estudantes = estudantes.id ORDER BY id', [body.ra]);
     return advertencias.rows;
   }catch(e){
     console.log(e);
