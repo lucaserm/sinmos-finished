@@ -59,7 +59,7 @@ Estudante.buscaHorariosPorRA = async (body) => {
     AND id_estudantes = estudantes.id
     AND id_horarios = horarios.id
     AND id_disciplinas = disciplinas.id
-    ORDER BY id
+    ORDER BY estudantes.id
     `, [body.ra]);
     return estudantes.rows;
   }catch(e){
@@ -76,10 +76,10 @@ Estudante.liberacaoPorRA = async (body) => {
     AND id_estudantes = estudantes.id
     AND id_horarios = horarios.id
     AND id_disciplinas = disciplinas.id
-    ORDER BY id
+    ORDER BY estudantes.id
     `, [body.ra]);
     
-    const hoje = new Date("2022-09-28T23:00:00Z");
+    const hoje = new Date();
     let status = [estudantes.rows, { aula: 'Estudante sem aula!' }];
     let listaMatutino = [
     { hora: 07, minuto: 00 }, 
@@ -106,108 +106,35 @@ Estudante.liberacaoPorRA = async (body) => {
     { hora: 23, minuto: 05 },
     { hora: 23, minuto: 50 }];
 
+    let listas = [listaMatutino, listaVespertino, listaNoturno];
+
+    let diaSemana = [
+      'Segunda-Feira',
+      'Terça-Feira',
+      'Quarta-Feira',
+      'Quinta-Feira',
+      'Sexta-Feira'
+    ]
+    let periodo = [
+      'Matutino',
+      'Vespertino',
+      'Noturno'
+    ];
+
     estudantes.rows.forEach( estudante => {
-      if(hoje.getDay() == 1 && estudante.dia_semana == 'Segunda-Feira'){
-        if(estudante.periodo_horarios == 'Matutino'){
-          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Vespertino'){
-          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Noturno'){
-          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+      for(let i = 0; i <= 4;i++){
+        for(let j = 0; j <= 2; j++){
+          if(hoje.getDay() == 1 && estudante.dia_semana == diaSemana[i]){
+            if(estudante.periodo_horarios == periodo[j]){
+              if(hoje.getHours() - listas[j][estudante.tempo_fim-1].hora <= 0){
+                if(hoje.getMinutes() - listas[j][estudante.tempo_fim-1].minuto <= 0){
+                  status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+                }
+              }
             }
           }
         }
-      } else if(hoje.getDay() == 2 && estudante.dia_semana == 'Terça-Feira'){
-        if(estudante.periodo_horarios == 'Matutino'){
-          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Vespertino'){
-          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Noturno'){
-          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }
-      } else if(hoje.getDay() == 3 && estudante.dia_semana == 'Quarta-Feira'){
-        if(estudante.periodo_horarios == 'Matutino'){
-          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Vespertino'){
-          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Noturno'){
-          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }
-      } else if(hoje.getDay() == 4 && estudante.dia_semana == 'Quinta-Feira'){
-        if(estudante.periodo_horarios == 'Matutino'){
-          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Vespertino'){
-          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Noturno'){
-          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }
-      } else if(hoje.getDay() == 5 && estudante.dia_semana == 'Sexta-Feira'){
-        if(estudante.periodo_horarios == 'Matutino'){
-          if(hoje.getHours() - listaMatutino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaMatutino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Vespertino'){
-          if(hoje.getHours() - listaVespertino[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaVespertino[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }else if(estudante.periodo_horarios == 'Noturno'){
-          if(hoje.getHours() - listaNoturno[estudante.tempo_fim-1].hora <= 0){
-            if(hoje.getMinutes() - listaNoturno[estudante.tempo_fim-1].minuto <= 0){
-              status = [estudantes.rows, { aula: 'Estudante em aula!' }];
-            }
-          }
-        }
-      }
+      } 
     });
     return status;
   }catch(e){

@@ -30,7 +30,7 @@ Registro.update = async(body) => {
 Registro.buscaRegistros = async() => {
   try {
     const registros = await client.query('SELECT registros.id, nome_estudante, ra, foto, descricao, dia_liberacao FROM registros, estudantes WHERE id_estudantes = estudantes.id ORDER BY id');
-    const hoje = new Date("2022-09-26");
+    const hoje = new Date();
     let data = hoje.toISOString().substring(0,10);
     let reg = [registros.rows, data]
     return reg;
