@@ -1,12 +1,13 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
 <div class="container">
-  <div class="row">
+  <div class="row" >
     <div class="col-lg-2"></div>
     <div class="col-lg-8 my-3">
       <h1 class="text-center">Estudantes</h1>
       <p class="text-center lead">Todos os alunos registrados: </p>
       <% if (estudantes.length > 0){ %>
+      <div>
       <div class="responsive-table">
         <table class="table my-3" color>
           <tr>
@@ -28,6 +29,7 @@
           </tr>
           <% }); %>
         </table>
+      </div>
         <hr>
         <p class="text-center lead">Requisições para Liberação</p>
         <form action="/administracao/requisicoes" method="POST">
