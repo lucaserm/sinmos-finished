@@ -122,19 +122,29 @@ Estudante.liberacaoPorRA = async (body) => {
     ];
 
     estudantes.rows.forEach( estudante => {
-      for(let i = 0; i <= 4;i++){
-        for(let j = 0; j <= 2; j++){
-          if(hoje.getDay() == 1 && estudante.dia_semana == diaSemana[i]){
-            if(estudante.periodo_horarios == periodo[j]){
-              if(hoje.getHours() - listas[j][estudante.tempo_fim-1].hora <= 0){
-                if(hoje.getMinutes() - listas[j][estudante.tempo_fim-1].minuto <= 0){
+      for(let k = 1; k < 6; k++){
+        for(let i = 0; i < 5;i++){
+          for(let j = 0; j <= 2; j++){
+            //Define dia da semana
+            if(hoje.getDay() == k && estudante.dia_semana == diaSemana[i]){
+              //Periodo, matutino, vespertino, noturno
+              if(estudante.periodo_horarios == periodo[j]){
+                //horaAtual - periodo, hora que a aula termina e horaAtual >= hora que aula começa
+                if(hoje.getHours() - listas[j][estudante.tempo_fim-1].hora <= 0 && hoje.getHours() >= listas[j][estudante.tempo_inicio-1].hora){
+                  // hora igual a hora que começa
+                  if(hoje.getHours() == listas[j][estudante.tempo_inicio-1].hora){
+                    if(hoje.getMinutes() > listas[j][estudante.tempo_fim-1].minuto){
+                      status = [estudantes.rows, { aula: 'Estudante em aula!' }];
+                    }
+                  }
+                } else{
                   status = [estudantes.rows, { aula: 'Estudante em aula!' }];
                 }
               }
             }
           }
-        }
-      } 
+        } 
+      }
     });
     return status;
   }catch(e){

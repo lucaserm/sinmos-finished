@@ -1,5 +1,6 @@
 const client = require('../../server');
 const Advertencia = require('../models/AdvertenciasModel');
+const transporter = require('../../server');
 
 function Registro(body){
   this.body = body;
