@@ -51,6 +51,10 @@ route.get('/administracao/login', administracaoController.login);
 //Horários de todos os alunos cadastrados
 route.post('/administracao/paginainicial', administracaoController.paginaAdm);
 // Configuração de armazenamento de imagens
+route.post('/administracao/horarios', administracaoController.horarios);
+route.post('/administracao/requisicoes', administracaoController.requisicoes);
+route.post('/administracao/responsavel', administracaoController.responsavel);
+route.post('/administracao/editar', administracaoController.editar);
 storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/assets/img/crachas/')
@@ -67,11 +71,7 @@ storage = multer.diskStorage({
     }
 });
 upload = multer({ storage });
-route.post('/administracao/horarios', upload.single('avatar'), administracaoController.horarios);
-route.post('/administracao/requisicoes', administracaoController.requisicoes);
-route.post('/administracao/responsavel', administracaoController.responsavel);
-route.post('/administracao/editar', administracaoController.editar);
-route.post('/administracao/editarSaidaEstudantes', administracaoController.editarSaidaEstudante);
+route.post('/administracao/editarSaidaEstudantes', upload.single('avatar'), administracaoController.editarSaidaEstudante);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
 

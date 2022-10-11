@@ -1,48 +1,48 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-
-    <div class="col-lg-10 my-3">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Registre o Estudante abaixo.</p>
-      <form action="/cadastro/estudantesalvo" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 my-3">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <p class="text-center lead">Registre o Estudante abaixo.</p>
+        <form action="/cadastro/estudantesalvo" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <label>Responsável</label>
+            <select name="id_responsaveis" class="form-control" required>
+              <% responsaveis.forEach(responsavel=> { %>
+                <option value="<%= responsavel.id%>"><%= responsavel.nome_responsavel%>, <%= responsavel.email_responsavel%>, <%= responsavel.telefone_responsavel%></option>
+              <% }); %>
+            </select>
+            <br>
+            <label>Não achou seu responsável? Cadastre aqui</label>
+            <a href="/cadastro/responsavel" class="btn btn-info" style="margin-top: 0;">Cadastrar Responsável</a>
+            <br>
+            <br>
+            <label>Nome do Estudante</label>
+            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" required>
+            <label>Email Institucional</label>
+            <input type="email" class="form-control" name="email_institucional" autocomplete="off" required>
+            <label>CPF</label>
+            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" placeholder="000.000.000-00" autocomplete="off" required>
+            <label>RA</label>
+            <input type="text" class="form-control" name="ra" autocomplete="off" required>
+            <label>Foto</label>
+            <input type="file" name="avatar" class="form-control" required>
+            <button type="submit" class="btn button btn-success">Salvar Estudante</button>
+          </div>
+          <hr>
+        </form>
+        <form action="/cadastro" method="post">
           <input type="text" name="user" value="<%= user%>" hidden>
-          <label>Responsável</label>
-          <select name="id_responsaveis" class="form-control" required>
-            <% responsaveis.forEach(responsavel=> { %>
-              <option value="<%= responsavel.id%>"><%= responsavel.nome_responsavel%>, <%= responsavel.email_responsavel%>, <%= responsavel.telefone_responsavel%></option>
-            <% }); %>
-          </select>
-          <br>
-          <label>Não achou seu responsável? Cadastre aqui</label>
-          <a href="/cadastro/responsavel" class="btn btn-info" style="margin-top: 0;">Cadastrar Responsável</a>
-          <br>
-          <br>
-          <label>Nome do Estudante</label>
-          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" required>
-          <label>Email Institucional</label>
-          <input type="email" class="form-control" name="email_institucional" autocomplete="off" required>
-          <label>CPF</label>
-          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" placeholder="000.000.000-00" autocomplete="off" required>
-          <label>RA</label>
-          <input type="text" class="form-control" name="ra" autocomplete="off" required>
-          <label>Foto</label>
-          <input type="file" name="avatar" class="form-control" required>
-          <button type="submit" class="btn btn-success">Salvar Estudante</button>
-        </div>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
         <hr>
-      </form>
-      <form action="/cadastro" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn">Voltar</button>
-      </form>
-      <hr>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 

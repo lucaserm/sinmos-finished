@@ -1,31 +1,33 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8 my-3">
-      <h1 class="text-center">Estudantes</h1>
-      <div class="responsive-table">
-        <p class="text-center lead">Insira o RA do aluno que deseja verificar:</p>
-        <form action="/administracao/editarSaidaEstudantes" method="POST">
-          <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
-          <input type="text" class="form-control" name="user" value="<%= user%>" hidden/>
-          <button class="btn btn-success small" style="margin: 0;">Ver</button>
-        </form>
-        <hr>
-        <p class="text-center lead">Requisições para Liberação</p>
-        <form action="/administracao/requisicoes" method="POST">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" name="senha" value="123456" hidden>
-          <button class="btn btn-info small" style="margin: 0;">Ver</button>
-        </form>
-        <hr>
-        <form action="/administracao/login">
-          <button class="btn" style="margin: 0;">Voltar</button>
-        </form>
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8 my-3">
+        <h1 class="text-center">Estudantes</h1>
+        <div class="responsive-table">
+          <p class="text-center lead">Insira o RA do aluno que deseja verificar:</p>
+          <form action="/administracao/editarSaidaEstudantes" method="POST">
+            <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
+            <input type="text" class="form-control" name="user" value="<%= user%>" hidden/>
+            <button class="btn button btn-success small" style="margin: 0;">Ver</button>
+          </form>
+          <hr>
+          <p class="text-center lead">Requisições para Liberação</p>
+          <form action="/administracao/requisicoes" method="POST">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="senha" value="123456" hidden>
+            <button class="btn button btn-info small" style="margin: 0;">Ver</button>
+          </form>
+          <hr>
+          <form action="/administracao/login">
+            <button class="btn button btn-dark" style="margin: 0;">Voltar</button>
+          </form>
+        </div>
       </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer');%>

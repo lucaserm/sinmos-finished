@@ -1,36 +1,38 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 my-3">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Altere o Estudante abaixo.</p>
-      <form action="/administracao/editadoEstudante" method="POST">
-        <div class="form-group ">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <label>Nome do Estudante</label>
-          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0].nome_estudante%>" required>
-          <label>CPF</label>
-          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0].cpf%>" autocomplete="off" required>
-          <label>RA</label>
-          <input type="text" class="form-control" name="ra" value="<%= estudantes[0].ra%>" autocomplete="off" required>
-          <div align="center">
-            <img src="<%= estudantes[0].foto%>" height="200" class="lead">
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 my-3">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <p class="text-center lead">Altere o Estudante abaixo.</p>
+        <form action="/administracao/editadoEstudante" method="POST">
+          <div class="form-group ">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <label>Nome do Estudante</label>
+            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0].nome_estudante%>" required>
+            <label>CPF</label>
+            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0].cpf%>" autocomplete="off" required>
+            <label>RA</label>
+            <input type="text" class="form-control" name="ra" value="<%= estudantes[0].ra%>" autocomplete="off" required>
+            <div align="center">
+              <img src="<%= estudantes[0].foto%>" height="200" class="lead">
+            </div>
+            <input type="text" class="form-control" name="ra2" value="<%= estudantes[0].ra%>" autocomplete="off" hidden>
+            <button type="submit" class="btn button btn-success">Salvar Estudante</button>
           </div>
-          <input type="text" class="form-control" name="ra2" value="<%= estudantes[0].ra%>" autocomplete="off" hidden>
-          <button type="submit" class="btn btn-success">Salvar Estudante</button>
-        </div>
-        <hr>
-        <hr>
-      </form>
-      <form action="/administracao/paginainicial" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <input type="text" name="senha" value="123456" hidden>
-        <button class="btn">Voltar</button>
-      </form>
+          <hr>
+          <hr>
+        </form>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer') %>

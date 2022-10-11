@@ -1,63 +1,70 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8 my-3">
-      <h1 class="text-center">Requisições</h1>
-      <p class="text-center lead">Todos as requisições registradas: </p>
-      <% if (registros[0].length > 0){ %>
-      <div class="responsive-table">
-        <table class="table my-3">
-          <tr align="center">
-            <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
-          </tr>
-          <% registros[0].forEach(registro => { %>
-          <tr align="center">
-            <td><%= registro.ra%></td>
-            <td><img src="<%= registro.foto%>" width="70"></td>
-            <td><%= registro.descricao%></td>
-            <td><%= registro.dia_liberacao%></td>
-          </tr>
-          <% if(registros[1] == registro.dia_liberacao) {%>
-          <tr>
-            <td colspan="6">
-              <form action="/administracao/editarSaidaEstudantes" method="post">
-                <input type="text" name="ra" value="<%= registro.ra%>" hidden>
-                <input type="text" name="id" value="<%= registro.id%>" hidden>
-                <input type="text" name="user" value="<%= user%>" hidden>
-                <button class="btn btn-info" style="margin: 0;">Liberar Estudante</button>
-              </form>
-            </td>
-          </tr>
-          <% }%>
-          <% }); %>
-        </table>
-        <hr>
-        <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" name="senha" value="123456" hidden>
-          <button class="btn">Voltar</button>
-        </form>
+<div class="first_part">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8 my-3">
+        <h1 class="text-center">Requisições</h1>
+        <p class="text-center lead">Todos as requisições registradas: </p>
+        <% if (registros[0].length > 0){ %>
+        <div class="responsive-table">
+          <table class="table my-3">
+            <tr align="center">
+              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
+            </tr>
+            <% registros[0].forEach(registro => { %>
+            <tr align="center">
+              <td><%= registro.ra%></td>
+              <td><img src="<%= registro.foto%>" width="70"></td>
+              <td><%= registro.descricao%></td>
+              <td><%= registro.dia_liberacao%></td>
+            </tr>
+            <% if(registros[1] == registro.dia_liberacao) {%>
+            <tr>
+              <td colspan="6">
+                <form action="/administracao/editarSaidaEstudantes" method="post">
+                  <input type="text" name="ra" value="<%= registro.ra%>" hidden>
+                  <input type="text" name="id" value="<%= registro.id%>" hidden>
+                  <input type="text" name="user" value="<%= user%>" hidden>
+                  <button class="btn button btn-info" style="margin: 0;">Liberar Estudante</button>
+                </form>
+              </td>
+            </tr>
+            <% }%>
+            <% }); %>
+          </table>
+          <hr>
+          <form action="/cadastro" method="post">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <button class="btn button btn-success">Cadastros</button>
+          </form>
+          <hr>
+          <form action="/administracao/paginainicial" method="post">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="senha" value="123456" hidden>
+            <button class="btn button ">Voltar</button>
+          </form>
+        </div>
+        <% } else { %>
+          <hr>
+          <p class="text-center lead">Não existem registros disponíveis.</p>
+          <hr>
+          <form action="/cadastro" method="post">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <button class="btn button btn-success">Cadastros</button>
+          </form>
+          <hr>
+          <form action="/administracao/paginainicial" method="post">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="senha" value="123456" hidden>
+            <button class="btn button btn-dark">Voltar</button>
+          </form>
+        <% } %>
       </div>
-      <% } else { %>
-        <hr>
-        <p class="text-center lead">Não existem registros disponíveis.</p>
-        <hr>
-        <a href="/cadastro" style="width: 70%; height: 4rem; text-align: center;">
-          <button type="submit" class="btn btn-warning text-white"  style="margin: 0; width: 100%; height: 5rem; text-align: center;" >
-            Cadastros
-          </button>
-        </a>
-        <hr>
-        <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" name="senha" value="123456" hidden>
-          <button class="btn">Voltar</button>
-        </form>
-      <% } %>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer');%>

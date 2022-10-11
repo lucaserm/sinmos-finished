@@ -1,36 +1,38 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 my-3">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Registre o curso abaixo.</p>
-      <form action="/cadastro/registrosalvo" method="post">
-        <div class="form-group">
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 my-3">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <p class="text-center lead">Registre o curso abaixo.</p>
+        <form action="/cadastro/registrosalvo" method="post">
+          <div class="form-group">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <label>Nome do Estudante</label>
+            <select name="id_estudantes" class="form-control">
+              <% estudantes.forEach( estudante => { %>
+                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+              <% });%>
+            </select>
+            <br>
+            <label>Descrição</label>
+            <input type="text" name="descricao" class="form-control" required autocomplete="off">
+            <label>Dia que será liberado</label>
+            <input type="date" name="dia_liberacao" class="form-control" required>
+          </div>
+          <hr>
+          <button type="submit" class="btn button btn-success" style="margin: 0;">Salvar Registro</button>
+          <hr>
+        </form>
+        <form action="/cadastro" method="post">
           <input type="text" name="user" value="<%= user%>" hidden>
-          <label>Nome do Estudante</label>
-          <select name="id_estudantes" class="form-control">
-            <% estudantes.forEach( estudante => { %>
-              <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
-            <% });%>
-          </select>
-          <br>
-          <label>Descrição</label>
-          <input type="text" name="descricao" class="form-control" required autocomplete="off">
-          <label>Dia que será liberado</label>
-          <input type="date" name="dia_liberacao" class="form-control" required>
-        </div>
-        <hr>
-        <button type="submit" class="btn btn-success" style="margin: 0;">Salvar Registro</button>
-        <hr>
-      </form>
-      <form action="/cadastro" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn">Voltar</button>
-      </form>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer') %>

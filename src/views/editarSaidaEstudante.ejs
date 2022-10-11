@@ -1,59 +1,59 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 my-3">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Dados do Estudante abaixo.</p>
-      <% if (estudantes[0].length > 0 ){%>
-      <form action="/administracao/editadoSaida" method="POST">
-        <div class="form-group">
-          <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <label>Nome do Estudante</label>
-          <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
-          <label>CPF</label>
-          <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0][0].cpf%>" autocomplete="off" disabled>
-          <label>RA</label>
-          <input type="text" class="form-control" name="ra" value="<%= estudantes[0][0].ra%>" autocomplete="off" disabled>
-          <div align="center">
-            <img src="<%=estudantes[0][0].foto%>" height="200">
-          </div>
-          <% if(estudantes[1].aula == 'Estudante em aula!'){%>
-            <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-              <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 my-3">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <p class="text-center lead">Dados do Estudante abaixo.</p>
+        <% if (estudantes[0].length > 0 ){%>
+        <form action="/administracao/editadoSaida" method="POST">
+          <div class="form-group">
+            <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <label>Nome do Estudante</label>
+            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
+            <label>CPF</label>
+            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0][0].cpf%>" autocomplete="off" disabled>
+            <label>RA</label>
+            <input type="text" class="form-control" name="ra" value="<%= estudantes[0][0].ra%>" autocomplete="off" disabled>
+            <div align="center">
+              <img src="<%=estudantes[0][0].foto%>" height="200">
             </div>
+            <% if(estudantes[1].aula == 'Estudante em aula!'){%>
+              <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+                <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+              </div>
+              <hr>
+              <input type="number" name="id" value="<%= id%>" hidden>
+              <button type="submit" class="btn button btn-success" style="margin: 0;">Liberar Estudante</button>
+            <% }else{%>
+              <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+                <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+              </div>
+            <%}%>
             <hr>
-            <input type="number" name="id" value="<%= id%>" hidden>
-            <button type="submit" class="btn btn-success" style="margin: 0;">Liberar Estudante</button>
-          <% }else{%>
-            <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-              <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
-            </div>
-          <%}%>
-          <hr>
-        </div>
-      </form>
-      <form action="/administracao/paginainicial" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <input type="text" name="senha" value="123456" hidden>
-        <button class="btn">Voltar</button>
-      </form>
-      <% } else { %>
-        <hr>
-        <p class="text-center lead">Não existe estudante com esse RA.</p>
-        <hr>
+          </div>
+        </form>
         <form action="/administracao/paginainicial" method="post">
           <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="senha" value="123456" hidden>
-          <button class="btn">Voltar</button>
+          <button class="btn button btn-dark">Voltar</button>
         </form>
-      <% } %>
+        <% } else { %>
+          <hr>
+          <p class="text-center lead">Não existe estudante com esse RA.</p>
+          <hr>
+          <form action="/administracao/paginainicial" method="post">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="senha" value="123456" hidden>
+            <button class="btn button btn-dark">Voltar</button>
+          </form>
+        <% } %>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
-
 <%- include('includes/footer') %>

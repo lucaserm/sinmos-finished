@@ -41,7 +41,13 @@ exports.editar = async(req, res) => {
 
 //página para liberar o estudante
 exports.editarSaidaEstudante = async(req, res) => {
-    const estudantes = await Estudante.liberacaoPorRA(req.body);
+    // se ambos os campos estiverem vazios, horarios recebe nulo
+    const estudantes = req.body.ra == '' && typeof req.file == 'undefined' ? {} :
+    //se só o ra não está vazio, busca por ra
+    req.body.ra != '' ? await Estudante.liberacaoPorRA(req.body.ra, 'null') :
+    //se está vazio, busca pela imagem
+    {};
+    // await Estudante.liberacaoPorRA('null', req.file.filename);
     const id = req.body.id;
     const user = req.body.user;
     res.render('editarSaidaEstudante', { estudantes, id, user });
@@ -71,12 +77,12 @@ exports.horarios = async(req, res) => {
     // se ambos os campos estiverem vazios, horarios recebe nulo
     const horarios = req.body.ra == '' && typeof req.file == 'undefined' ? {} :
         //se só o ra não está vazio, busca por ra
-        req.body.ra != '' ? await Estudante.buscaHorariosPorRA(req.body, 'null') :
+        req.body.ra != '' ? await Estudante.buscaHorariosPorRA(req.body.ra, 'null') :
         //se está vazio, busca pela imagem
         {};
         // await Estudante.buscaHorariosPorRA('null', req.file.filename);
     const user = req.body.user;
-    console.log(req.file);
+    
     res.render('horarios', { horarios, user });
 }
 

@@ -1,31 +1,32 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 my-3">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <br>
-      <hr>
-      <% if(req.url == '/administracao/editadoSaida'){%>
-        <%if(id > 0){%>
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 my-3">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <br>
+        <hr>
+        <% if(req.url == '/administracao/editadoSaida'){%>
+          <%if(id > 0){%>
+            <h4 class="text-center">Salvo com sucesso!</h4>
+            <% } else {%>
+            <h4 class="text-center">Tentativa de saída em horário de aula, advertência registrada!</h4>
+          <% }%>  
+        <% } else {%>
           <h4 class="text-center">Salvo com sucesso!</h4>
-          <% } else {%>
-          <h4 class="text-center">Tentativa de saída em horário de aula, advertência registrada!</h4>
         <% }%>  
-      <% } else {%>
-        <h4 class="text-center">Salvo com sucesso!</h4>
-      <% }%>  
-      <hr>
-      <br>
-      <form action="/administracao/paginainicial" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <input type="text" name="senha" value="123456" hidden>
-        <button class="btn">Voltar</button>
-      </form>
+        <hr>
+        <br>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
-
 <%- include('includes/footer') %>

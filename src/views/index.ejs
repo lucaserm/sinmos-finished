@@ -1,38 +1,15 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 my-3"
-      style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Bem vindo ao <i>Sistema Integrado de Monitoramento e Segurança</i></p>
-      <div class=" my-2" style="display: flex; width: 90%; align-items: center; justify-content: space-around;">
-        <a href="/administracao/login" style="width: 50%; height: 5rem; text-align: center;">
-          <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center;">
-            Acessar Alunos
-          </button>
-        </a>
-        <div class="col-lg-1" style="display: flex; align-self: flex-end; border-left: 1px solid black;"></div>
-
-        <form action="/administracao/paginainicial" method="POST"style="width: 50%;">
-          <div class="form-group">
-            <label>Nome de Acesso</label>
-            <input type="text" class="form-control" name="user">
-            <label>Senha</label>
-            <input type="password" class="form-control" name="senha">
-          </div>
-          <div class="form-group">
-            <a href="/"><p class="text-left lead small">Esqueci minha senha</p></a>
-          </div>
-          <button type="submit" class="btn">Entrar</button>
-        </form>
-      </div>
-      <br>
-      <br>
-      <br>
+<div class="first_part">
+  <div class="container">
+    <div class="title container-fluid">
+    <h2> 
+      <span>SSI</span>
+    </h2>
     </div>
-    <div class="col-lg-2"></div>
+    <div class="text1"><span>Projeto de seguranca para escolas</span></div>
+    <br><br><br>
+    <div class="text2"><a href="/administracao/login"><button type="button" class="btn btn-dark btn-lg buttonIndex">Login</button></a></div>       
   </div>
 </div>
 <%- include('includes/footer') %>

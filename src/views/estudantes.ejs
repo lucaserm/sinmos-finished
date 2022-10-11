@@ -1,77 +1,79 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row" >
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8 my-3">
-      <h1 class="text-center">Estudantes</h1>
-      <p class="text-center lead">Todos os alunos registrados: </p>
-      <% if (estudantes.length > 0){ %>
-      <div>
-      <div class="responsive-table">
-        <table class="table my-3" color>
-          <tr align="center">
-            <td>Id</td><td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
-          </tr>
-          <% estudantes.forEach(estudante => { %>
-          <tr class="vertival-align-center" align="center">
-            <td><%= estudante.id%></td>
-            <td><%= estudante.nome_estudante%></td>
-            <td><%= estudante.cpf%></td>
-            <td><%= estudante.ra%></td>
-            <td><img src="<%= estudante.foto%>" height="60"></td>
-          </tr>
-          <tr>
-            <td colspan="5">
-              <form action="/administracao/editar" method="post">
-                <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
-                <input type="text" name="user" value="<%= user%>" hidden>
-                <button class="btn btn-info" style="margin: 0;">Editar</button>
-              </form></td>
-            </td>
-          </tr>
-          <% }); %>
-        </table>
+<div class="first_part">
+  <div class="container">
+    <div class="row" >
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8 my-3">
+        <h1 class="text-center">Estudantes</h1>
+        <p class="text-center lead">Todos os alunos registrados: </p>
+        <% if (estudantes.length > 0){ %>
+        <div>
+        <div class="responsive-table">
+          <table class="table my-3" color>
+            <tr align="center">
+              <td>Id</td><td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
+            </tr>
+            <% estudantes.forEach(estudante => { %>
+            <tr class="vertival-align-center" align="center">
+              <td><%= estudante.id%></td>
+              <td><%= estudante.nome_estudante%></td>
+              <td><%= estudante.cpf%></td>
+              <td><%= estudante.ra%></td>
+              <td><img src="<%= estudante.foto%>" height="60"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <form action="/administracao/editar" method="post">
+                  <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
+                  <input type="text" name="user" value="<%= user%>" hidden>
+                  <button class="btn button btn-info" style="margin: 0;">Editar</button>
+                </form></td>
+              </td>
+            </tr>
+            <% }); %>
+          </table>
+        </div>
+          <hr style="margin-top: 0;">
+          <p class="text-center lead">Requisições para Liberação</p>
+          <form action="/administracao/requisicoes" method="POST">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="senha" value="123456" hidden>
+            <button class="btn button btn-info small" style="margin: 0;">Ver</button>
+          </form>
+          <hr>
+          <form action="/administracao/horarios" method="POST">
+            <p class="text-center lead">Insira o RA do aluno para ver todos os dados</p>
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
+            <button class="btn button btn-success small" style="margin: 0;">Ver</button>
+          </form>
+          <hr>
+          <form action="/cadastro" method="POST">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <button class="btn button btn-success small" style="margin: 0;">Cadastros</button>
+          </form>
+          <hr>
+          <form action="/">
+            <button class="btn button btn-dark" style="margin: 0;">Voltar</button>
+          </form>
+        </div>
+        <% } else { %>
+          <hr>
+          <p class="text-center lead">Não existem estudantes registrados.</p>
+          <hr>
+          <form action="/cadastro" method="POST">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <button class="btn button btn-success small" style="margin: 0;">Cadastros</button>
+          </form>
+          <hr>
+          <form action="/">
+            <button class="btn button btn-dark" style="margin: 0;">Voltar</button>
+          </form>
+        <% } %>
       </div>
-        <hr>
-        <p class="text-center lead">Requisições para Liberação</p>
-        <form action="/administracao/requisicoes" method="POST">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" name="senha" value="123456" hidden>
-          <button class="btn btn-info small" style="margin: 0;">Ver</button>
-        </form>
-        <hr>
-        <form action="/administracao/horarios" method="POST">
-          <p class="text-center lead">Insira o RA do aluno para ver todos os dados</p>
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
-          <button class="btn btn-success small" style="margin: 0;">Ver</button>
-        </form>
-        <hr>
-        <form action="/cadastro" method="POST">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <button class="btn btn-success small" style="margin: 0;">Cadastros</button>
-        </form>
-        <hr>
-        <form action="/">
-          <button class="btn" style="margin: 0;">Voltar</button>
-        </form>
-      </div>
-      <% } else { %>
-        <hr>
-        <p class="text-center lead">Não existem estudantes registrados.</p>
-        <hr>
-        <form action="/cadastro" method="POST">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <button class="btn btn-success small" style="margin: 0;">Cadastros</button>
-        </form>
-        <hr>
-        <form action="/">
-          <button class="btn" style="margin: 0;">Voltar</button>
-        </form>
-      <% } %>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer');%>

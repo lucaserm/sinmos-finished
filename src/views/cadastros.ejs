@@ -1,47 +1,49 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8 my-3" style="align-items: center; justify-content: center;">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Selecione a opção desejada.</p>
-      <form action="/cadastro/estudante" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Estudante</button>
-      </form>
-      <form action="/cadastro/curso" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Curso</button>
-      </form>
-      <form action="/cadastro/matricula" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Matrícula</button>
-      </form>
-      <form action="/cadastro/disciplina" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Disciplina</button>
-      </form>
-      <form action="/cadastro/horario" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Horário</button>
-      </form>
-      <form action="/cadastro/horarioestudante" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Disciplina ao Estudante</button>
-      </form>
-      <form action="/cadastro/registro" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn btn-success">Registros</button>
-      </form>
-      <form action="/administracao/paginainicial" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <input type="text" name="senha" value="123456" hidden>
-        <button class="btn">Voltar</button>
-      </form>
-      </a>
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8 my-3" style="align-items: center; justify-content: center;">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <p class="text-center lead">Selecione a opção desejada.</p>
+        <form action="/cadastro/estudante" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Estudante</button>
+        </form>
+        <form action="/cadastro/curso" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Curso</button>
+        </form>
+        <form action="/cadastro/matricula" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Matrícula</button>
+        </form>
+        <form action="/cadastro/disciplina" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Disciplina</button>
+        </form>
+        <form action="/cadastro/horario" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Horário</button>
+        </form>
+        <form action="/cadastro/horarioestudante" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Disciplina ao Estudante</button>
+        </form>
+        <form action="/cadastro/registro" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-success">Registros</button>
+        </form>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+        </a>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer') %>

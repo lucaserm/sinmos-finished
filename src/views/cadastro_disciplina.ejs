@@ -1,38 +1,40 @@
 <%- include('includes/head') %>
 <%- include('includes/nav') %>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 my-3">
-      <h1 class="text-center">Sistema Integrado de Segurança</h1>
-      <p class="text-center lead">Registre a Disciplina abaixo.</p>
-      <form action="/cadastro/disciplinasalvo" method="POST">
-        <div class="form-group">
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-10 my-3">
+        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <p class="text-center lead">Registre a Disciplina abaixo.</p>
+        <form action="/cadastro/disciplinasalvo" method="POST">
+          <div class="form-group">
+            <input type="text" name="user" value="<%= user%>" hidden>
+            <label>Curso</label>
+            <select name="select" class="form-control" required>
+              <% cursos.forEach(curso => { %>
+                <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
+              <% }); %>
+            </select>
+            <br>
+            <label>Nome da Disciplina</label>
+            <input type="text" class="form-control" name="nome_disciplina" required autocomplete="off">
+            <label>Turma</label>
+            <input type="text" class="form-control" name="turma" required autocomplete="off">
+            <label>Semestre</label>
+            <input type="text" class="form-control" name="semestre" required autocomplete="off">
+          </div>
+          <button type="submit" class="btn button btn-success">Salvar Disciplina</button>
+          <hr>
+        </form>
+        <form action="/cadastro" method="post">
           <input type="text" name="user" value="<%= user%>" hidden>
-          <label>Curso</label>
-          <select name="select" class="form-control" required>
-            <% cursos.forEach(curso => { %>
-              <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
-            <% }); %>
-          </select>
-          <br>
-          <label>Nome da Disciplina</label>
-          <input type="text" class="form-control" name="nome_disciplina" required autocomplete="off">
-          <label>Turma</label>
-          <input type="text" class="form-control" name="turma" required autocomplete="off">
-          <label>Semestre</label>
-          <input type="text" class="form-control" name="semestre" required autocomplete="off">
-        </div>
-        <button type="submit" class="btn btn-success">Salvar Disciplina</button>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
         <hr>
-      </form>
-      <form action="/cadastro" method="post">
-        <input type="text" name="user" value="<%= user%>" hidden>
-        <button class="btn">Voltar</button>
-      </form>
-      <hr>
+      </div>
+      <div class="col-lg-2"></div>
     </div>
-    <div class="col-lg-2"></div>
   </div>
 </div>
 <%- include('includes/footer') %>

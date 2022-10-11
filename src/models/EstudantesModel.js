@@ -53,9 +53,9 @@ Estudante.buscaEstudantes = async () => {
 Estudante.buscaHorariosPorRA = async (body, filename) => {
   try{
     let ra;
-    filename = '/assets/img/crachas/' + "4d18398471a11594f98b32b27e41a31bbc924739dd7684f8613c519952a98d914ce2be83850c1e9af8c8ba94180761d7faf23b1629df2b1849ef2561fe32b410.jpeg";
+    filename = '/assets/img/crachas/' + filename;
     if(body != 'null'){
-      ra = body.ra;
+      ra = body;
     } else if(body == 'null'){
       // // criar um leitor de código de barras
       // let reader = new BarCodeReader(filename, null, null);
@@ -84,8 +84,25 @@ Estudante.buscaHorariosPorRA = async (body, filename) => {
   }
 }
 
-Estudante.liberacaoPorRA = async (body) => {
+Estudante.liberacaoPorRA = async (body, filename) => {
   try{
+    let ra;
+    filename = '/assets/img/crachas/' + filename;
+    if(body != 'null'){
+      ra = body;
+    } else if(body == 'null'){
+      // // criar um leitor de código de barras
+      // let reader = new BarCodeReader(filename, null, null);
+      // // ler códigos de barras
+      // reader.readBarCodes().forEach(function (result, i, results)
+      // {
+      //     console.log(result.getCodeText());
+      //     console.log("\n");
+      //     console.log(result.getCodeTypeName());
+      // });
+      
+    } 
+
     const estudantes = await client.query(`
     SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM estudantes, horarios, disciplinas, horariosestudantes
@@ -94,7 +111,7 @@ Estudante.liberacaoPorRA = async (body) => {
     AND id_horarios = horarios.id
     AND id_disciplinas = disciplinas.id
     ORDER BY estudantes.id
-    `, [body.ra]);
+    `, [ra]);
     
     const hoje = new Date();
     let status = [estudantes.rows, { aula: 'Estudante sem aula!' }];
@@ -139,17 +156,17 @@ Estudante.liberacaoPorRA = async (body) => {
     ];
 
     estudantes.rows.forEach( estudante => {
-      for(let k = 1; k < 6; k++){
-        for(let i = 0; i < 5;i++){
+        for(let i = 1; i < 6; i++){
           for(let j = 0; j <= 2; j++){
             //Define dia da semana
-            if(hoje.getDay() == k && estudante.dia_semana == diaSemana[i]){
+            if(hoje.getDay() == i && estudante.dia_semana == diaSemana[i-1]){
               //Periodo, matutino, vespertino, noturno
               if(estudante.periodo_horarios == periodo[j]){
-                //horaAtual - periodo, hora que a aula termina e horaAtual >= hora que aula começa
-                if(hoje.getHours() - listas[j][estudante.tempo_fim-1].hora <= 0 && hoje.getHours() >= listas[j][estudante.tempo_inicio-1].hora){
+                //horaAtual <= hora que aula termina, hora que a aula termina e horaAtual >= hora que aula começa
+                if(hoje.getHours() <= listas[j][estudante.tempo_fim-1].hora && hoje.getHours() >= listas[j][estudante.tempo_inicio-1].hora){
                   // hora igual a hora que começa
                   if(hoje.getHours() == listas[j][estudante.tempo_inicio-1].hora){
+                    //verifica os minutos
                     if(hoje.getMinutes() > listas[j][estudante.tempo_fim-1].minuto){
                       status = [estudantes.rows, { aula: 'Estudante em aula!' }];
                     }
@@ -158,7 +175,7 @@ Estudante.liberacaoPorRA = async (body) => {
                   status = [estudantes.rows, { aula: 'Estudante em aula!' }];
                 }
               }
-            }
+
           }
         } 
       }

@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&display=swap');
 
 :root {
   --primary-color: crimson;
-  --primary-color-darker: #441D2A;
-  --neutro: #220E15;
+  --primary-color-darker: #441d2a;
+  --neutro: #220e15;
+  --paleta4: #662b3f;
+  --paleta5: #ee6695;
+  --paleta6: #b64e73;
 }
 
 * {
@@ -14,8 +17,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: var(--primary-color-darker);
-  font-family: 'Open sans', sans-serif;
+  font-family: "Lexend Deca", sans-serif;
   font-size: 1em;
   line-height: 1.5em;
 }
@@ -23,7 +25,7 @@ body {
 .container {
   max-width: 70%;
   margin: 50px auto;
-  background: #fff;
+  /* background: #fff; */
   padding: 10px;
   border-radius: 10px;
 }
@@ -46,16 +48,20 @@ form input:focus {
   outline: 1px solid var(--primary-color);
 }
 
-button {
+.button {
   color: #ffffff;
-  background-color: var(--primary-color-darker);
-  height: 5rem;
+  height: 3rem;
   cursor: pointer;
 }
 
-button:hover {
-  color: #FFFFFF;
-  background-color: var(--neutro);
+.btn-light {
+  color: #ffffff;
+  background-color: var(--paleta5);
+}
+
+.btn-light:hover {
+  color: #ffffff;
+  background-color: var(--paleta6);
 }
 
 .responsive-table {
@@ -66,6 +72,7 @@ button:hover {
 table {
   border-collapse: collapse;
   width: 100%;
+  color: white;
 }
 
 table th {
@@ -76,4 +83,159 @@ table td,
 table th {
   padding: 1rem;
   text-align: center;
+}
+
+.text1 {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.text2 {
+  margin-top: 2.5%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.buttonIndex {
+  padding: 2rem 10rem;
+  background: linear-gradient(
+    135deg,
+    rgb(51, 133, 255) 0%,
+    rgb(48, 79, 255) 0.01%,
+    rgb(102, 207, 255) 100%
+  );
+  color: #fff;
+  text-align: center;
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.title h2 {
+  display: flex;
+  font-size: 1 em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+.title h2 span {
+  font-weight: 50;
+  line-height: 1em;
+  font-size: 5rem;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: center;
+  color: rgb(207, 217, 221);
+}
+
+.navbar {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-brand {
+  margin: 0;
+}
+
+.cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  gap: 1rem;
+}
+
+.me-2 {
+  margin: 0 !important;
+}
+
+/* rodape*/
+
+#footer {
+  background: rgba(0, 0, 0, 1);
+  color: white;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#footer .footer-content {
+  width: 100%;
+}
+
+#footer .footer-content .footer-menu p {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #919496;
+  font-size: 0.8rem;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+.socials i {
+  margin: 0 1rem;
+  font-size: 1.7rem;
+  transition: all 300ms ease;
+}
+
+.footer-info {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  font-weight: bold;
+  color: #919496;
+  font-size: 1rem;
+  padding-top: 0.5rem;
+}
+
+.footer-info .footer-info-items {
+  display: flex;
+  list-style: none;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.footer-info .footer-info-items .footer-info-item {
+  margin: 0 0.5rem;
+}
+
+.footer-info .footer-info-items .footer-info-item:hover {
+  cursor: pointer;
+}
+
+.img_footer {
+  width: 25%;
+}
+
+.footer_copy {
+  margin-top: 1%;
 }
