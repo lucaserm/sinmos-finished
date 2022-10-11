@@ -8,16 +8,16 @@ const administracaoController = require('./src/controllers/administracaoControll
 //Rota da home 
 route.get('/', homesController.paginaInicial);
 //Qual cadastro
-route.get('/cadastro', cadastroController.cadastros);
+route.post('/cadastro', cadastroController.cadastros);
 // Cadastros
-route.get('/cadastro/curso', cadastroController.cadastroCurso);
-route.get('/cadastro/matricula', cadastroController.cadastroMatricula);
-route.get('/cadastro/disciplina', cadastroController.cadastroDisciplina);
-route.get('/cadastro/horario', cadastroController.cadastroHorario);
-route.get('/cadastro/estudante', cadastroController.cadastroEstudante);
-route.get('/cadastro/responsavel', cadastroController.cadastroResponsavel);
-route.get('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstudante);
-route.get('/cadastro/registro', cadastroController.cadastroRegistro);
+route.post('/cadastro/curso', cadastroController.cadastroCurso);
+route.post('/cadastro/matricula', cadastroController.cadastroMatricula);
+route.post('/cadastro/disciplina', cadastroController.cadastroDisciplina);
+route.post('/cadastro/horario', cadastroController.cadastroHorario);
+route.post('/cadastro/estudante', cadastroController.cadastroEstudante);
+route.post('/cadastro/responsavel', cadastroController.cadastroResponsavel);
+route.post('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstudante);
+route.post('/cadastro/registro', cadastroController.cadastroRegistro);
 //Salvando
 route.post('/cadastro/cursosalvo', cadastroController.trataPost);
 route.post('/cadastro/disciplinasalvo', cadastroController.trataPost);

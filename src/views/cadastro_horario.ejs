@@ -8,6 +8,7 @@
       <p class="text-center lead">Registre o Horário da Disciplina abaixo.</p>
       <form action="/cadastro/horariosalvo" method="POST">
         <div class="form-group">
+          <input type="text" name="user" value="<%= user%>" hidden>
           <label>Disciplina</label>
           <select name="id_disciplinas" class="form-control" required>
             <% disciplinas.forEach(disciplina => { %>
@@ -54,7 +55,8 @@
         <button type="submit" class="btn btn-success">Salvar Horário</button>
         <hr>
       </form>
-      <form action="/cadastro">
+      <form action="/cadastro" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
         <button class="btn">Voltar</button>
       </form>
       <hr>

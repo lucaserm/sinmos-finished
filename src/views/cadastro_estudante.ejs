@@ -10,6 +10,7 @@
       <p class="text-center lead">Registre o Estudante abaixo.</p>
       <form action="/cadastro/estudantesalvo" method="POST" enctype="multipart/form-data">
         <div class="form-group">
+          <input type="text" name="user" value="<%= user%>" hidden>
           <label>Responsável</label>
           <select name="id_responsaveis" class="form-control" required>
             <% responsaveis.forEach(responsavel=> { %>
@@ -35,7 +36,8 @@
         </div>
         <hr>
       </form>
-      <form action="/cadastro">
+      <form action="/cadastro" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
         <button class="btn">Voltar</button>
       </form>
       <hr>

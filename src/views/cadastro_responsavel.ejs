@@ -8,6 +8,7 @@
       <p class="text-center lead">Registre o Responsável abaixo.</p>
       <form action="/cadastro/responsavelsalvo" method="POST">
         <div class="form-group">
+          <input type="text" name="user" value="<%= user%>" hidden>
           <label>Nome do Responsável</label>
           <input type="text" class="form-control" name="nome_responsavel" required autocomplete="off">
           <label>Email do Responsável</label>
@@ -18,7 +19,8 @@
         </div>
         <hr>
       </form>
-      <form action="/cadastro">
+      <form action="/cadastro" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
         <button class="btn">Voltar</button>
       </form>
       <hr>

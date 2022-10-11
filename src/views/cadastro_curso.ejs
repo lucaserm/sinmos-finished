@@ -8,6 +8,7 @@
       <p class="text-center lead">Registre o curso abaixo.</p>
       <form action="/cadastro/cursosalvo" method="POST">
         <div class="form-group">
+          <input type="text" name="user" value="<%= user%>" hidden>
           <label>Nome do Curso</label>
           <input type="text" class="form-control" name="nome_curso" required>
           <label>Período</label>
@@ -21,7 +22,8 @@
         <hr>
       </form>
       <hr>
-      <form action="/cadastro">
+      <form action="/cadastro" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
         <button class="btn">Voltar</button>
       </form>
     </div>

@@ -51,7 +51,6 @@ button {
   background-color: var(--primary-color-darker);
   height: 5rem;
   cursor: pointer;
-  margin-top: 3rem;
 }
 
 button:hover {

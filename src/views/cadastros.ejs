@@ -6,46 +6,39 @@
     <div class="col-lg-8 my-3" style="align-items: center; justify-content: center;">
       <h1 class="text-center">Sistema Integrado de Segurança</h1>
       <p class="text-center lead">Selecione a opção desejada.</p>
-      <a href="/cadastro/estudante" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;" >
-          Estudante
-        </button>
-      </a>
-      <a href="/cadastro/curso" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;" >
-          Curso
-        </button>
-      </a>
-      <a href="/cadastro/matricula" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;" >
-          Matrícula
-        </button>
-      </a>
-      <a href="/cadastro/disciplina" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;" >
-          Disciplina
-        </button>
-      </a>
-      <a href="/cadastro/horario" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;" >
-          Horário
-        </button>
-      </a>
-        <a href="/cadastro/horarioestudante" style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;">
-          Disciplina ao Estudante
-        </button>
-      </a>
-        <a href="/cadastro/registro"style="width: 70%; height: 4rem; text-align: center;">
-        <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center; margin: 1rem 0 0 0;">
-          Registros
-        </button>
-      </a>
-        <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="coordenacao" hidden>
-          <input type="text" name="senha" value="123456" hidden>
-          <button class="btn btn-success">Voltar</button>
-        </form>
+      <form action="/cadastro/estudante" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Estudante</button>
+      </form>
+      <form action="/cadastro/curso" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Curso</button>
+      </form>
+      <form action="/cadastro/matricula" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Matrícula</button>
+      </form>
+      <form action="/cadastro/disciplina" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Disciplina</button>
+      </form>
+      <form action="/cadastro/horario" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Horário</button>
+      </form>
+      <form action="/cadastro/horarioestudante" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Disciplina ao Estudante</button>
+      </form>
+      <form action="/cadastro/registro" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn btn-success">Registros</button>
+      </form>
+      <form action="/administracao/paginainicial" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <input type="text" name="senha" value="123456" hidden>
+        <button class="btn">Voltar</button>
+      </form>
       </a>
     </div>
     <div class="col-lg-2"></div>
