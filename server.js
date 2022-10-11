@@ -1,4 +1,5 @@
 require('dotenv').config();
+// set NODE_OPTIONS=--openssl-legacy-provider
 const express = require('express');
 const app = express();
 const { Client, Pool } = require('pg');
@@ -16,15 +17,12 @@ client.connect()
         app.emit('Pronto.');
     })
     .catch(e => console.log(e));
-const flash = require('connect-flash');
 const routes = require('./routes');
 const path = require('path');
 const { middlewareGlobal } = require('./src/middlewares/middleware');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, 'public')));
-
-app.use(flash());
 
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
@@ -34,7 +32,9 @@ app.use(routes);
 
 app.on('Pronto.', () => {
     app.listen(process.env.PORT || 3000, () => {
-        console.log('Acessar em https://localhost:3000');
+        console.log('Acessar em https://localhost:3000/');
+        console.log('Acessar em https://192.168.100.13:3000/');
+
         console.log('Servidor rodando na porta 3000');
     });
 });

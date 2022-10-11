@@ -1,4 +1,4 @@
-const client = require("../../server")
+const client = require("../../server");
 
 function Estudante(body){
   this.body = body;
@@ -50,8 +50,25 @@ Estudante.buscaEstudantes = async () => {
   }
 }
 
-Estudante.buscaHorariosPorRA = async (body) => {
+Estudante.buscaHorariosPorRA = async (body, filename) => {
   try{
+    let ra;
+    filename = '/assets/img/crachas/' + "4d18398471a11594f98b32b27e41a31bbc924739dd7684f8613c519952a98d914ce2be83850c1e9af8c8ba94180761d7faf23b1629df2b1849ef2561fe32b410.jpeg";
+    if(body != 'null'){
+      ra = body.ra;
+    } else if(body == 'null'){
+      // // criar um leitor de código de barras
+      // let reader = new BarCodeReader(filename, null, null);
+      // // ler códigos de barras
+      // reader.readBarCodes().forEach(function (result, i, results)
+      // {
+      //     console.log(result.getCodeText());
+      //     console.log("\n");
+      //     console.log(result.getCodeTypeName());
+      // });
+      
+    } 
+
     const estudantes = await client.query(`
     SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM estudantes, horarios, disciplinas, horariosestudantes
@@ -60,7 +77,7 @@ Estudante.buscaHorariosPorRA = async (body) => {
     AND id_horarios = horarios.id
     AND id_disciplinas = disciplinas.id
     ORDER BY estudantes.id
-    `, [body.ra]);
+    `, [ra]);
     return estudantes.rows;
   }catch(e){
     console.log(`Houve um erro ${e}`)

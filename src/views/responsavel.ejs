@@ -25,7 +25,9 @@
           <% }) %>
           <tr><td></td><td></td><td></td></tr>
         </table>
-        <%} else if(advertencias.length > 0) {%>
+        </div>
+        <%}
+        if(advertencias.length > 0) {%>
         <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">
           Advertências
         </p>
@@ -45,17 +47,21 @@
           <% }); %>
           <tr><td></td><td></td><td></td></tr>
         </table>
+      </div>
         <form action="/administracao/horarios" method="post">
           <input type="text" name="ra" value="<%= responsaveis[1]%>" hidden>
-          <button class="btn btn-dark">Voltar</button>
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn">Voltar</button>
         </form>
       </div>
       <% } else { %>
       <hr />
-      <p class="text-center lead">Não existem responsáveis nos seus dados.</p>
+      <p class="text-center lead">Não existem advertências nos seus dados.</p>
       <hr />
-      <form action="/">
-        <button class="btn btn-dark">Voltar</button>
+      <form action="/administracao/horarios" method="post">
+        <input type="text" name="ra" value="<%= responsaveis[1]%>" hidden>
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <button class="btn">Voltar</button>
       </form>
       <% } %>
     </div>

@@ -2,8 +2,8 @@
 
 :root {
   --primary-color: crimson;
-  --primary-color-darker: rgb(9, 48, 56);
-  --neutro: rgb(0,0,0, 0.5);
+  --primary-color-darker: #441D2A;
+  --neutro: #220E15;
 }
 
 * {
@@ -47,16 +47,34 @@ form input:focus {
 }
 
 button {
-  border: none;
-  background-color: var(--neutro);
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  height: 50px;
+  color: #ffffff;
+  background-color: var(--primary-color-darker);
+  height: 5rem;
   cursor: pointer;
-  margin-top: 30px;
+  margin-top: 3rem;
 }
 
 button:hover {
-  background: var(--primary-color-darker);
+  color: #FFFFFF;
+  background-color: var(--neutro);
+}
+
+.responsive-table {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th {
+  background: #eee;
+}
+
+table td,
+table th {
+  padding: 1rem;
+  text-align: center;
 }

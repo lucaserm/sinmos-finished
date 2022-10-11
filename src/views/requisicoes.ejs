@@ -10,15 +10,12 @@
       <div class="responsive-table">
         <table class="table my-3">
           <tr align="center">
-            <td>Id</td><td>Nome</td><td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
+            <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
           </tr>
           <% registros[0].forEach(registro => { %>
           <tr align="center">
-
-            <td><%= registro.id%></td>
-            <td><%= registro.nome_estudante%></td>
             <td><%= registro.ra%></td>
-            <td><img src="<%= registro.foto%>" width="100"></td>
+            <td><img src="<%= registro.foto%>" width="70"></td>
             <td><%= registro.descricao%></td>
             <td><%= registro.dia_liberacao%></td>
           </tr>
@@ -28,16 +25,19 @@
               <form action="/administracao/editarSaidaEstudantes" method="post">
                 <input type="text" name="ra" value="<%= registro.ra%>" hidden>
                 <input type="text" name="id" value="<%= registro.id%>" hidden>
+                <input type="text" name="user" value="<%= user%>" hidden>
                 <button class="btn btn-info" style="margin: 0;">Liberar Estudante</button>
-              </form></td>
+              </form>
             </td>
           </tr>
           <% }%>
           <% }); %>
         </table>
         <hr>
-        <form action="/">
-          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn">Voltar</button>
         </form>
       </div>
       <% } else { %>
@@ -50,8 +50,10 @@
           </button>
         </a>
         <hr>
-        <form action="/">
-          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn">Voltar</button>
         </form>
       <% } %>
     </div>

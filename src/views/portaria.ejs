@@ -9,18 +9,19 @@
         <p class="text-center lead">Insira o RA do aluno que deseja verificar:</p>
         <form action="/administracao/editarSaidaEstudantes" method="POST">
           <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
+          <input type="text" class="form-control" name="user" value="<%= user%>" hidden/>
           <button class="btn btn-success small" style="margin: 0;">Ver</button>
         </form>
         <hr>
         <p class="text-center lead">Requisições para Liberação</p>
         <form action="/administracao/requisicoes" method="POST">
-          <input type="text" name="nome_acesso" value="portaria" hidden>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="senha" value="123456" hidden>
           <button class="btn btn-info small" style="margin: 0;">Ver</button>
         </form>
         <hr>
         <form action="/administracao/login">
-          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+          <button class="btn" style="margin: 0;">Voltar</button>
         </form>
       </div>
     </div>

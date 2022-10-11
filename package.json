@@ -28,7 +28,8 @@
     "nodemailer": "^6.8.0",
     "pg": "^8.7.3",
     "regenerator-runtime": "^0.13.5",
-    "style-loader": "^1.2.1"
+    "style-loader": "^1.2.1",
+    "webrtc-adapter": "^8.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",

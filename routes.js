@@ -1,19 +1,5 @@
 const express = require('express');
 const multer = require('multer');
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/assets/img')
-    },
-    filename: function (req, file, cb) {
-        const extensaoArquivo = file.originalname.split('.')[1];
-        const novoNomeArquivo = require('crypto')
-            .randomBytes(64)
-            .toString('hex');
-        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
-    }
-});
-
-const upload = multer({ storage });
 const route = express.Router();
 const homesController = require('./src/controllers/homesController');
 const cadastroController = require('./src/controllers/cadastroController'); 
@@ -37,6 +23,23 @@ route.post('/cadastro/cursosalvo', cadastroController.trataPost);
 route.post('/cadastro/disciplinasalvo', cadastroController.trataPost);
 route.post('/cadastro/horariosalvo', cadastroController.trataPost);
 route.post('/cadastro/matriculasalvo', cadastroController.trataPost);
+// Configuração de armazenamento de imagens
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/assets/img/')
+    },
+    filename: function (req, file, cb) {
+        // Extração da extensão do arquivo original:
+        const extensaoArquivo = file.originalname.split('.')[1];
+        // Cria um código randômico que será o nome do arquivo
+        const novoNomeArquivo = require('crypto')
+            .randomBytes(64)
+            .toString('hex');
+        // Indica o novo nome do arquivo:
+        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+    }
+});
+let upload = multer({ storage });
 route.post('/cadastro/estudantesalvo', upload.single('avatar'), cadastroController.trataPost);
 route.post('/cadastro/responsavelsalvo', cadastroController.trataPost);
 route.post('/cadastro/horarioestudantesalvo', cadastroController.trataPost);
@@ -47,7 +50,24 @@ route.post('/cadastro/registrosalvo', cadastroController.trataPost);
 route.get('/administracao/login', administracaoController.login);
 //Horários de todos os alunos cadastrados
 route.post('/administracao/paginainicial', administracaoController.paginaAdm);
-route.post('/administracao/horarios', administracaoController.horarios);
+// Configuração de armazenamento de imagens
+storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/assets/img/crachas/')
+    },
+    filename: function (req, file, cb) {
+        // Extração da extensão do arquivo original:
+        const extensaoArquivo = file.originalname.split('.')[1];
+        // Cria um código randômico que será o nome do arquivo
+        const novoNomeArquivo = require('crypto')
+            .randomBytes(64)
+            .toString('hex');
+        // Indica o novo nome do arquivo:
+        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+    }
+});
+upload = multer({ storage });
+route.post('/administracao/horarios', upload.single('avatar'), administracaoController.horarios);
 route.post('/administracao/requisicoes', administracaoController.requisicoes);
 route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editar', administracaoController.editar);

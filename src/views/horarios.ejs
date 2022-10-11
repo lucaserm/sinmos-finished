@@ -20,24 +20,28 @@
           </tr>
           <% }); %>
         </table>
-        <hr>
+      </div>
+      <hr>
         <form action="/administracao/responsavel" method="POST">
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="ra" value="<%= ra%>" hidden>
           <button class="btn btn-danger" style="margin:0">Advertências</button>
         </form>
         <hr>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="nome_acesso" value="root" hidden>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="senha" value="123456" hidden>
-          <button class="btn btn-dark">Voltar</button>
+          <button class="btn">Voltar</button>
         </form>
       </div>
       <% } else { %>
         <hr>
-        <p class="text-center lead">Não existem horários registrados à esse aluno.</p>
+        <p class="text-center lead">Não existem horários registrados à esse aluno ou insira um aluno válido.</p>
         <hr>
-        <form action="/">
-          <button class="btn btn-dark">Voltar</button>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="senha" value="123456" hidden>
+          <button class="btn">Voltar</button>
         </form>
       <% } %>
     </div>

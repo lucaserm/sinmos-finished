@@ -11,6 +11,7 @@
       <form action="/administracao/editadoSaida" method="POST">
         <div class="form-group">
           <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <label>Nome do Estudante</label>
           <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
           <label>CPF</label>
@@ -18,7 +19,7 @@
           <label>RA</label>
           <input type="text" class="form-control" name="ra" value="<%= estudantes[0][0].ra%>" autocomplete="off" disabled>
           <div align="center">
-            <img src="<%=estudantes[0][0].foto%>" height="300">
+            <img src="<%=estudantes[0][0].foto%>" height="200">
           </div>
           <% if(estudantes[1].aula == 'Estudante em aula!'){%>
             <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
@@ -36,18 +37,18 @@
         </div>
       </form>
       <form action="/administracao/paginainicial" method="post">
-        <input type="text" name="nome_acesso" value="portaria" hidden>
+        <input type="text" name="user" value="<%= user%>" hidden>
         <input type="text" name="senha" value="123456" hidden>
-        <button class="btn btn-dark">Voltar</button>
+        <button class="btn">Voltar</button>
       </form>
       <% } else { %>
         <hr>
         <p class="text-center lead">Não existe estudante com esse RA.</p>
         <hr>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="nome_acesso" value="portaria" hidden>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="senha" value="123456" hidden>
-          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+          <button class="btn">Voltar</button>
         </form>
       <% } %>
     </div>

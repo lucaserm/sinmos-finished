@@ -18,7 +18,9 @@
       <% }%>  
       <hr>
       <br>
-      <form action="/">
+      <form action="/administracao/paginainicial" method="post">
+        <input type="text" name="user" value="<%= user%>" hidden>
+        <input type="text" name="senha" value="123456" hidden>
         <button class="btn">Voltar</button>
       </form>
     </div>

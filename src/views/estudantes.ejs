@@ -10,19 +10,22 @@
       <div>
       <div class="responsive-table">
         <table class="table my-3" color>
-          <tr>
-            <td>Id</td><td>Nome</td><td>RA</td><td>CPF</td><td>Foto</td>
+          <tr align="center">
+            <td>Id</td><td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
           </tr>
           <% estudantes.forEach(estudante => { %>
-          <tr class="vertival-align-center">
-            <td><%= estudante.id%></td><td><%= estudante.nome_estudante%></td>
-            <td><%= estudante.ra%></td><td><%= estudante.cpf%></td>
-            <td><img src="<%= estudante.foto%>" height="100"></td>
+          <tr class="vertival-align-center" align="center">
+            <td><%= estudante.id%></td>
+            <td><%= estudante.nome_estudante%></td>
+            <td><%= estudante.cpf%></td>
+            <td><%= estudante.ra%></td>
+            <td><img src="<%= estudante.foto%>" height="60"></td>
           </tr>
           <tr>
             <td colspan="5">
               <form action="/administracao/editar" method="post">
                 <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
+                <input type="text" name="user" value="<%= user%>" hidden>
                 <button class="btn btn-info" style="margin: 0;">Editar</button>
               </form></td>
             </td>
@@ -33,15 +36,17 @@
         <hr>
         <p class="text-center lead">Requisições para Liberação</p>
         <form action="/administracao/requisicoes" method="POST">
-          <input type="text" name="nome_acesso" value="portaria" hidden>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="senha" value="123456" hidden>
           <button class="btn btn-info small" style="margin: 0;">Ver</button>
         </form>
         <hr>
         <form action="/administracao/horarios" method="POST">
           <p class="text-center lead">Insira o RA do aluno para ver todos os dados</p>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
           <button class="btn btn-success small" style="margin: 0;">Ver</button>
+          <div id="camera"></div>
         </form>
         <hr>
         <a href="/cadastro" style="width: 70%; height: 4rem; text-align: center;">
@@ -51,7 +56,7 @@
         </a>
         <hr>
         <form action="/">
-          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+          <button class="btn" style="margin: 0;">Voltar</button>
         </form>
       </div>
       <% } else { %>
@@ -59,13 +64,13 @@
         <p class="text-center lead">Não existem estudantes registrados.</p>
         <hr>
         <a href="/cadastro" style="width: 70%; height: 4rem; text-align: center;">
-          <button type="submit" class="btn btn-dark"  style="width: 100%; height: 5rem; text-align: center;" >
+          <button type="submit" class="btn"  style="width: 100%; height: 5rem; text-align: center;" >
             Cadastros
           </button>
         </a>
         <hr>
         <form action="/">
-          <button class="btn btn-dark" style="margin: 0;">Voltar</button>
+          <button class="btn" style="margin: 0;">Voltar</button>
         </form>
       <% } %>
     </div>
