@@ -74,5 +74,6 @@ upload = multer({ storage });
 route.post('/administracao/editarSaidaEstudantes', upload.single('avatar'), administracaoController.editarSaidaEstudante);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
+route.post('/administracao/deleteAdvertencia', administracaoController.trataEditado);
 
 module.exports = route;

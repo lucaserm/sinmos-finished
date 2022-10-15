@@ -5,8 +5,14 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
-        <p class="text-center lead">Registre o Estudante abaixo.</p>
+        <h1 class="text-center">Registre o Estudante</h1>
+        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <label>Não achou seu responsável? Cadastre aqui</label>
+        <form action="/cadastro/responsavel" method="post">
+          <input type="text" name="user" value="<%= user%>" hidden>
+          <button class="btn button btn-info">Cadastrar Responsável</button>
+        </form>
+        <br>
         <form action="/cadastro/estudantesalvo" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <input type="text" name="user" value="<%= user%>" hidden>
@@ -17,18 +23,14 @@
               <% }); %>
             </select>
             <br>
-            <label>Não achou seu responsável? Cadastre aqui</label>
-            <a href="/cadastro/responsavel" class="btn btn-info" style="margin-top: 0;">Cadastrar Responsável</a>
-            <br>
-            <br>
             <label>Nome do Estudante</label>
-            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" required>
+            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" placeholder="Nome Completo" required>
             <label>Email Institucional</label>
-            <input type="email" class="form-control" name="email_institucional" autocomplete="off" required>
+            <input type="email" class="form-control" name="email_institucional" autocomplete="off" placeholder="Ex.: nome.sobrenome@estudante.ifms.edu.br" required>
             <label>CPF</label>
-            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" placeholder="000.000.000-00" autocomplete="off" required>
+            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" placeholder="Ex.: 000.000.000-00" autocomplete="off" required>
             <label>RA</label>
-            <input type="text" class="form-control" name="ra" autocomplete="off" required>
+            <input type="text" class="form-control" name="ra" autocomplete="off" placeholder="Ex.: 123456" required>
             <label>Foto</label>
             <input type="file" name="avatar" class="form-control" required>
             <button type="submit" class="btn button btn-success">Salvar Estudante</button>

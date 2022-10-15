@@ -5,13 +5,13 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
-        <p class="text-center lead">Registre o curso abaixo.</p>
+        <h1 class="text-center">Registre o Curso</h1>
+        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <form action="/cadastro/cursosalvo" method="POST">
           <div class="form-group">
             <input type="text" name="user" value="<%= user%>" hidden>
             <label>Nome do Curso</label>
-            <input type="text" class="form-control" name="nome_curso" required>
+            <input type="text" class="form-control" name="nome_curso" placeholder="Ex.: Técnico em Informática" required>
             <label>Período</label>
             <select name="periodo" class="form-control select" required>
               <option value="Matutino">Matutino</option>

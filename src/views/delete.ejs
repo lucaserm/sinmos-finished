@@ -8,21 +8,18 @@
         <h1 class="text-center">Sistema Integrado de Monitoramento e Segurança</h1>
         <br>
         <hr>
-        <%if(id > 0){%>
-          <h4 class="text-center">Salvo com sucesso!</h4>
-          <% } else {%>
-          <h4 class="text-center">Tentativa de saída em horário de aula, advertência registrada!</h4>
-        <% }%>  
+        <h4 class="text-center">Deletado com sucesso!</h4>
         <hr>
-        <br> 
+        <br>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="portaria" hidden>
+          <input type="text" name="user" value="<%= user%>" hidden>
           <input type="text" name="senha" value="123456" hidden>
           <button class="btn button btn-dark">Voltar</button>
-        </form> 
+        </form>
       </div>
       <div class="col-lg-2"></div>
     </div>
   </div>
 </div>
+
 <%- include('includes/footer') %>

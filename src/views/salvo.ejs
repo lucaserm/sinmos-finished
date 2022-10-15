@@ -5,18 +5,10 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <h1 class="text-center">Sistema Integrado de Monitoramento e Segurança</h1>
         <br>
         <hr>
-        <% if(req.url == '/administracao/editadoSaida'){%>
-          <%if(id > 0){%>
-            <h4 class="text-center">Salvo com sucesso!</h4>
-            <% } else {%>
-            <h4 class="text-center">Tentativa de saída em horário de aula, advertência registrada!</h4>
-          <% }%>  
-        <% } else {%>
-          <h4 class="text-center">Salvo com sucesso!</h4>
-        <% }%>  
+        <h4 class="text-center">Salvo com sucesso!</h4>
         <hr>
         <br>
         <form action="/cadastro" method="post">

@@ -162,8 +162,8 @@ Estudante.liberacaoPorRA = async (body, filename) => {
             if(hoje.getDay() == i && estudante.dia_semana == diaSemana[i-1]){
               //Periodo, matutino, vespertino, noturno
               if(estudante.periodo_horarios == periodo[j]){
-                //horaAtual <= hora que aula termina, hora que a aula termina e horaAtual >= hora que aula começa
-                if(hoje.getHours() <= listas[j][estudante.tempo_fim-1].hora && hoje.getHours() >= listas[j][estudante.tempo_inicio-1].hora){
+                //horaAtual >= hora que aula termina, e horaAtual >= hora que aula começa
+                if(hoje.getHours() >= listas[j][estudante.tempo_fim-1].hora && hoje.getHours() >= listas[j][estudante.tempo_inicio-1].hora){
                   // hora igual a hora que começa
                   if(hoje.getHours() == listas[j][estudante.tempo_inicio-1].hora){
                     //verifica os minutos

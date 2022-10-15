@@ -1,5 +1,5 @@
 require('dotenv').config();
-// set NODE_OPTIONS=--openssl-legacy-provider
+// 
 const express = require('express');
 const app = express();
 const { Client, Pool } = require('pg');

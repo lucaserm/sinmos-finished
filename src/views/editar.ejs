@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <h1 class="text-center">Editar Estudante</h1>
         <p class="text-center lead">Altere o Estudante abaixo.</p>
         <form action="/administracao/editadoEstudante" method="POST">
           <div class="form-group ">
@@ -20,6 +20,7 @@
               <img src="<%= estudantes[0].foto%>" height="200" class="lead">
             </div>
             <input type="text" class="form-control" name="ra2" value="<%= estudantes[0].ra%>" autocomplete="off" hidden>
+            <br>
             <button type="submit" class="btn button btn-success">Salvar Estudante</button>
           </div>
           <hr>

@@ -38,6 +38,7 @@
                 <td>Descrição</td>
                 <td>Data da Advertência</td>
                 <td>Enviar</td>
+                <td>Excluir</td>
               </tr>
               <% advertencias.forEach(advertencia => { %>
               <tr>
@@ -48,9 +49,16 @@
                     Enviar Advertência ao Responsável
                   </a>
                 </td>
+                <td>
+                  <form action="/administracao/deleteAdvertencia" method="post">
+                    <input type="text" name="id" value="<%= advertencia.id%>" hidden>
+                    <input type="text" name="user" value="<%= user%>" hidden>
+                    <button class="btn button btn-danger">Excluir</button>
+                  </form>
+                </td>
               </tr>
               <% }); %>
-              <tr><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td></tr>
             </table>
           </div>
           <form action="/administracao/horarios" method="post">

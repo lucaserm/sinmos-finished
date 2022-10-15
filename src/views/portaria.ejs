@@ -5,11 +5,11 @@
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
-        <h1 class="text-center">Estudantes</h1>
+        <h1 class="text-center">Portaria</h1>
         <div class="responsive-table">
           <p class="text-center lead">Insira o RA do aluno que deseja verificar:</p>
           <form action="/administracao/editarSaidaEstudantes" method="POST">
-            <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" required>
+            <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" placeholder="Ex.: 123456" required>
             <input type="text" class="form-control" name="user" value="<%= user%>" hidden/>
             <button class="btn button btn-success small" style="margin: 0;">Ver</button>
           </form>

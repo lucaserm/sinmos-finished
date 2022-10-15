@@ -58,6 +58,11 @@ exports.trataEditado = async(req, res) => {
         Estudante.update(req.body);
     }else if(req.url == '/administracao/editadoSaida'){
         Registro.update(req.body);
+    }else if(req.url == '/administracao/deleteAdvertencia'){
+        Advertencia.deletePorRA(req.body);
+        const id = req.body.id;
+        const user = req.body.user; 
+        return res.render('delete', { req, id, user })
     }
     const id = req.body.id;
     const user = req.body.user; 

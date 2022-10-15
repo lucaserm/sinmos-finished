@@ -5,22 +5,23 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
-        <p class="text-center lead">Registre o Responsável abaixo.</p>
+        <h1 class="text-center">Registre um Responsável</h1>
+        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <form action="/cadastro/responsavelsalvo" method="POST">
           <div class="form-group">
             <input type="text" name="user" value="<%= user%>" hidden>
             <label>Nome do Responsável</label>
-            <input type="text" class="form-control" name="nome_responsavel" required autocomplete="off">
+            <input type="text" class="form-control" name="nome_responsavel" placeholder="Nome Completo" required autocomplete="off">
             <label>Email do Responsável</label>
-            <input type="email" class="form-control" name="email_responsavel" required autocomplete="off">
+            <input type="email" class="form-control" name="email_responsavel" placeholder="Ex.: responsavel@gmail.com" required autocomplete="off">
             <label>Telefone do Responsável</label>
-            <input type="tel" class="form-control" name="telefone_responsavel" required autocomplete="off">
+            <input type="tel" class="form-control" name="telefone_responsavel" placeholder="Ex.: (67)90000-0000" required autocomplete="off">
+            <br>
             <button type="submit" class="btn button btn-success">Salvar Responsável</button>
           </div>
           <hr>
         </form>
-        <form action="/cadastro" method="post">
+        <form action="/cadastro/estudante" method="post">
           <input type="text" name="user" value="<%= user%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>

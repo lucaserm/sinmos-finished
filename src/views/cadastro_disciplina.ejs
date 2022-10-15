@@ -5,8 +5,8 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
-        <p class="text-center lead">Registre a Disciplina abaixo.</p>
+        <h1 class="text-center">Registre a Disciplina</h1>
+        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <form action="/cadastro/disciplinasalvo" method="POST">
           <div class="form-group">
             <input type="text" name="user" value="<%= user%>" hidden>
@@ -18,11 +18,11 @@
             </select>
             <br>
             <label>Nome da Disciplina</label>
-            <input type="text" class="form-control" name="nome_disciplina" required autocomplete="off">
+            <input type="text" class="form-control" name="nome_disciplina" placeholder="Ex.: Matemática" required autocomplete="off">
             <label>Turma</label>
-            <input type="text" class="form-control" name="turma" required autocomplete="off">
+            <input type="text" class="form-control" name="turma" placeholder="Ex.: 111" required autocomplete="off">
             <label>Semestre</label>
-            <input type="text" class="form-control" name="semestre" required autocomplete="off">
+            <input type="number" class="form-control" name="semestre" required placeholder="Ex.: 5" autocomplete="off">
           </div>
           <button type="submit" class="btn button btn-success">Salvar Disciplina</button>
           <hr>

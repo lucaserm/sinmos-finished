@@ -11,6 +11,7 @@ database=projeto
 rodar o sql no banco
 
 1 terminal 
+set NODE_OPTIONS=--openssl-legacy-provider
 npm run dev
 
 2 terminal

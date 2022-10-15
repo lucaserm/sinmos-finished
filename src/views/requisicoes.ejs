@@ -36,15 +36,10 @@
             <% }); %>
           </table>
           <hr>
-          <form action="/cadastro" method="post">
-            <input type="text" name="user" value="<%= user%>" hidden>
-            <button class="btn button btn-success">Cadastros</button>
-          </form>
-          <hr>
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="user" value="<%= user%>" hidden>
             <input type="text" name="senha" value="123456" hidden>
-            <button class="btn button ">Voltar</button>
+            <button class="btn button btn-dark">Voltar</button>
           </form>
         </div>
         <% } else { %>
