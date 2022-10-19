@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js --ignore public",
     "init": "node server.js",
-    "dev": "webpack --openssl-legacy-provider -w"
+    "dev": "webpack -w"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +25,6 @@
     "express-pg-session": "^1.1.0",
     "express-session": "^1.17.3",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.8.0",
     "pg": "^8.7.3",
     "regenerator-runtime": "^0.13.5",
     "style-loader": "^1.2.1",

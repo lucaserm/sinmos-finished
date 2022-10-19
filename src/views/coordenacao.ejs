@@ -28,7 +28,7 @@
                   <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
                   <input type="text" name="user" value="<%= user%>" hidden>
                   <button class="btn button btn-info" style="margin: 0;">Editar</button>
-                </form></td>
+                </form>
               </td>
             </tr>
             <% }); %>
@@ -45,7 +45,8 @@
           <form action="/administracao/horarios" method="POST">
             <p class="text-center lead">Insira o RA do aluno para ver todos os dados</p>
             <input type="text" name="user" value="<%= user%>" hidden>
-            <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" placeholder="Ex.: 123456" required>
+            <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" 
+            placeholder="Ex.: 123456" required>
             <button class="btn button btn-success small" style="margin: 0;">Ver</button>
           </form>
           <hr>

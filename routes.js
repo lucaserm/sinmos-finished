@@ -1,12 +1,12 @@
 const express = require('express');
 const multer = require('multer');
 const route = express.Router();
-const homesController = require('./src/controllers/homesController');
+const homeController = require('./src/controllers/homeController');
 const cadastroController = require('./src/controllers/cadastroController'); 
 const administracaoController = require('./src/controllers/administracaoController');
 
 //Rota da home 
-route.get('/', homesController.paginaInicial);
+route.get('/', homeController.paginaInicial);
 //Qual cadastro
 route.post('/cadastro', cadastroController.cadastros);
 // Cadastros

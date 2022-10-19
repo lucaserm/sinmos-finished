@@ -5,7 +5,7 @@ const Advertencia = require('../models/AdvertenciasModel');
 
 //página de login
 exports.login = (req, res) => {
-    res.render('administrador');
+    res.render('login');
 };
 
 //gerenciando todos os users 
@@ -20,7 +20,7 @@ exports.paginaAdm = async(req, res) => {
     //Coordenação
     else if (req.body.user == 'coordenacao' && req.body.senha == '123456'){
         const estudantes = await Estudante.buscaEstudantes();
-        res.render('estudantes', { estudantes, user } );
+        res.render('coordenacao', { estudantes, user } );
       //Portaria
     } else if (req.body.user == 'portaria' && req.body.senha == '123456'){
         const estudantes = await Estudante.buscaEstudantes();
@@ -50,7 +50,7 @@ exports.editarSaidaEstudante = async(req, res) => {
     // await Estudante.liberacaoPorRA('null', req.file.filename);
     const id = req.body.id;
     const user = req.body.user;
-    res.render('editarSaidaEstudante', { estudantes, id, user });
+    res.render('saidaEstudante', { estudantes, id, user });
 }
 
 exports.trataEditado = async(req, res) => {
