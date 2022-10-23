@@ -44,6 +44,7 @@ route.post('/cadastro/estudantesalvo', upload.single('avatar'), cadastroControll
 route.post('/cadastro/responsavelsalvo', cadastroController.trataPost);
 route.post('/cadastro/horarioestudantesalvo', cadastroController.trataPost);
 route.post('/cadastro/registrosalvo', cadastroController.trataPost);
+route.post('/cadastro/ocorrenciasalvo', cadastroController.trataPost);
 
 //Rotas do administrador
 //Login do Administrador
@@ -71,7 +72,7 @@ storage = multer.diskStorage({
     }
 });
 upload = multer({ storage });
-route.post('/administracao/editarSaidaEstudantes', upload.single('avatar'), administracaoController.editarSaidaEstudante);
+route.post('/administracao/saidaEstudante', upload.single('avatar'), administracaoController.editarSaidaEstudante);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
 route.post('/administracao/deleteAdvertencia', administracaoController.trataEditado);

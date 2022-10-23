@@ -57,6 +57,29 @@ Estudante.buscaPorRA = async (body) => {
   }
 };
 
+Estudante.buscaPorCPF = async (body) => {
+  try {
+    const estudantes = await client.query(
+      `SELECT * FROM estudantes WHERE cpf = $1 ORDER BY id`,
+      [body.cpf]
+    );
+    return estudantes.rows;
+  } catch (e) {
+    console.log(`Houve um erro ${e}`);
+  }
+};
+
+Estudante.buscaPorNome = async(body) => {
+  try {
+    const estudantes = await client.query(
+      `SELECT * FROM estudantes WHERE nome_estudante = $1 ORDER BY id`, [body.nome]
+    );
+    return estudantes.rows;
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 Estudante.buscaEstudantes = async () => {
   try {
     const estudantes = await client.query(
@@ -68,53 +91,150 @@ Estudante.buscaEstudantes = async () => {
   }
 };
 
-Estudante.buscaHorariosPorRA = async (body, filename) => {
+Estudante.buscaHorarios = async (body, filename) => {
   try {
-    let ra;
+    let estudantes;
     filename = "/assets/img/crachas/" + filename;
-    if (body != "null") {
-      ra = body;
-    } else if (body == "null") {
+    if (filename != 'null') {
       // // criar um leitor de código de barras
     }
-
-    const estudantes = await client.query(
-      `
-    SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-    FROM estudantes, horarios, disciplinas, horariosestudantes
-    WHERE ra = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
-    ORDER BY estudantes.id
-    `,
-      [ra]
-    );
+    if(body != 'null'){
+      if (body.ra != '') {
+        estudantes = await client.query(
+          `
+          SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE ra = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+          `,
+            [body.ra]
+          );
+      }
+      if(body.cpf != ''){
+        estudantes = await client.query(
+          `
+          SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE cpf = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+          `,
+            [body.cpf]
+          );
+      }
+      if(body.nome != ''){
+        estudantes = await client.query(
+          `
+          SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE nome_estudante = $1
+          AND id_estudantes = estudantes.id
+          AND id_horarios = horarios.id
+          AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+          `, [body.nome]
+        );
+      }
+    }
     return estudantes.rows;
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
 };
 
-Estudante.liberacaoPorRA = async (body, filename) => {
+Estudante.liberacao = async (body, ra) => {
   try {
-    let ra;
-    filename = "/assets/img/crachas/" + filename;
-    if (body != "null") {
-      ra = body;
-    } else if (body == "null") {
-      // // criar um leitor de código de barras
+    let estudantes;
+    let requisicoes;
+    console.log(ra)
+    if (ra != 'null') {
+      estudantes = await client.query(
+        `
+          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE ra = $1 
+          AND id_estudantes = estudantes.id
+          AND id_horarios = horarios.id
+          AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+        `,
+        [ra]);
     }
 
-    const estudantes = await client.query(
-    `
-    SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-    FROM estudantes, horarios, disciplinas, horariosestudantes
-    WHERE ra = $1 
-    AND id_estudantes = estudantes.id
-    AND id_horarios = horarios.id
-    AND id_disciplinas = disciplinas.id
-    ORDER BY estudantes.id
-    `,
-      [ra]
-    );
+    if(body != 'null'){
+      if(body.nome != 'null'){
+        estudantes = await client.query(
+          `
+          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE nome_estudante = $1
+          AND id_estudantes = estudantes.id
+          AND id_horarios = horarios.id
+          AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+          `, [body.nome]
+        );
+        requisicoes = await client.query(
+          `
+          SELECT registros.id, dia_liberacao 
+          FROM registros, estudantes
+          WHERE id_estudantes = estudantes.id
+          AND nome_estudante = $1
+          `,[body.nome]
+        );
+      }
+      if(body.cpf != ''){
+        estudantes = await client.query(
+          `
+          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE cpf = $1 
+          AND id_estudantes = estudantes.id
+          AND id_horarios = horarios.id
+          AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+          `,
+            [body.cpf]
+        );
+        requisicoes = await client.query(
+          `
+          SELECT registros.id, dia_liberacao 
+          FROM registros, estudantes
+          WHERE id_estudantes = estudantes.id
+          AND cpf = $1
+          `,
+          [body.cpf]
+        );
+      }
+      if (body.ra != '') {
+        estudantes = await client.query(
+          `
+          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE ra = $1 
+          AND id_estudantes = estudantes.id
+          AND id_horarios = horarios.id
+          AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+          `,
+            [body.ra]
+          );
+        requisicoes = await client.query(
+          `
+          SELECT registros.id, dia_liberacao 
+          FROM registros, estudantes
+          WHERE id_estudantes = estudantes.id
+          AND ra = $1
+          `,
+          [body.ra]
+        );
+      }
+    }
+    
+    
+
+    requisicoes.rows.forEach(requisicao => {
+      console.log(requisicao.dia_liberacao)
+    })
 
     const hoje = new Date();
     let status = [estudantes.rows, { aula: "Estudante sem aula!" }];
@@ -159,30 +279,22 @@ Estudante.liberacaoPorRA = async (body, filename) => {
 
     estudantes.rows.forEach((estudante) => {
       for (let i = 1; i < 6; i++) {
-        for (let j = 0; j <= 2; j++) {
-          //Define dia da semana
-          if (hoje.getDay() == i && estudante.dia_semana == diaSemana[i - 1]) {
+        //Define dia da semana
+        if (hoje.getDay() == i && estudante.dia_semana == diaSemana[i - 1]) {
+          for (let j = 0; j <= 2; j++) {
             //Periodo, matutino, vespertino, noturno
             if (estudante.periodo_horarios == periodo[j]) {
-              //horaAtual >= hora que aula termina, e horaAtual >= hora que aula começa
-              if (
-                hoje.getHours() >= listas[j][estudante.tempo_fim - 1].hora &&
-                hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora
-              ) {
+              //horaAtual <= hora que aula termina, e horaAtual >= hora que aula começa
+              if (hoje.getHours() <= listas[j][estudante.tempo_fim - 1].hora && hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora) {
                 // hora igual a hora que começa
-                if (
-                  hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora
-                ) {
+                if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
                   //verifica os minutos
-                  if (
-                    hoje.getMinutes() >
-                    listas[j][estudante.tempo_fim - 1].minuto
-                  ) {
+                  if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto) {
                     status = [estudantes.rows, { aula: "Estudante em aula!" }];
                   }
                 }
               } else {
-                status = [estudantes.rows, { aula: "Estudante em aula!" }];
+                status = [estudantes.rows, { aula: "Estudante sem aula!" }];
               }
             }
           }

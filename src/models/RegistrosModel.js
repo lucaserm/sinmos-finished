@@ -40,9 +40,9 @@ Registro.buscaRegistros = async () => {
   try {
     const registros = await client.query(
       `
-      SELECT registros.id, nome_estudante, ra, foto, descricao, dia_liberacao 
+      SELECT registros.id, nome_estudante, ra, foto, descricao, dia_liberacao, dia_hora_saida
       FROM registros, estudantes 
-      WHERE id_estudantes = estudantes.id 
+      WHERE id_estudantes = estudantes.id
       ORDER BY id
       `
     );

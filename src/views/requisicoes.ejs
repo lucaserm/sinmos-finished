@@ -11,7 +11,7 @@
         <div class="responsive-table">
           <table class="table my-3">
             <tr align="center">
-              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
+              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td><td>Hora da saída</td>
             </tr>
             <% registros[0].forEach(registro => { %>
             <tr align="center">
@@ -19,19 +19,8 @@
               <td><img src="<%= registro.foto%>" width="70"></td>
               <td><%= registro.descricao%></td>
               <td><%= registro.dia_liberacao%></td>
+              <td><%= registro.dia_hora_saida%></td>
             </tr>
-            <% if(registros[1] == registro.dia_liberacao) {%>
-            <tr>
-              <td colspan="6">
-                <form action="/administracao/editarSaidaEstudantes" method="post">
-                  <input type="text" name="ra" value="<%= registro.ra%>" hidden>
-                  <input type="text" name="id" value="<%= registro.id%>" hidden>
-                  <input type="text" name="user" value="<%= user%>" hidden>
-                  <button class="btn button btn-info" style="margin: 0;">Liberar Estudante</button>
-                </form>
-              </td>
-            </tr>
-            <% }%>
             <% }); %>
           </table>
           <hr>

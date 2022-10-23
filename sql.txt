@@ -1,58 +1,96 @@
-CREATE TABLE Responsaveis(
+CREATE TABLE Responsaveis (
     telefone_responsavel varchar(14),
     email_responsavel varchar(50),
     nome_responsavel varchar(50),
-    id serial PRIMARY KEY
+	id serial PRIMARY KEY
 );
-CREATE TABLE Cursos(
+ 
+CREATE TABLE Cursos (
     nome_curso varchar(30),
-    periodo_cursos varchar(20),
-    id serial PRIMARY KEY
+    periodo_cursos varchar(40),
+	id serial PRIMARY KEY
 );
-CREATE TABLE Estudantes(
-    nome_estudante varchar(50),
-    email_institucional varchar(50),
+
+CREATE TABLE Estudantes (
+    id_responsaveis integer references Responsaveis(id),
     cpf varchar(14),
     ra varchar(6),
     foto varchar,
-    id_responsaveis int references Responsaveis(id),
-    id serial PRIMARY KEY
+    nome_estudante varchar(50),
+    email_institucional varchar(40),
+	id serial PRIMARY KEY
 );
-CREATE TABLE Advertencias(
-    descricao varchar,
-    data_advertencia date,
-    id_estudantes int references Estudantes(id),
-    id serial PRIMARY KEY
+
+CREATE TABLE Matriculas (
+    id_estudantes integer references Estudantes(id),
+    id_cursos integer,
+    ano_matricula integer,
+	id serial PRIMARY KEY
 );
-CREATE TABLE Registros(
-    dia_hora_saida date,
-    descricao varchar,
-    id_estudantes int references Estudantes(id),
-    id serial PRIMARY KEY
-);
-CREATE TABLE Disciplinas(
+ 
+CREATE TABLE Disciplinas (
+    id_cursos integer references Cursos(id),
     nome_disciplina varchar(30),
+    semestre integer,
     turma varchar(10),
-    semestre int,
-    id_cursos int references Cursos(id),
-    id serial PRIMARY KEY
+	id serial PRIMARY KEY
 );
-CREATE TABLE Matricula(
-    ano_matricula int,
-    id_estudantes int references Estudantes(id),
-    id_cursos int references Cursos(id),
-    id serial PRIMARY KEY
-);
-CREATE TABLE Horarios(
-    dia_semana varchar(20),
+
+CREATE TABLE Horarios (
+    id_disciplinas serial references Disciplinas(id),
     periodo_horarios varchar(20),
-    tempo_inicio int,
-    tempo_fim int
-    id_disciplinas int references Disciplinas(id),
+    dia_semana varchar(20),
+    tempo_inicio integer,
+    tempo_fim integer,
+	id serial PRIMARY KEY
+);
+
+CREATE TABLE HorariosEstudantes (
+    id_horarios integer references Horarios(id),
+    id_estudantes integer references Estudantes(id),
+	id serial PRIMARY KEY
+);
+
+CREATE TABLE Registros (
+    dia_hora_saida date,
+    descricao text,
+    dia_liberacao varchar(10),
+	id serial PRIMARY KEY
+);
+
+CREATE TABLE RegistrosEstudantes (
+    id_estudantes integer references Estudantes(id),
+    id_registros integer references Registros(id),
     id serial PRIMARY KEY
 );
-CREATE TABLE HorariosEstudantes(
-    id_horarios int references Horarios(id),
-    id_estudantes int references Estudantes(id),
+
+CREATE TABLE Usuarios (
+    nome_usuario varchar(50),
+    senha varchar(20),
+    codigo_servidor varchar(20),
+    cargo varchar(50),
+	id serial PRIMARY KEY
+);
+
+CREATE TABLE Ocorrencias (
+    id_usuarios integer references Usuarios(id),
+    descricao text,
+    data_advertencia date,
+    nome_assistente_relacionado varchar(50),
+	id serial PRIMARY KEY
+);
+
+CREATE TABLE OcorrenciasEstudantes (
+    id_ocorrencias integer,
+    id_estudantes integer,
+	id serial PRIMARY KEY
+);
+ 
+CREATE TABLE Advertencias (
+    id_ocorrencia integer references Ocorrencias(id),
+    status varchar(30),
+    descricao text,
+    data_advertencia date,
+    nome_assistente_relacionado varchar(50),
     id serial PRIMARY KEY
 );

@@ -71,6 +71,7 @@ exports.trataPost = async(req, res) => {
         HorarioEstudante.save(req.body);
     }else if(req.url == '/cadastro/registrosalvo'){
         Registro.save(req.body);
+    }else if(req.url == '/cadastro/ocorrenciasalva'){
     }
     const user = req.body.user;
     const id = req.body.id;

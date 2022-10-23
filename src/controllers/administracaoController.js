@@ -2,6 +2,7 @@ const Estudante = require('../models/EstudantesModel');
 const Responsavel = require('../models/ResponsaveisModel');
 const Registro = require('../models/RegistrosModel');
 const Advertencia = require('../models/AdvertenciasModel');
+const Usuarios = require('../models/UsuariosModel');
 
 //página de login
 exports.login = (req, res) => {
@@ -11,24 +12,29 @@ exports.login = (req, res) => {
 //gerenciando todos os users 
 exports.paginaAdm = async(req, res) => {
     //variável para manipulação de páginas
-    const user = req.body.user;
+    const users = await Usuarios.buscaUsuarios();
     //Super User
+    let user = 'root'; 
+    const estudantes = await Estudante.buscaEstudantes();
     if(req.body.user == 'root' && req.body.senha == '123456'){
         const estudantes = await Estudante.buscaEstudantes();
-        res.render('teste', { estudantes, user } );
-    }
-    //Coordenação
-    else if (req.body.user == 'coordenacao' && req.body.senha == '123456'){
-        const estudantes = await Estudante.buscaEstudantes();
         res.render('coordenacao', { estudantes, user } );
-      //Portaria
-    } else if (req.body.user == 'portaria' && req.body.senha == '123456'){
-        const estudantes = await Estudante.buscaEstudantes();
-        res.render('portaria', { estudantes, user });
     }
-    else{
-        //caso o usuário e/ou a senha estejam errados vai para a página inicial
-        res.render('index');
+    if(users.length > 0){
+        users.forEach( usuario => {
+            //Coordenação
+            if (req.body.codigo_servidor == usuario.codigo_servidor && req.body.senha == usuario.senha){
+                let user = usuario.codigo_servidor;
+                let senha = usuario.senha;
+                if(usuario.cargo == 'Coordenacao'){
+                    return res.render('coordenacao', { estudantes, user, senha } );
+                } else if(usuario.cargo == 'Portaria'){
+                    return res.render('portaria', { estudantes, user, senha });
+                } else if(usuario.cargo == 'Assistencia'){
+                    return res.render('assistencia', { estudantes, user, senha });
+                }
+            }
+        });
     }
 };
 
@@ -41,21 +47,30 @@ exports.editar = async(req, res) => {
 
 //página para liberar o estudante
 exports.editarSaidaEstudante = async(req, res) => {
-    // se ambos os campos estiverem vazios, horarios recebe nulo
-    const estudantes = req.body.ra == '' && typeof req.file == 'undefined' ? {} :
-    //se só o ra não está vazio, busca por ra
-    req.body.ra != '' ? await Estudante.liberacaoPorRA(req.body.ra, 'null') :
-    //se está vazio, busca pela imagem
-    {};
-    // await Estudante.liberacaoPorRA('null', req.file.filename);
+    
+    const { lerQR } = require('./../middlewares/middleware');
+
+    const estudantes =
+    // se cpf não está vazio, pesquisa pelo cpf 
+    req.body.cpf != '' ? await Estudante.liberacao(req.body, 'null') :
+    // se ra não está vazio, pesquisa pelo ra 
+    req.body.ra != '' ? await Estudante.liberacao(req.body, 'null') :
+    // se nome não está vazio, pesquisa pelo nome 
+    req.body.nome != '' ? await Estudante.liberacao(req.body, 'null') :
+    //se a imagem não está vazia
+    typeof req.file != 'undefined' ? await Estudante.liberacao('null', await lerQR(req.file.filename)) : {};
     const id = req.body.id;
     const user = req.body.user;
-    res.render('saidaEstudante', { estudantes, id, user });
+    const senha = req.body.senha;
+    res.render('saidaEstudante', { estudantes, id, user, senha });
 }
 
 exports.trataEditado = async(req, res) => {
+    const id = req.body.id;
+    const user = req.body.user; 
     if(req.url == '/administracao/editadoEstudante'){
         Estudante.update(req.body);
+        return res.render('salvo', {req, id, user})
     }else if(req.url == '/administracao/editadoSaida'){
         Registro.update(req.body);
     }else if(req.url == '/administracao/deleteAdvertencia'){
@@ -64,8 +79,6 @@ exports.trataEditado = async(req, res) => {
         const user = req.body.user; 
         return res.render('delete', { req, id, user })
     }
-    const id = req.body.id;
-    const user = req.body.user; 
     res.render('salvoEditado', { req, id, user })
 }
 
@@ -79,13 +92,16 @@ exports.responsavel = async(req, res) => {
 
 //pega os horários do estudante
 exports.horarios = async(req, res) => {
-    // se ambos os campos estiverem vazios, horarios recebe nulo
-    const horarios = req.body.ra == '' && typeof req.file == 'undefined' ? {} :
-        //se só o ra não está vazio, busca por ra
-        req.body.ra != '' ? await Estudante.buscaHorariosPorRA(req.body.ra, 'null') :
-        //se está vazio, busca pela imagem
+    const horarios = 
+        // se cpf não está vazio, pesquisa pelo cpf 
+        req.body.cpf != '' ? await Estudante.buscaHorarios(req.body, 'null') :
+        // se ra não está vazio, pesquisa pelo ra 
+        req.body.ra != '' ? await Estudante.buscaHorarios(req.body, 'null') :
+        // se nome não está vazio, pesquisa pelo nome 
+        req.body.nome != '' ? await Estudante.buscaHorarios(req.body, 'null') :
+        //se a imagem não está vazia
+        //typeof req.file == 'undefined' ? await Estudante.buscaHorariosPorRA('null', req.file.filename) : {};
         {};
-        // await Estudante.buscaHorariosPorRA('null', req.file.filename);
     const user = req.body.user;
     
     res.render('horarios', { horarios, user });
