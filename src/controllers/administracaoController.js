@@ -87,6 +87,7 @@ exports.trataEditado = async(req, res) => {
     res.render('salvoEditado', { req, id, user, senha })
 }
 
+
 //busca responsável e advertências de um estudante específico
 exports.responsavel = async(req, res) => {
     const user = req.body.user;
