@@ -15,10 +15,11 @@ exports.paginaAdm = async(req, res) => {
     const users = await Usuarios.buscaUsuarios();
     //Super User
     let user = 'root'; 
+    let senha = '123456'
     const estudantes = await Estudante.buscaEstudantes();
-    if(req.body.user == 'root' && req.body.senha == '123456'){
+    if(req.body.codigo_servidor == 'root' && req.body.senha == '123456'){
         const estudantes = await Estudante.buscaEstudantes();
-        res.render('coordenacao', { estudantes, user } );
+        res.render('coordenacao', { estudantes, user, senha } );
     }
     if(users.length > 0){
         users.forEach( usuario => {
@@ -27,22 +28,24 @@ exports.paginaAdm = async(req, res) => {
                 let user = usuario.codigo_servidor;
                 let senha = usuario.senha;
                 if(usuario.cargo == 'Coordenacao'){
-                    return res.render('coordenacao', { estudantes, user, senha } );
+                    res.render('coordenacao', { estudantes, user, senha } );
                 } else if(usuario.cargo == 'Portaria'){
-                    return res.render('portaria', { estudantes, user, senha });
+                    res.render('portaria', { estudantes, user, senha });
                 } else if(usuario.cargo == 'Assistencia'){
-                    return res.render('assistencia', { estudantes, user, senha });
+                    res.render('assistencia', { estudantes, user, senha });
                 }
             }
         });
     }
+    res.render('login')
 };
 
 //página para editar dados do estudante
 exports.editar = async(req, res) => {
     const estudantes = await Estudante.buscaPorRA(req.body);
     const user = req.body.user;
-    res.render('editar', { estudantes, user });
+    const senha = req.body.senha;
+    res.render('editar', { estudantes, user, senha });
 }
 
 //página para liberar o estudante
@@ -67,27 +70,31 @@ exports.editarSaidaEstudante = async(req, res) => {
 
 exports.trataEditado = async(req, res) => {
     const id = req.body.id;
-    const user = req.body.user; 
+    const user = req.body.user;
+    const senha = req.body.senha; 
     if(req.url == '/administracao/editadoEstudante'){
         Estudante.update(req.body);
-        return res.render('salvo', {req, id, user})
+        return res.render('salvo', { req, id, user, senha })
     }else if(req.url == '/administracao/editadoSaida'){
         Registro.update(req.body);
     }else if(req.url == '/administracao/deleteAdvertencia'){
         Advertencia.deletePorRA(req.body);
         const id = req.body.id;
-        const user = req.body.user; 
-        return res.render('delete', { req, id, user })
+        const user = req.body.user;
+        const senha = req.body.senha; 
+        return res.render('delete', { req, id, user, senha })
     }
-    res.render('salvoEditado', { req, id, user })
+    res.render('salvoEditado', { req, id, user, senha })
 }
 
 //busca responsável e advertências de um estudante específico
 exports.responsavel = async(req, res) => {
     const user = req.body.user;
+    const senha = req.body.senha;
+
     const responsaveis = await Responsavel.buscaResponsavelPorRA(req.body);
     const advertencias = await Advertencia.buscaAdvertenciaPorRA(req.body);
-    res.render('responsavel', { responsaveis, advertencias, user });
+    res.render('responsavel', { responsaveis, advertencias, user, senha });
 }
 
 //pega os horários do estudante
@@ -103,13 +110,15 @@ exports.horarios = async(req, res) => {
         //typeof req.file == 'undefined' ? await Estudante.buscaHorariosPorRA('null', req.file.filename) : {};
         {};
     const user = req.body.user;
+    const senha = req.body.senha;
     
-    res.render('horarios', { horarios, user });
+    res.render('horarios', { horarios, user, senha });
 }
 
 //todas as requisições de todos os estudantes
 exports.requisicoes = async(req, res) => {
     const registros = await Registro.buscaRegistros();
     const user = req.body.user;
-    res.render('requisicoes', { registros, user });
+    const senha = req.body.senha;
+    res.render('requisicoes', { registros, user, senha });
 }
