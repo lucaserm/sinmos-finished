@@ -48,7 +48,7 @@ OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
       WHERE id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
       AND id_usuarios = usuarios.id
-      AND codigo_servidor = $1
+      AND codigo_servidor = $1 or nome_usuario_relacionado = nome_usuario
       ORDER BY ocorrenciasestudantes.id
       `,
       [codigo]
@@ -58,7 +58,6 @@ OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
     console.log(e);
   }
 }
-
 
 
 module.exports = OcorrenciaEstudante;
