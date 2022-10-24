@@ -1,8 +1,10 @@
 const client = require("../../server");
 const Advertencia = require("../models/AdvertenciasModel");
 
-function Registro(body) {
-  this.body = body;
+class Registro{
+  constructor(body) {
+    this.body = body;
+  }
 }
 
 Registro.save = async (body) => {

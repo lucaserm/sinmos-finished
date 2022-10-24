@@ -1,8 +1,10 @@
 const client = require("../../server");
 const Usuario = require('../models/UsuariosModel');
 
-function OcorrenciaEstudante(body) {
-  this.body = body;
+class OcorrenciaEstudante{
+  constructor(body) {
+    this.body = body;
+  }
 }
 
 OcorrenciaEstudante.save = async (body) => {

@@ -1,7 +1,9 @@
 const client = require("../../server");
 
-function HorarioEstudante(body) {
-  this.body = body;
+class HorarioEstudante{
+  constructor(body) {
+    this.body = body;
+  }
 }
 
 HorarioEstudante.save = async (body) => {

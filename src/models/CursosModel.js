@@ -1,8 +1,10 @@
 const client = require('../../server');
 
-function Curso(body){
-  this.body = body;
-};
+class Curso{
+  constructor(body){
+    this.body = body;
+  }
+}
 
 Curso.buscarCursos = async () => {
   try{

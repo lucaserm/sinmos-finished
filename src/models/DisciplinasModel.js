@@ -1,7 +1,9 @@
 const client = require("../../server");
 
-function Disciplina(body) {
-  this.body = body;
+class Disciplina{
+  constructor(body){
+    this.body = body;
+  }
 }
 
 Disciplina.buscarDisciplinas = async () => {

@@ -1,7 +1,9 @@
 const client = require('../../server');
 
-function Ocorrencia(body){
-  this.body = body;
+class Ocorrencia{
+  constructor(body){
+    this.body = body;
+  }
 }
 
 Ocorrencia.save = async(body) => {

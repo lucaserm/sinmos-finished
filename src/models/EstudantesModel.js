@@ -1,7 +1,9 @@
 const client = require("../../server");
 
-function Estudante(body) {
-  this.body = body;
+class Estudante{
+  constructor(body){  
+    this.body = body;
+  }
 }
 
 Estudante.save = async (body, filename) => {

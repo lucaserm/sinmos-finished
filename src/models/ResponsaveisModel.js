@@ -1,7 +1,9 @@
 const client = require("../../server");
 
-function Responsavel(body) {
-  this.body = body;
+class Responsavel{
+  constructor(body) {
+    this.body = body;
+  }
 }
 
 Responsavel.save = async (body) => {

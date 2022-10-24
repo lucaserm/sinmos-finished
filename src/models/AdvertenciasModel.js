@@ -1,7 +1,9 @@
 const client = require("../../server");
 
-function Advertencia(body) {
-  this.body = body;
+class Advertencia{
+  constructor(body){
+    this.body = body;
+  }
 }
 
 Advertencia.save = async (body) => {

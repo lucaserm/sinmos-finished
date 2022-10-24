@@ -1,7 +1,9 @@
 const client = require('../../server')
 
-function Usuarios(body){
-  this.body = body;
+class Usuarios{
+  constructor(body){
+    this.body = body;
+  }
 }
 
 Usuarios.buscaUsuarios = async() => {

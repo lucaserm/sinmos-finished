@@ -1,7 +1,9 @@
 const client = require("../../server");
 
-function Matricula(body) {
-  this.body = body;
+class Matricula{
+  constructor(body) {
+    this.body = body;
+  }
 }
 
 Matricula.save = async (body) => {
