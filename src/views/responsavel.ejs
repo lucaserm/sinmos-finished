@@ -26,11 +26,38 @@
             <tr><td></td><td></td><td></td></tr>
           </table>
           </div>
-          <%}
-          if(advertencias.length > 0) {%>
-          <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">
-            Advertências
-          </p>
+          <% }%>
+          <% if(ocorrencias.length > 0) {%>
+            <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">Ocorrências</p>
+            <br>
+            <div class="responsive-table">
+              <table class="table my-3">
+                <tr>
+                  <td>Servidor que Registrou</td>
+                  <td>Servido Relacionado</td>
+                  <td>Descrição</td>
+                  <td>Data da Ocorrência</td>
+                </tr>
+                <% ocorrencias.forEach( ocorrencia => {%>
+                  <tr>
+                    <td><%= ocorrencia.nome_usuario%></td>
+                    <td><%= ocorrencia.nome_usuario_relacionado%></td>
+                    <td><%= ocorrencia.descricao_ocorrencia%></td>
+                    <td><%= ocorrencia.data_ocorrencia%></td>
+                  </tr>  
+                <% })%>
+              </table>
+            </div>
+          <% } else { %>
+            <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">
+              Ocorrências
+            </p>
+            <br>
+            <p class="text-center lead">Não existem ocorrências nos seus dados.</p>
+          <hr />
+          <% } %>
+          <% if(advertencias.length > 0) {%>
+          <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">Advertências</p>
           <br>
           <div class="responsive-table">
             <table class="table my-3" color>
@@ -52,7 +79,7 @@
                 <td>
                   <form action="/administracao/deleteAdvertencia" method="post">
                     <input type="text" name="id" value="<%= advertencia.id%>" hidden>
-                    <input type="text" name="user" value="<%= user%>" hidden>
+                    <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
                     <button class="btn button btn-danger">Excluir</button>
                   </form>
                 </td>
@@ -63,18 +90,21 @@
           </div>
           <form action="/administracao/horarios" method="post">
             <input type="text" name="ra" value="<%= responsaveis[1]%>" hidden>
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
         </div>
         </div>
         <% } else { %>
+          <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">
+            Advertências
+          </p>
+          <br>
+          <p class="text-center lead">Não existem advertências nos seus dados.</p>
         <hr />
-        <p class="text-center lead">Não existem advertências nos seus dados.</p>
-        <hr />
-        <form action="/administracao/horarios" method="post">
-          <input type="text" name="ra" value="<%= responsaveis[1]%>" hidden>
-          <input type="text" name="user" value="<%= user%>" hidden>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
         <% } %>

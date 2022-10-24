@@ -6,61 +6,83 @@ const Horario = require('../models/HorariosModel');
 const Responsavel = require('../models/ResponsaveisModel');
 const HorarioEstudante = require('../models/HorariosEstudantesModel');
 const Registro = require('../models/RegistrosModel');
+const Usuario = require('../models/UsuariosModel');
+const Ocorrencia = require('../models/OcorrenciasModel')
+const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes')
 
 exports.cadastros = (req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    res.render('cadastros', { user, senha });
+    res.render('cadastros', { codigo_servidor, senha });
 };
 
 exports.cadastroCurso = (req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    res.render('cadastro_curso', { user, senha });
+    res.render('cadastro_curso', { codigo_servidor, senha });
 };
 exports.cadastroMatricula = async(req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const cursos = await Curso.buscarCursos();
     const estudantes = await Estudante.buscaEstudantes();
-    res.render('cadastro_matricula', { cursos, estudantes, user, senha });
+    res.render('cadastro_matricula', { cursos, estudantes, codigo_servidor, senha });
 }
 exports.cadastroDisciplina = async(req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const cursos = await Curso.buscarCursos();
-    res.render('cadastro_disciplina', { cursos, user, senha });
+    res.render('cadastro_disciplina', { cursos, codigo_servidor, senha });
 };
 exports.cadastroHorario = async(req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    const disciplinas = await Disciplina.buscarDisciplinas();
-    res.render('cadastro_horario', { disciplinas, user, senha });
+    const disciplinas = await Disciplina.buscarDisciplinasNaoRegistradas();
+    const horarios = await Horario.buscaHorarios();
+    res.render('cadastro_horario', { disciplinas, horarios, codigo_servidor, senha });
 };
 exports.cadastroEstudante = async(req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const cursos = await Curso.buscarCursos();
     const responsaveis = await Responsavel.buscaResponsaveis();
-    res.render('cadastro_estudante', { cursos, responsaveis, user, senha });
+    res.render('cadastro_estudante', { cursos, responsaveis, codigo_servidor, senha });
 };
 exports.cadastroResponsavel = (req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    res.render('cadastro_responsavel', { user, senha });
+    res.render('cadastro_responsavel', { codigo_servidor, senha });
 };
 exports.cadastroHorarioEstudante = async(req,res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const estudantes = await Estudante.buscaEstudantes();
-    const horarios = await Horario.buscaHorarios();
-    res.render('cadastro_horariosestudantes', { estudantes, horarios, user, senha });
+    const horarios = await Horario.buscaHorariosDiscipinas();
+    res.render('cadastro_horariosestudantes', { estudantes, horarios, codigo_servidor, senha });
 }
 exports.cadastroRegistro = async(req, res) => {
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const estudantes = await Estudante.buscaEstudantes();
-    res.render('cadastro_registros', { estudantes, user, senha });
+    res.render('cadastro_registro', { estudantes, codigo_servidor, senha });
+}
+exports.cadastroUsuario = async(req, res) => {
+    const codigo_servidor = req.body.codigo_servidor;
+    const senha = req.body.senha;
+    res.render('cadastro_usuario', { codigo_servidor, senha });
+}
+exports.cadastroOcorrencia = async(req, res) => {
+    const codigo_servidor = req.body.codigo_servidor;
+    const senha = req.body.senha;
+    res.render('cadastro_ocorrencia', { codigo_servidor, senha });
+}
+exports.cadastroOcorrenciaEstudante = async(req, res) => {
+    const codigo_servidor = req.body.codigo_servidor;
+    const senha = req.body.senha;
+    const estudantes = await Estudante.buscaEstudantes();
+    const ocorrencias = await Ocorrencia.buscarOcorrencias();
+    const id = req.body.id;
+    res.render('cadastro_ocorrenciasestudantes', { estudantes, ocorrencias, codigo_servidor, senha, id });
 }
 
 exports.trataPost = async(req, res) => {
@@ -80,11 +102,16 @@ exports.trataPost = async(req, res) => {
         HorarioEstudante.save(req.body);
     }else if(req.url == '/cadastro/registrosalvo'){
         Registro.save(req.body);
-    }else if(req.url == '/cadastro/ocorrenciasalva'){
+    }else if(req.url == '/cadastro/usuariosalvo'){
+        Usuario.save(req.body);
+    }else if(req.url == '/cadastro/ocorrenciasalvo'){
+        Ocorrencia.save(req.body);
+    }else if(req.url == '/cadastro/ocorrenciaestudantesalvo'){
+        OcorrenciaEstudante.save(req.body);
     }
-    const user = req.body.user;
+    const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const id = req.body.id;
-    res.render('salvo', {req, id, user, senha});
+    res.render('salvo', {req, id, codigo_servidor, senha});
     return;
 };

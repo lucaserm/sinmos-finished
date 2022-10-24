@@ -11,7 +11,7 @@
         <form action="/administracao/saidaEstudante" method="POST">
           <div class="form-group">
             <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <label>Nome do Estudante</label>
             <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
             <label>CPF</label>
@@ -21,26 +21,30 @@
             <div align="center">
               <img src="<%=estudantes[0][0].foto%>" height="200">
             </div>
-            <% if(estudantes[1].aula == 'Estudante em aula!'){%>
-              <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-                <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
-              </div>
-              <hr>
-              <input type="number" name="id" value="<%= id%>" hidden>
-              <% if(user == 'coordenacao')%>
-                <button type="submit" class="btn button btn-success">Registrar Ocorrência</button>
-              <% }%>
-            <% }else{%>
-              <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-                <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
-              </div>
-            <%}%>
-            <hr>
           </div>
         </form>
+        <% if(estudantes[1].aula == 'Estudante em aula!'){%>
+          <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+            <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+          </div>
+          <hr>
+          <% if(users[0].cargo == 'Assistencia'){%>
+            <form action="/cadastro/ocorrenciaestudante" method="post">
+              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+              <input type="text" name="senha" value="<%= senha%>" hidden>
+              <button class="btn button btn-success">Registrar Ocorrência</button>
+            </form>
+          <% }%>
+        <% }else{%>
+          <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+            <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+          </div>
+        <%}%>
+        <hr>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" name="senha" value="123456" hidden>
+          <input type="text" name="id" value="<%= estudantes[0][0].id_estudantes%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
         <% } else { %>
@@ -48,7 +52,7 @@
           <p class="text-center lead">Não existe estudante com esse RA.</p>
           <hr>
           <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>

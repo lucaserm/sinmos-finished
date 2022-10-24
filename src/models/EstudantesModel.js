@@ -144,9 +144,8 @@ Estudante.buscaHorarios = async (body, filename) => {
 Estudante.liberacao = async (body, ra) => {
   try {
     let estudantes;
-    let requisicoes;
-    console.log(ra)
     if (ra != 'null') {
+      console.log(ra)
       estudantes = await client.query(
         `
           SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -159,8 +158,8 @@ Estudante.liberacao = async (body, ra) => {
         `,
         [ra]);
     }
-
-    if(body != 'null'){
+    
+    if(typeof body == 'object'){
       if(body.nome != 'null'){
         estudantes = await client.query(
           `
@@ -172,14 +171,6 @@ Estudante.liberacao = async (body, ra) => {
           AND id_disciplinas = disciplinas.id
           ORDER BY estudantes.id
           `, [body.nome]
-        );
-        requisicoes = await client.query(
-          `
-          SELECT registros.id, dia_liberacao 
-          FROM registros, estudantes
-          WHERE id_estudantes = estudantes.id
-          AND nome_estudante = $1
-          `,[body.nome]
         );
       }
       if(body.cpf != ''){
@@ -195,15 +186,6 @@ Estudante.liberacao = async (body, ra) => {
           `,
             [body.cpf]
         );
-        requisicoes = await client.query(
-          `
-          SELECT registros.id, dia_liberacao 
-          FROM registros, estudantes
-          WHERE id_estudantes = estudantes.id
-          AND cpf = $1
-          `,
-          [body.cpf]
-        );
       }
       if (body.ra != '') {
         estudantes = await client.query(
@@ -215,26 +197,10 @@ Estudante.liberacao = async (body, ra) => {
           AND id_horarios = horarios.id
           AND id_disciplinas = disciplinas.id
           ORDER BY estudantes.id
-          `,
-            [body.ra]
-          );
-        requisicoes = await client.query(
-          `
-          SELECT registros.id, dia_liberacao 
-          FROM registros, estudantes
-          WHERE id_estudantes = estudantes.id
-          AND ra = $1
-          `,
-          [body.ra]
+          `, [body.ra]
         );
       }
     }
-    
-    
-
-    requisicoes.rows.forEach(requisicao => {
-      console.log(requisicao.dia_liberacao)
-    })
 
     const hoje = new Date();
     let status = [estudantes.rows, { aula: "Estudante sem aula!" }];
@@ -284,23 +250,36 @@ Estudante.liberacao = async (body, ra) => {
           for (let j = 0; j <= 2; j++) {
             //Periodo, matutino, vespertino, noturno
             if (estudante.periodo_horarios == periodo[j]) {
-              //horaAtual <= hora que aula termina, e horaAtual >= hora que aula começa
-              if (hoje.getHours() <= listas[j][estudante.tempo_fim - 1].hora && hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora) {
-                // hora igual a hora que começa
-                if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
+              //Se a aula termina no mesmo tempo que começa
+              if(estudante.tempo_inicio == estudante.tempo_fim){
+                if(hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora){
                   //verifica os minutos
                   if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto) {
                     status = [estudantes.rows, { aula: "Estudante em aula!" }];
                   }
+                }else{
+                  status = [estudantes.rows, { aula: "Estudante sem aula!" }];
                 }
-              } else {
-                status = [estudantes.rows, { aula: "Estudante sem aula!" }];
+              }else{
+                //horaAtual <= hora que aula termina, e horaAtual >= hora que aula começa
+                if (hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora && hoje.getHours() <= listas[j][estudante.tempo_fim - 1].hora) {
+                  // hora igual a hora que começa
+                  if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
+                    //verifica os minutos
+                    if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto) {
+                      status = [estudantes.rows, { aula: "Estudante em aula!" }];
+                    }
+                  }
+                } else {
+                  status = [estudantes.rows, { aula: "Estudante sem aula!" }];
+                }
               }
             }
           }
         }
       }
     });
+    status = [estudantes.rows, { aula: "Estudante em aula!" }];
     return status;
   } catch (e) {
     console.log(`Houve um erro ${e}`);

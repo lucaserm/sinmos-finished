@@ -9,7 +9,8 @@
         <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <form action="/cadastro/disciplinasalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Curso</label>
             <select name="select" class="form-control" required>
               <% cursos.forEach(curso => { %>
@@ -28,7 +29,8 @@
           <hr>
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
         <hr>

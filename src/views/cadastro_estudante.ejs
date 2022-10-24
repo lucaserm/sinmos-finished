@@ -9,13 +9,14 @@
         <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <label>Não achou seu responsável? Cadastre aqui</label>
         <form action="/cadastro/responsavel" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <button class="btn button btn-info">Cadastrar Responsável</button>
         </form>
         <br>
         <form action="/cadastro/estudantesalvo" method="POST" enctype="multipart/form-data">
           <div class="form-group">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Responsável</label>
             <select name="id_responsaveis" class="form-control" required>
               <% responsaveis.forEach(responsavel=> { %>
@@ -38,7 +39,8 @@
           <hr>
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
         <hr>

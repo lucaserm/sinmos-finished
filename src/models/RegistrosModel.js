@@ -9,8 +9,8 @@ Registro.save = async (body) => {
   try {
     let dia_hora_saida = `${body.dia_liberacao} 00:00:00`;
     await client.query(
-      "INSERT INTO Registros(dia_hora_saida, dia_liberacao, descricao, id_estudantes) VALUES($1, $2, $3, $4)",
-      [dia_hora_saida, body.dia_liberacao, body.descricao, body.id_estudantes]
+      "INSERT INTO Registros(dia_hora_saida, dia_liberacao, descricao) VALUES($1, $2, $3)",
+      [dia_hora_saida, body.dia_liberacao, body.descricao]
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -41,8 +41,8 @@ Registro.buscaRegistros = async () => {
     const registros = await client.query(
       `
       SELECT registros.id, nome_estudante, ra, foto, descricao, dia_liberacao, dia_hora_saida
-      FROM registros, estudantes 
-      WHERE id_estudantes = estudantes.id
+      FROM registros, estudantes, registrosestudantes 
+      WHERE id_estudantes = estudantes.id and id_registros = registros.id
       ORDER BY id
       `
     );

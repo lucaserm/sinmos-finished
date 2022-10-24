@@ -9,12 +9,29 @@
         <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <form action="/cadastro/horariosalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Disciplina</label>
             <select name="id_disciplinas" class="form-control" required>
-              <% disciplinas.forEach(disciplina => { %>
-                <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
-              <% }); %>
+              <% if(horarios.length > 0){ %>
+                <% let lista = []%>
+                <% horarios.forEach(horario => { %>
+                  <% disciplinas.forEach(disciplina => { %>
+                    <% if(horario.id_disciplinas == disciplina.id) {%>
+                      <% lista.push(disciplina.id)%>
+                    <% }%>
+                  <% })%>
+                <% })%>
+                <% disciplinas.forEach(disciplina => { %>
+                  <% if(lista.findIndex(e => e = disciplina.id) == -1){%>
+                      <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
+                  <% }%>
+                <% })%>
+              <% }else{ %>
+                <% disciplinas.forEach(disciplina => { %>
+                  <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
+                <% })%>
+              <% }%>
             </select>
             <br>
             <label>Período da Disciplina</label>
@@ -57,7 +74,8 @@
           <hr>
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
         <hr>

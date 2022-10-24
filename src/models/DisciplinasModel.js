@@ -9,6 +9,11 @@ Disciplina.buscarDisciplinas = async () => {
   return disciplinas.rows;
 };
 
+Disciplina.buscarDisciplinasNaoRegistradas = async () => {
+  const disciplinas = await client.query("SELECT * FROM disciplinas ORDER BY id");
+  return disciplinas.rows;
+};
+
 Disciplina.save = async (body) => {
   try {
     await client.query(

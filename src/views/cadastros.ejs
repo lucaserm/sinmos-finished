@@ -5,38 +5,60 @@
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3" style="align-items: center; justify-content: center;">
-        <h1 class="text-center">Sistema Integrado de Segurança</h1>
+        <h1 class="text-center">SINMOS</h1>
         <p class="text-center lead">Selecione a opção desejada.</p>
         <form action="/cadastro/estudante" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Estudante</button>
         </form>
         <form action="/cadastro/curso" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Curso</button>
         </form>
         <form action="/cadastro/matricula" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Matrícula</button>
         </form>
         <form action="/cadastro/disciplina" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Disciplina</button>
         </form>
         <form action="/cadastro/horario" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Horário</button>
         </form>
         <form action="/cadastro/horarioestudante" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Disciplina ao Estudante</button>
         </form>
         <form action="/cadastro/registro" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Registros</button>
         </form>
+        <form action="/cadastro/usuario" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-success">Usuários</button>
+        </form>
+        <form action="/cadastro/ocorrencia" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-success">Ocorrência</button>
+        </form>
+        <form action="/cadastro/ocorrenciaestudante" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-success">Ocorrência ao Estudante</button>
+        </form>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>

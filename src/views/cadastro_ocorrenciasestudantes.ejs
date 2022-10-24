@@ -5,29 +5,35 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Registre um Curso à um Estudante</h1>
+        <h1 class="text-center">Registre uma Disciplina para um Estudante</h1>
         <p class="text-center lead">Formulário para inserção no banco de dados.</p>
-        <form action="/cadastro/matriculasalvo" method="post">
+        <form action="/cadastro/ocorrenciaestudantesalvo" method="post">
           <div class="form-group">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
-            <label>Ano de Matrícula</label>
-            <input type="number" name="ano_matricula" class="form-control" value="2022">
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
               <% estudantes.forEach( estudante => { %>
-                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+                <% if(typeof id != 'undefined'){%>
+                  <% if(id == estudante.id){%>
+                    <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+                  <% }%>
+                <%} else {%>
+                  <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+                <%}%>
               <% });%>
             </select>
-            <label>Curso</label>
-            <select name="id_cursos" class="form-control">
-              <% cursos.forEach( curso => { %>
-                <option value="<%= curso.id %>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
+            <label>Ocorrência</label>
+            <select name="id_ocorrencia" class="form-control">
+              <% ocorrencias.forEach( ocorrencia => { %>
+                <option value="<%= ocorrencia.id%>"><%= ocorrencia.descricao_ocorrencia%></option>
               <% });%>
             </select>
+            <br>
+            <input type="text" name="nome_usuario_relacionado" class="form-control" placeholder="Nome Assistente Auxiliar">
           </div>
           <hr>
-          <button type="submit" class="btn button btn-success" style="margin: 0;">Relacionar Matrícula</button>
+          <button type="submit" class="btn button btn-success" style="margin: 0;">Salvar Ocorrência ao Estudante</button>
           <hr>
         </form>
         <form action="/cadastro" method="post">

@@ -25,7 +25,7 @@
           </table>
           <hr>
           <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="123456" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
@@ -35,12 +35,12 @@
           <p class="text-center lead">Não existem registros disponíveis.</p>
           <hr>
           <form action="/cadastro" method="post">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <button class="btn button btn-success">Cadastros</button>
           </form>
           <hr>
           <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="123456" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>

@@ -73,24 +73,27 @@ CREATE TABLE Usuarios (
 );
 
 CREATE TABLE Ocorrencias (
-    id_usuarios integer references Usuarios(id),
-    descricao text,
-    data_advertencia date,
-    nome_assistente_relacionado varchar(50),
+    descricao_ocorrencia text,
 	id serial PRIMARY KEY
 );
 
 CREATE TABLE OcorrenciasEstudantes (
-    id_ocorrencias integer,
-    id_estudantes integer,
+    id_usuarios integer references Usuarios(id),
+    id_ocorrencias integer references Ocorrencias(id),
+    id_estudantes integer references Estudantes(id),
+    data_ocorrencia date,
+    nome_usuario_relacionado varchar(50),
 	id serial PRIMARY KEY
 );
  
 CREATE TABLE Advertencias (
     id_ocorrencia integer references Ocorrencias(id),
     status varchar(30),
-    descricao text,
-    data_advertencia date,
-    nome_assistente_relacionado varchar(50),
+    descricao_advertencia text,
+    data_resolucao date,
     id serial PRIMARY KEY
 );
+
+INSERT INTO Usuarios VALUES('Juninho Portugal', 'bandadejavu', '4422', 'Coordenacao');
+INSERT INTO Usuarios VALUES('ShowMaker', 'fazedordeshow', '0666', 'Assistencia');
+INSERT INTO Usuarios VALUES('Mucalol', 'lolmestre', '01110010', 'Portaria');

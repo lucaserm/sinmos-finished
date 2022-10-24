@@ -21,13 +21,24 @@ Horario.save = async (body) => {
   }
 };
 
-Horario.buscaHorarios = async () => {
+Horario.buscaHorariosDiscipinas = async () => {
   try {
     const horarios = await client.query(`
     SELECT horarios.id, nome_disciplina, turma, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
     FROM horarios, disciplinas
     WHERE id_disciplinas = disciplinas.id
     ORDER BY id
+    `);
+    return horarios.rows;
+  } catch (e) {
+    console.log(`Houve um erro ${e}`);
+  }
+};
+
+Horario.buscaHorarios = async () => {
+  try {
+    const horarios = await client.query(`
+    SELECT * FROM horarios ORDER BY id
     `);
     return horarios.rows;
   } catch (e) {

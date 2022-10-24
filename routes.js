@@ -18,6 +18,9 @@ route.post('/cadastro/estudante', cadastroController.cadastroEstudante);
 route.post('/cadastro/responsavel', cadastroController.cadastroResponsavel);
 route.post('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstudante);
 route.post('/cadastro/registro', cadastroController.cadastroRegistro);
+route.post('/cadastro/usuario', cadastroController.cadastroUsuario);
+route.post('/cadastro/ocorrencia', cadastroController.cadastroOcorrencia);
+route.post('/cadastro/ocorrenciaestudante', cadastroController.cadastroOcorrenciaEstudante);
 //Salvando
 route.post('/cadastro/cursosalvo', cadastroController.trataPost);
 route.post('/cadastro/disciplinasalvo', cadastroController.trataPost);
@@ -44,7 +47,9 @@ route.post('/cadastro/estudantesalvo', upload.single('avatar'), cadastroControll
 route.post('/cadastro/responsavelsalvo', cadastroController.trataPost);
 route.post('/cadastro/horarioestudantesalvo', cadastroController.trataPost);
 route.post('/cadastro/registrosalvo', cadastroController.trataPost);
+route.post('/cadastro/usuariosalvo', cadastroController.trataPost);
 route.post('/cadastro/ocorrenciasalvo', cadastroController.trataPost);
+route.post('/cadastro/ocorrenciaestudantesalvo', cadastroController.trataPost);
 
 //Rotas do administrador
 //Login do Administrador

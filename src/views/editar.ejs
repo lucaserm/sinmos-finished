@@ -9,11 +9,12 @@
         <p class="text-center lead">Altere o Estudante abaixo.</p>
         <form action="/administracao/editadoEstudante" method="POST">
           <div class="form-group ">
-            <input type="text" name="user" value="<%= user%>" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Nome do Estudante</label>
             <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0].nome_estudante%>" required>
             <label>CPF</label>
-            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0].cpf%>" autocomplete="off" required>
+            <input type="text" class="form-control" name="cpf" value="<%= estudantes[0].cpf%>" autocomplete="off" required>
             <label>RA</label>
             <input type="text" class="form-control" name="ra" value="<%= estudantes[0].ra%>" autocomplete="off" required>
             <div align="center">
@@ -27,8 +28,8 @@
           <hr>
         </form>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="user" value="<%= user%>" hidden>
-          <input type="text" name="senha" value="123456" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>
