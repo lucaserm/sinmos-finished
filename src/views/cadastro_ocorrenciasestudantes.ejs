@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Registre uma Disciplina para um Estudante</h1>
+        <h1 class="text-center">Registre uma Ocorrência para um Estudante</h1>
         <p class="text-center lead">Formulário para inserção no banco de dados.</p>
         <form action="/cadastro/ocorrenciaestudantesalvo" method="post">
           <div class="form-group">
@@ -23,20 +23,22 @@
                 <%}%>
               <% });%>
             </select>
+            <br>
             <label>Ocorrência</label>
-            <select name="id_ocorrencia" class="form-control">
+            <select name="id_ocorrencias" class="form-control">
               <% ocorrencias.forEach( ocorrencia => { %>
                 <option value="<%= ocorrencia.id%>"><%= ocorrencia.descricao_ocorrencia%></option>
               <% });%>
             </select>
             <br>
-            <input type="text" name="nome_usuario_relacionado" class="form-control" placeholder="Nome Assistente Auxiliar">
+            <input type="text" name="nome_usuario_relacionado" class="form-control" placeholder="Nome Assistente Auxiliar" autocomplete="off">
+            <hr>
+            <input type="password" name="senha_" class="form-control" placeholder="INSIRA SUA SENHA AQUI" style="text-align: center;">
           </div>
-          <hr>
           <button type="submit" class="btn button btn-success" style="margin: 0;">Salvar Ocorrência ao Estudante</button>
           <hr>
         </form>
-        <form action="/cadastro" method="post">
+        <form action="/administracao/paginainicial" method="post">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>

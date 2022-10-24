@@ -30,6 +30,7 @@
           <hr>
           <% if(users[0].cargo == 'Assistencia'){%>
             <form action="/cadastro/ocorrenciaestudante" method="post">
+              <input type="text" name="id" value="<%= estudantes[0][0].id_estudantes%>" hidden>
               <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
               <input type="text" name="senha" value="<%= senha%>" hidden>
               <button class="btn button btn-success">Registrar Ocorrência</button>
@@ -42,7 +43,6 @@
         <%}%>
         <hr>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="id" value="<%= estudantes[0][0].id_estudantes%>" hidden>
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>

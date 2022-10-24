@@ -5,34 +5,38 @@
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
-        <h1 class="text-center">Requisições</h1>
-        <p class="text-center lead">Todos as requisições registradas: </p>
-        <% if (registros[0].length > 0){ %>
+        <h1 class="text-center">Ocorrências</h1>
+        <p class="text-center lead">Todos as ocorrências registradas: </p>
+        <% if (ocorrencias.length > 0){ %>
         <div class="responsive-table">
           <table class="table my-3">
             <tr align="center">
-              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td><td>Hora da saída</td>
+              <td>Servidor Relacionado</td>
+              <td>RA do Estudante</td>
+              <td>Nome do Estudante</td>
+              <td>Descrição</td>
+              <td>Data Ocorrência</td>
             </tr>
-            <% registros[0].forEach(registro => { %>
+            <% ocorrencias.forEach(ocorrencia => { %>
             <tr align="center">
-              <td><%= registro.ra%></td>
-              <td><img src="<%= registro.foto%>" width="70"></td>
-              <td><%= registro.descricao%></td>
-              <td><%= registro.dia_liberacao%></td>
-              <td><%= registro.dia_hora_saida%></td>
+              <td><%= ocorrencia.nome_usuario_relacionado%></td>
+              <td><%= ocorrencia.ra%></td>
+              <td><%= ocorrencia.nome_estudante%></td>
+              <td><%= ocorrencia.descricao_ocorrencia%></td>
+              <td><%= ocorrencia.data_ocorrencia%></td>
             </tr>
             <% }); %>
           </table>
           <hr>
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<% senha%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
         </div>
         <% } else { %>
           <hr>
-          <p class="text-center lead">Não existem registros disponíveis.</p>
+          <p class="text-center lead">Não existem ocorrências disponíveis.</p>
           <hr>
           <form action="/cadastro" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
@@ -42,7 +46,7 @@
           <hr>
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<% senha%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
         <% } %>

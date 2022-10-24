@@ -59,6 +59,7 @@ route.post('/administracao/paginainicial', administracaoController.paginaAdm);
 // Configuração de armazenamento de imagens
 route.post('/administracao/horarios', administracaoController.horarios);
 route.post('/administracao/requisicoes', administracaoController.requisicoes);
+route.post('/administracao/ocorrencias', administracaoController.ocorrencias);
 route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editar', administracaoController.editar);
 storage = multer.diskStorage({

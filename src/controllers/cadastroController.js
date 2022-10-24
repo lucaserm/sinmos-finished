@@ -10,10 +10,23 @@ const Usuario = require('../models/UsuariosModel');
 const Ocorrencia = require('../models/OcorrenciasModel')
 const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes')
 
-exports.cadastros = (req, res) => {
-    const codigo_servidor = req.body.codigo_servidor;
-    const senha = req.body.senha;
-    res.render('cadastros', { codigo_servidor, senha });
+exports.cadastros = async (req, res) => {
+    const users = await Usuario.buscaPorCodigo(req.body.codigo_servidor);
+    let codigo_servidor = users[0].codigo_servidor;
+    let senha = users[0].senha;
+    //Super User
+    if(req.body.codigo_servidor == 'root'){
+        let codigo_servidor = 'root'; 
+        let senha = '123456'
+        res.render('cadastros', { codigo_servidor, senha } );
+    }
+    if(users[0].cargo == 'Coordenacao'){
+        res.render('cadastros', { codigo_servidor, senha } );
+    } else if(users[0].cargo == 'Portaria'){
+        res.render('portaria', { codigo_servidor, senha });
+    } else if(users[0].cargo == 'Assistencia'){
+        res.render('assistencia', { codigo_servidor, senha });
+    }
 };
 
 exports.cadastroCurso = (req, res) => {
@@ -86,6 +99,7 @@ exports.cadastroOcorrenciaEstudante = async(req, res) => {
 }
 
 exports.trataPost = async(req, res) => {
+    let id = typeof req.body.id == 'undefined' ? 0 : req.body.id;
     if(req.url == '/cadastro/cursosalvo'){
         Curso.save(req.body);
     }else if(req.url == '/cadastro/disciplinasalvo'){
@@ -107,11 +121,14 @@ exports.trataPost = async(req, res) => {
     }else if(req.url == '/cadastro/ocorrenciasalvo'){
         Ocorrencia.save(req.body);
     }else if(req.url == '/cadastro/ocorrenciaestudantesalvo'){
-        OcorrenciaEstudante.save(req.body);
+        if(req.body.senha_ == req.body.senha){
+            OcorrenciaEstudante.save(req.body);
+        }else{
+            id = 1;
+        }
     }
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    const id = req.body.id;
-    res.render('salvo', {req, id, codigo_servidor, senha});
+    res.render('salvo', {id, codigo_servidor, senha});
     return;
 };

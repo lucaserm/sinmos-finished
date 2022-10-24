@@ -2,7 +2,7 @@ const Estudante = require('../models/EstudantesModel');
 const Responsavel = require('../models/ResponsaveisModel');
 const Registro = require('../models/RegistrosModel');
 const Advertencia = require('../models/AdvertenciasModel');
-const Usuarios = require('../models/UsuariosModel');
+const Usuario = require('../models/UsuariosModel');
 const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes');
 
 //página de login
@@ -13,7 +13,7 @@ exports.login = (req, res) => {
 //gerenciando todos os users 
 exports.paginaAdm = async(req, res) => {
     //variável para manipulação de páginas
-    const users = await Usuarios.buscaUsuarios();
+    const users = await Usuario.buscaUsuarios();
     //Super User
     const estudantes = await Estudante.buscaEstudantes();
     if(req.body.codigo_servidor == 'root' && req.body.senha == '123456'){
@@ -21,24 +21,23 @@ exports.paginaAdm = async(req, res) => {
         let senha = '123456'
         const estudantes = await Estudante.buscaEstudantes();
         res.render('coordenacao', { estudantes, codigo_servidor, senha } );
-    }
-    if(users.length > 0){
+    }else if(users.length > 0){
         users.forEach( usuario => {
-            //Coordenação
             if (req.body.codigo_servidor == usuario.codigo_servidor && req.body.senha == usuario.senha){
                 let codigo_servidor = usuario.codigo_servidor;
                 let senha = usuario.senha;
                 if(usuario.cargo == 'Coordenacao'){
                     res.render('coordenacao', { estudantes, codigo_servidor, senha } );
                 } else if(usuario.cargo == 'Portaria'){
-                    res.render('portaria', { estudantes, codigo_servidor, senha });
+                    res.render('portaria', { codigo_servidor, senha });
                 } else if(usuario.cargo == 'Assistencia'){
-                    res.render('assistencia', { estudantes, codigo_servidor, senha });
+                    res.render('assistencia', {  codigo_servidor, senha });
                 }
             }
         });
+    } else {
+        res.render('login')
     }
-    res.render('login')
 };
 
 //página para editar dados do estudante
@@ -61,7 +60,7 @@ exports.editarSaidaEstudante = async(req, res) => {
     typeof req.file != 'undefined' ? await Estudante.liberacao('null', await lerQR(req.file.filename)) : {};
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    const users = await Usuarios.buscaPorCodigo(codigo_servidor);
+    const users = await Usuario.buscaPorCodigo(codigo_servidor);
     res.render('saidaEstudante', { estudantes, users, codigo_servidor, senha });
 }
 
@@ -119,4 +118,11 @@ exports.requisicoes = async(req, res) => {
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     res.render('requisicoes', { registros, codigo_servidor, senha });
+}
+
+exports.ocorrencias = async(req, res) => {
+    const codigo_servidor = req.body.codigo_servidor;
+    const senha = req.body.senha;
+    const ocorrencias = await OcorrenciaEstudante.buscaPorServidor(codigo_servidor);
+    res.render('ocorrencias', {ocorrencias, codigo_servidor, senha})
 }

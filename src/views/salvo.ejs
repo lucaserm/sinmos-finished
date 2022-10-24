@@ -8,11 +8,16 @@
         <h1 class="text-center">Sistema Integrado de Monitoramento e Segurança</h1>
         <br>
         <hr>
-        <h4 class="text-center">Salvo com sucesso!</h4>
+        <% if(id == 1){%>
+          <h4 class="text-center">Senha Inválida!</h4>
+        <% } else {%>
+          <h4 class="text-center">Salvo com sucesso!</h4>
+        <% }%>
         <hr>
         <br>
-        <form action="/cadastro" method="post">
+        <form action="/administracao/paginainicial" method="post">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>

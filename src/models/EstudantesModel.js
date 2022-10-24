@@ -161,19 +161,22 @@ Estudante.liberacao = async (body, ra) => {
     
     if(typeof body == 'object'){
       if(body.nome != 'null'){
+        body.nome = body.nome.trim();
+        body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
           `
           SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
           FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE nome_estudante = $1
+          WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
           AND id_estudantes = estudantes.id
           AND id_horarios = horarios.id
           AND id_disciplinas = disciplinas.id
           ORDER BY estudantes.id
-          `, [body.nome]
+          `
         );
       }
       if(body.cpf != ''){
+        body.cpf = body.cpf.trim()
         estudantes = await client.query(
           `
           SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -188,6 +191,7 @@ Estudante.liberacao = async (body, ra) => {
         );
       }
       if (body.ra != '') {
+        body.ra = body.ra.trim()
         estudantes = await client.query(
           `
           SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
