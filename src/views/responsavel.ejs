@@ -37,6 +37,7 @@
                   <td>Servido Relacionado</td>
                   <td>Descrição</td>
                   <td>Data da Ocorrência</td>
+                  <td>Status</td>
                 </tr>
                 <% ocorrencias.forEach( ocorrencia => {%>
                   <tr>
@@ -44,6 +45,7 @@
                     <td><%= ocorrencia.nome_usuario_relacionado%></td>
                     <td><%= ocorrencia.descricao_ocorrencia%></td>
                     <td><%= ocorrencia.data_ocorrencia%></td>
+                    <td><%= ocorrencia.status%></td>
                   </tr>  
                 <% })%>
               </table>

@@ -83,12 +83,12 @@ CREATE TABLE OcorrenciasEstudantes (
     id_estudantes integer references Estudantes(id),
     data_ocorrencia date,
     nome_usuario_relacionado varchar(50),
+    status varchar(30),
 	id serial PRIMARY KEY
 );
  
 CREATE TABLE Advertencias (
-    id_ocorrencia integer references Ocorrencias(id),
-    status varchar(30),
+    id_ocorrenciasestudantes integer references OcorrenciasEstudantes(id),
     descricao_advertencia text,
     data_resolucao date,
     id serial PRIMARY KEY

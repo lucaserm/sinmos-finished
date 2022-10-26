@@ -11,7 +11,7 @@
         <div class="responsive-table">
           <table class="table my-3">
             <tr align="center">
-              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td><td>Hora da saída</td>
+              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
             </tr>
             <% registros[0].forEach(registro => { %>
             <tr align="center">
@@ -19,7 +19,6 @@
               <td><img src="<%= registro.foto%>" width="70"></td>
               <td><%= registro.descricao%></td>
               <td><%= registro.dia_liberacao%></td>
-              <td><%= registro.dia_hora_saida%></td>
             </tr>
             <% }); %>
           </table>
@@ -34,17 +33,31 @@
           <hr>
           <p class="text-center lead">Não existem registros disponíveis.</p>
           <hr>
-          <form action="/cadastro" method="post">
+          <form action="/cadastro/registro" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-success">Cadastros</button>
           </form>
           <hr>
-          <form action="/administracao/paginainicial" method="post">
+          <% if(users[0].cargo == 'Coordenacao'){%>
+          <form action="/administracao/horarios" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
+          <% } else if(users[0].cargo == 'Assistencia'){%>
+            <form action="/administracao/saidaEstudante method="post">
+              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+              <input type="text" name="senha" value="<% senha%>" hidden>
+              <button class="btn button btn-dark">Voltar</button>
+            </form>
+          <% } else if(users[0].cargo == 'Portaria'){%>
+            <form action="/administracao/paginainicial" method="post">
+              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+              <input type="text" name="senha" value="<% senha%>" hidden>
+              <button class="btn button btn-dark">Voltar</button>
+            </form>
+          <% }%>
         <% } %>
       </div>
       <div class="col-lg-2"></div>

@@ -8,7 +8,9 @@ const HorarioEstudante = require('../models/HorariosEstudantesModel');
 const Registro = require('../models/RegistrosModel');
 const Usuario = require('../models/UsuariosModel');
 const Ocorrencia = require('../models/OcorrenciasModel')
-const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes')
+const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes');
+const Advertencia = require('../models/AdvertenciasModel');
+const RegistroEstudante = require('../models/RegistrosEstudantes');
 
 exports.cadastros = async (req, res) => {
     const users = await Usuario.buscaPorCodigo(req.body.codigo_servidor);
@@ -115,7 +117,7 @@ exports.trataPost = async(req, res) => {
     }else if(req.url == '/cadastro/horarioestudantesalvo'){
         HorarioEstudante.save(req.body);
     }else if(req.url == '/cadastro/registrosalvo'){
-        Registro.save(req.body);
+        RegistroEstudante.save(req.body, await Registro.save(req.body));
     }else if(req.url == '/cadastro/usuariosalvo'){
         Usuario.save(req.body);
     }else if(req.url == '/cadastro/ocorrenciasalvo'){
@@ -125,6 +127,15 @@ exports.trataPost = async(req, res) => {
             OcorrenciaEstudante.save(req.body);
         }else{
             id = 1;
+        }
+    }else if(req.url == '/cadastro/advertenciasalvo'){
+        if(typeof req.body.descricao_advertencia != 'undefined'){
+            OcorrenciaEstudante.updateAprovado(req.body);
+            Advertencia.save(req.body);
+        }else{
+            id = 0;
+            OcorrenciaEstudante.updateReprovado(req.body);
+            res.render('salvo', { id, codigo_servidor, senha });
         }
     }
     const codigo_servidor = req.body.codigo_servidor;

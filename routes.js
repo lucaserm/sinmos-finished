@@ -50,6 +50,7 @@ route.post('/cadastro/registrosalvo', cadastroController.trataPost);
 route.post('/cadastro/usuariosalvo', cadastroController.trataPost);
 route.post('/cadastro/ocorrenciasalvo', cadastroController.trataPost);
 route.post('/cadastro/ocorrenciaestudantesalvo', cadastroController.trataPost);
+route.post('/cadastro/advertenciasalvo', cadastroController.trataPost);
 
 //Rotas do administrador
 //Login do Administrador
@@ -59,6 +60,7 @@ route.post('/administracao/paginainicial', administracaoController.paginaAdm);
 // Configuração de armazenamento de imagens
 route.post('/administracao/horarios', administracaoController.horarios);
 route.post('/administracao/requisicoes', administracaoController.requisicoes);
+route.post('/administracao/advertencias', administracaoController.advertencias);
 route.post('/administracao/ocorrencias', administracaoController.ocorrencias);
 route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editar', administracaoController.editar);
@@ -78,7 +80,7 @@ storage = multer.diskStorage({
     }
 });
 upload = multer({ storage });
-route.post('/administracao/saidaEstudante', upload.single('avatar'), administracaoController.editarSaidaEstudante);
+route.post('/administracao/saidaEstudante', upload.single('avatar'), administracaoController.saidaEstudante);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
 route.post('/administracao/deleteAdvertencia', administracaoController.trataEditado);

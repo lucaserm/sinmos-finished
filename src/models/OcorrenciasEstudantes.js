@@ -19,11 +19,69 @@ OcorrenciaEstudante.save = async (body) => {
   }
 }
 
+OcorrenciaEstudante.updateAprovado = async (body) => {
+  try {
+    await client.query(
+      `UPDATE ocorrenciasestudantes SET status = 'Finalizado' WHERE id = ${body.id}`
+    );
+    console.log('Status Aprovado')
+  } catch (e) {
+    console.log(`Houve um erro ${e}`);
+  }
+}
+
+OcorrenciaEstudante.updateReprovado = async (body) => {
+  try {
+    await client.query(
+      `UPDATE ocorrenciasestudantes SET status = 'Reprovado' WHERE id = ${body.id}`
+    );
+    console.log('Status Reprovado')
+  } catch (e) {
+    console.log(`Houve um erro ${e}`);
+  }
+}
+
+OcorrenciaEstudante.buscar = async () => {
+  try {
+    const ocorrencias = await client.query(
+      `
+      SELECT nome_usuario, nome_usuario_relacionado, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ra, ocorrenciasestudantes.id
+      FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
+      WHERE id_estudantes = estudantes.id
+      AND id_ocorrencias = ocorrencias.id
+      AND id_usuarios = usuarios.id
+      ORDER BY ocorrenciasestudantes.id
+      `
+    );
+    return ocorrencias.rows;
+  } catch (e) {
+    console.log(`Houve um erro ${e}`);
+  }
+};
+
+OcorrenciaEstudante.buscarPorID = async (id) => {
+  try {
+    const ocorrencias = await client.query(
+      `
+      SELECT nome_usuario, nome_usuario_relacionado, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ra
+      FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
+      WHERE id_estudantes = estudantes.id
+      AND id_ocorrencias = ocorrencias.id
+      AND id_usuarios = usuarios.id
+      AND ocorrenciasestudantes.id = $1
+      `, [id]
+    );
+    return ocorrencias.rows;
+  } catch (e) {
+    console.log(`Houve um erro ${e}`);
+  }
+};
+
 OcorrenciaEstudante.buscarPorRa = async (body) => {
   try {
     const ocorrencias = await client.query(
       `
-      SELECT nome_usuario, nome_usuario_relacionado, descricao_ocorrencia, data_ocorrencia
+      SELECT nome_usuario, nome_usuario_relacionado, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
       FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
       WHERE id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
@@ -43,7 +101,7 @@ OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
   try {
     const ocorrencias = await client.query(
       `
-      SELECT nome_usuario_relacionado, ra,nome_estudante, descricao_ocorrencia, data_ocorrencia
+      SELECT codigo_servidor, nome_usuario_relacionado, ra, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
       FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
       WHERE id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id

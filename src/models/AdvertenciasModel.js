@@ -10,7 +10,7 @@ Advertencia.save = async (body) => {
   try {
     await client.query(
       "INSERT INTO advertencias(descricao, data_advertencia, id_estudantes) VALUES ($1, CURRENT_TIMESTAMP, $2)",
-      [body.descricao, body.id_estudantes]
+      [body.descricao_advertencia, body.id]
     );
     console.log("Advertência Salva");
   } catch (e) {
@@ -21,7 +21,7 @@ Advertencia.save = async (body) => {
 Advertencia.buscaAdvertenciaPorRA = async (body) => {
   try {
     const advertencias = await client.query(
-      "SELECT advertencias.* FROM advertencias, ocorrencias WHERE id_ocorrencia = ocorrencias.id AND status = 'Finalizado' ORDER BY id"
+      "SELECT advertencias.* FROM advertencias, ocorrenciasestudantes WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id AND ocorrenciasestudantes.status = 'Finalizado' ORDER BY id"
     );
     return advertencias.rows;
   } catch (e) {

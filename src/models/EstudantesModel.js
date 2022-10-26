@@ -73,10 +73,19 @@ Estudante.buscaPorCPF = async (body) => {
 
 Estudante.buscaPorNome = async(body) => {
   try {
-    const estudantes = await client.query(
-      `SELECT * FROM estudantes WHERE nome_estudante = $1 ORDER BY id`, [body.nome]
-    );
-    return estudantes.rows;
+    if(typeof body.nome != 'undefined'){
+      body.nome = body.nome.trim();
+      body.nome = body.nome.replace(' ', '%');
+      const estudantes = await client.query(
+        `
+        SELECT *
+        FROM estudantes
+        WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
+        ORDER BY estudantes.id
+        `
+      );
+      return estudantes.rows;
+    }
   } catch (e) {
     console.log(e)
   }
@@ -93,15 +102,26 @@ Estudante.buscaEstudantes = async () => {
   }
 };
 
-Estudante.buscaHorarios = async (body, filename) => {
+Estudante.buscaHorarios = async (body, ra) => {
   try {
     let estudantes;
-    filename = "/assets/img/crachas/" + filename;
-    if (filename != 'null') {
-      // // criar um leitor de código de barras
+    if (ra != 'null') {
+      console.log(ra)
+      estudantes = await client.query(
+        `
+          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+          FROM estudantes, horarios, disciplinas, horariosestudantes
+          WHERE ra = $1 
+          AND id_estudantes = estudantes.id
+          AND id_horarios = horarios.id
+          AND id_disciplinas = disciplinas.id
+          ORDER BY estudantes.id
+        `,
+        [ra]);
     }
-    if(body != 'null'){
+    if(typeof body == 'object'){
       if (body.ra != '') {
+        body.ra = body.ra.trim();
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -113,6 +133,7 @@ Estudante.buscaHorarios = async (body, filename) => {
           );
       }
       if(body.cpf != ''){
+        body.cpf = body.cpf.trim();
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -124,16 +145,18 @@ Estudante.buscaHorarios = async (body, filename) => {
           );
       }
       if(body.nome != ''){
+        body.nome = body.nome.trim();
+        body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
           FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE nome_estudante = $1
+          WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
           AND id_estudantes = estudantes.id
           AND id_horarios = horarios.id
           AND id_disciplinas = disciplinas.id
           ORDER BY estudantes.id
-          `, [body.nome]
+          `
         );
       }
     }
@@ -162,7 +185,8 @@ Estudante.liberacao = async (body, ra) => {
     }
     
     if(typeof body == 'object'){
-      if(body.nome != 'null'){
+      if(typeof body.nome != 'undefined'){
+        if(body.nome != ''){
         body.nome = body.nome.trim();
         body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
@@ -176,35 +200,40 @@ Estudante.liberacao = async (body, ra) => {
           ORDER BY estudantes.id
           `
         );
+        }
       }
-      if(body.cpf != ''){
-        body.cpf = body.cpf.trim()
-        estudantes = await client.query(
-          `
-          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE cpf = $1 
-          AND id_estudantes = estudantes.id
-          AND id_horarios = horarios.id
-          AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
-          `,
-            [body.cpf]
-        );
+      if(typeof body.cpf != 'undefined'){
+        if(body.cpf != ''){
+          body.cpf =  body.cpf.trim();
+          estudantes = await client.query(
+            `
+            SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+            FROM estudantes, horarios, disciplinas, horariosestudantes
+            WHERE cpf = $1 
+            AND id_estudantes = estudantes.id
+            AND id_horarios = horarios.id
+            AND id_disciplinas = disciplinas.id
+            ORDER BY estudantes.id
+            `,
+              [body.cpf]
+          );
+        }
       }
-      if (body.ra != '') {
-        body.ra = body.ra.trim()
-        estudantes = await client.query(
-          `
-          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE ra = $1 
-          AND id_estudantes = estudantes.id
-          AND id_horarios = horarios.id
-          AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
-          `, [body.ra]
-        );
+      if (typeof body.ra != 'undefined'){
+        if(body.ra != '') {
+          body.ra = body.ra.trim();
+          estudantes = await client.query(
+            `
+            SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
+            FROM estudantes, horarios, disciplinas, horariosestudantes
+            WHERE ra = $1 
+            AND id_estudantes = estudantes.id
+            AND id_horarios = horarios.id
+            AND id_disciplinas = disciplinas.id
+            ORDER BY estudantes.id
+            `, [body.ra]
+          );
+        }
       }
     }
 

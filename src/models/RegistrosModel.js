@@ -10,10 +10,11 @@ class Registro{
 Registro.save = async (body) => {
   try {
     let dia_hora_saida = `${body.dia_liberacao} 00:00:00`;
-    await client.query(
-      "INSERT INTO Registros(dia_hora_saida, dia_liberacao, descricao) VALUES($1, $2, $3)",
+    const id = await client.query(
+      "INSERT INTO Registros(dia_hora_saida, dia_liberacao, descricao) VALUES($1, $2, $3) returning id",
       [dia_hora_saida, body.dia_liberacao, body.descricao]
     );
+    return id.rows;
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }

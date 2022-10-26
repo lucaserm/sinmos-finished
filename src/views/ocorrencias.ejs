@@ -6,7 +6,7 @@
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
         <h1 class="text-center">Ocorrências</h1>
-        <p class="text-center lead">Todos as ocorrências registradas: </p>
+        <p class="text-center lead">Minhas ocorrências registradas </p>
         <% if (ocorrencias.length > 0){ %>
         <div class="responsive-table">
           <table class="table my-3">
@@ -28,6 +28,12 @@
             <% }); %>
           </table>
           <hr>
+          <form action="/cadastro/ocorrenciaestudante" method="post">
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<% senha%>" hidden>
+            <button class="btn button btn-success">Registrar Ocorrência</button>
+          </form>
+          <hr>
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
@@ -38,7 +44,7 @@
           <hr>
           <p class="text-center lead">Não existem ocorrências disponíveis.</p>
           <hr>
-          <form action="/cadastro" method="post">
+          <form action="/cadastro/ocorrenciaestudante" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-success">Cadastros</button>
