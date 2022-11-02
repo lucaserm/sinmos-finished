@@ -6,45 +6,55 @@
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
         <h1 class="text-center">Horários</h1>
-        <p class="text-center lead">Os horários do aluno estão abaixo.</p>
         <% if(repetir.length > 1){%>
-          <form action="/administracao/saidaEstudante " method="POST" enctype="multipart/form-data">
-            <div class="responsive-table">
-              <table class="table my-3" color>
-                <tr align="center">
-                  <td>Id</td><td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
-                </tr>
-                <% repetir.forEach(estudante => { %>  
-                <tr class="vertival-align-center" align="center">
-                  <td><%= estudante.id%></td>
-                  <td><%= estudante.nome_estudante%></td>
-                  <td><%= estudante.cpf%></td>
-                  <td><%= estudante.ra%></td>
-                  <td><img src="<%= estudante.foto%>" height="60"></td>
-                </tr>
-                <tr>
-                  <td colspan="5">
-                    <form action="/administracao/horarios method="post">
-                      <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
-                      <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-                      <input type="text" name="senha" value="<%= senha%>" hidden>
-                      <button class="btn button btn-info">Selecionar</button>
-                    </form>
-                  </td>
-                </tr>
-                <% }); %>    
-              </table>
-            </div>
+          <div class="responsive-table">
+            <table class="table my-3" color>
+              <tr align="center">
+                <td>Id</td><td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
+              </tr>
+              <% repetir.forEach(estudante => { %>  
+              <tr class="vertival-align-center" align="center">
+                <td><%= estudante.id%></td>
+                <td><%= estudante.nome_estudante%></td>
+                <td><%= estudante.cpf%></td>
+                <td><%= estudante.ra%></td>
+                <td><img src="<%= estudante.foto%>" height="60"></td>
+              </tr>
+              <tr>
+                <td colspan="5">
+                  <form action="/administracao/horarios" method="post">
+                    <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
+                    <input type="text" name="cpf" value="<%= estudante.cpf%>" hidden>
+                    <input type="text" name="nome" value="<%= estudante.nome_estudante%>" hidden>
+                    <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+                    <input type="text" name="senha" value="<%= senha%>" hidden>
+                    <button class="btn button btn-info">Selecionar</button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>    
+            </table>
+          </div>
+          <hr>
+          <form action="/administracao/paginainicial" method="post">
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-dark">Voltar</button>
           </form>
         <% }else if (horarios.length > 0){ %>
+        <div class="form-group" align="center">
+          <label>--- Nome do Estudante ---</label>
+          <input type="text" class="form-control" value="<%= horarios[0].nome_estudante%>" disabled style="text-align: center;">
+        </div>
         <div class="responsive-table">
           <table class="table" >
             <tr align="center">
-              <td>RA</td><td>Estudante</td><td>Disciplina</td><td>Período</td><td>Dia da Semana</td><td>Início</td><td>Fim</td>
+              <td>Disciplina</td><td>Período</td><td>Dia da Semana</td><td>Início</td><td>Fim</td>
             </tr>
             <% horarios.forEach(horario => { %>
             <tr align="center">
-              <td><%= ra = horario.ra%></td><td><%= horario.nome_estudante%></td><td><%= horario.nome_disciplina%></td>
+              <% ra = horario.ra%>
+              <td><%= horario.nome_disciplina%></td>
               <td><%= horario.periodo_horarios%></td><td><%= horario.dia_semana%></td><td><%= horario.tempo_inicio%>° Tempo</td>
               <td><%= horario.tempo_fim%>° Tempo</td>
             </tr>

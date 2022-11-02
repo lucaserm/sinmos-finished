@@ -97,6 +97,7 @@ exports.cadastroOcorrenciaEstudante = async(req, res) => {
     const estudantes = await Estudante.buscaEstudantes();
     const ocorrencias = await Ocorrencia.buscarOcorrencias();
     const id = req.body.id;
+    console.log(req.body.senha)
     res.render('cadastro_ocorrenciasestudantes', { estudantes, ocorrencias, codigo_servidor, senha, id });
 }
 

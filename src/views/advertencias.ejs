@@ -6,60 +6,69 @@
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
         <h1 class="text-center">Ocorrências</h1>
-        <p class="text-center lead">Todos as ocorrências registradas: </p>
-        <% if (ocorrencias.length > 0){ %>
-        <div class="responsive-table">
-          <table class="table my-3">
-            <tr align="center">
-              <td>Servidor que Registrou</td>
-              <td>Servidor Relacionado</td>
-              <td>RA do Estudante</td>
-              <td>Nome do Estudante</td>
-              <td>Descrição</td>
-              <td>Data Ocorrência</td>
-              <td>Status</td>
-            </tr>
-            <% ocorrencias.forEach(ocorrencia => { %>
+        <p class="text-center lead">Todas ocorrências registradas </p>
+        <% i = 0%>
+        <% ocorrencias.forEach(ocorrencia => { %>
+          <% if(ocorrencia.status == opcao){%>
+            <% i++%>
+          <%}%>
+        <% })%>
+        <% if(i == 0) {%>
+          <hr>
+          <p class="text-center lead">Não existem dados desse tipo registrados.</p>
+        <%} else {%>
+          <div class="responsive-table">
+            <table class="table my-3">
               <tr align="center">
-                <td><%= ocorrencia.nome_usuario%></td>
-                <td><%= ocorrencia.nome_usuario_relacionado%></td>
-                <td><%= ocorrencia.ra%></td>
-                <td><%= ocorrencia.nome_estudante%></td>
-                <td><%= ocorrencia.descricao_ocorrencia%></td>
-                <td><%= ocorrencia.data_ocorrencia%></td>
-                <td><%= ocorrencia.status%></td>
+                <td>Servidor que Registrou</td>
+                <td>Servidor Relacionado</td>
+                <td>Nome do Estudante</td>
+                <td>Descrição</td>
+                <td>Data Ocorrência</td>
+                <td>Status</td>
+                <td>Ver</td>
               </tr>
-              <% if(ocorrencia.status == 'Encaminhado'){%>
-              <tr>
-                <td colspan="7">
-                  <form action="/administracao/advertencias" method="post">
-                    <input type="text" name="id" value="<%= ocorrencia.id%>" hidden>
-                    <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-                    <input type="text" name="senha" value="<%= senha%>" hidden>
-                    <button class="btn button btn-info">Gerar Advertência</button>
-                  </form>
-                </td>
-              </tr>
-              <%}%>
-            <% }); %>
-          </table>
-        </div>
+              <% ocorrencias.forEach(ocorrencia => { %>
+                <% if(ocorrencia.status == opcao){%>
+                  <tr align="center">
+                  <td><%= ocorrencia.nome_usuario%></td>
+                  <td><%= ocorrencia.nome_usuario_relacionado%></td>
+                  <td><%= ocorrencia.nome_estudante%></td>
+                  <td><%= ocorrencia.descricao_ocorrencia%></td>
+                  <td><%= ocorrencia.data_ocorrencia%></td>
+                  <td><%= ocorrencia.status%></td>
+                  <% if(ocorrencia.status == 'Aprovado'){%>  
+                    <td>
+                      <form action="/administracao/advertencias" method="post">
+                        <input type="text" name="id" value="<%= ocorrencia.id%>" hidden>
+                        <input type="text" name="status" value="<%= ocorrencia.status%>" hidden>
+                        <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+                        <input type="text" name="senha" value="<%= senha%>" hidden>
+                        <button class="btn button btn-info">Ver</button>
+                      </form>
+                    </td>
+                  <% } else if(ocorrencia.status == 'Encaminhado'){%>
+                    <td>
+                      <form action="/administracao/advertencias" method="post">
+                        <input type="text" name="id" value="<%= ocorrencia.id%>" hidden>
+                        <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+                        <input type="text" name="senha" value="<%= senha%>" hidden>
+                        <button class="btn button btn-info">Ver</button>
+                      </form>
+                    </td>
+                  <% }%>
+                </tr>
+                <% }%>
+              <% }); %>
+            </table>
+          </div>
+        <%}%>
         <hr>
-        <form action="/administracao/paginainicial" method="post">
+        <form action="/administracao/advertencias" method="post">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <% } else { %>
-          <hr>
-          <p class="text-center lead">Não existem ocorrências disponíveis para análise.</p>
-          <hr>
-          <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-dark">Voltar</button>
-          </form>
-        <% } %>
       </div>
       <div class="col-lg-2"></div>
     </div>

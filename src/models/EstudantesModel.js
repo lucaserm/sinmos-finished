@@ -73,19 +73,17 @@ Estudante.buscaPorCPF = async (body) => {
 
 Estudante.buscaPorNome = async(body) => {
   try {
-    if(typeof body.nome != 'undefined'){
-      body.nome = body.nome.trim();
-      body.nome = body.nome.replace(' ', '%');
-      const estudantes = await client.query(
-        `
-        SELECT *
-        FROM estudantes
-        WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
-        ORDER BY estudantes.id
-        `
-      );
-      return estudantes.rows;
-    }
+    body.nome = String(body.nome).trim();
+    body.nome = body.nome.replace(' ', '%');
+    const estudantes = await client.query(
+      `
+      SELECT *
+      FROM estudantes
+      WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
+      ORDER BY estudantes.id
+      `
+    );
+    return estudantes.rows;
   } catch (e) {
     console.log(e)
   }
@@ -121,7 +119,7 @@ Estudante.buscaHorarios = async (body, ra) => {
     }
     if(typeof body == 'object'){
       if (body.ra != '') {
-        body.ra = body.ra.trim();
+        body.ra = String(body.ra).trim();
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -133,7 +131,7 @@ Estudante.buscaHorarios = async (body, ra) => {
           );
       }
       if(body.cpf != ''){
-        body.cpf = body.cpf.trim();
+        body.cpf = String(body.cpf).trim();
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -145,7 +143,7 @@ Estudante.buscaHorarios = async (body, ra) => {
           );
       }
       if(body.nome != ''){
-        body.nome = body.nome.trim();
+        body.nome = String(body.nome).trim();
         body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
           `
@@ -187,7 +185,7 @@ Estudante.liberacao = async (body, ra) => {
     if(typeof body == 'object'){
       if(typeof body.nome != 'undefined'){
         if(body.nome != ''){
-        body.nome = body.nome.trim();
+        body.nome = String(body.nome).trim();
         body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
           `
@@ -204,7 +202,7 @@ Estudante.liberacao = async (body, ra) => {
       }
       if(typeof body.cpf != 'undefined'){
         if(body.cpf != ''){
-          body.cpf =  body.cpf.trim();
+          body.cpf =  String(body.cpf).trim();
           estudantes = await client.query(
             `
             SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -221,7 +219,7 @@ Estudante.liberacao = async (body, ra) => {
       }
       if (typeof body.ra != 'undefined'){
         if(body.ra != '') {
-          body.ra = body.ra.trim();
+          body.ra = String(body.ra).trim();
           estudantes = await client.query(
             `
             SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -301,13 +299,11 @@ Estudante.liberacao = async (body, ra) => {
                   // hora igual a hora que começa
                   if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
                     //verifica os minutos
-                    if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto) {
+                    if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto){
                       status = [estudantes.rows, { aula: "Estudante em aula!" }];
                     }
                   }
-                } else {
-                  status = [estudantes.rows, { aula: "Estudante sem aula!" }];
-                }
+                } 
               }
             }
           }

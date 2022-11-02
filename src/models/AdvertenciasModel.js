@@ -8,9 +8,11 @@ class Advertencia{
 
 Advertencia.save = async (body) => {
   try {
+    let tempo = await client.query("SELECT CURRENT_TIMESTAMP"); 
+    tempo = tempo.rows;
     await client.query(
-      "INSERT INTO advertencias(descricao, data_advertencia, id_estudantes) VALUES ($1, CURRENT_TIMESTAMP, $2)",
-      [body.descricao_advertencia, body.id]
+      "INSERT INTO advertencias(descricao, data_advertencia, id_estudantes) VALUES ($1, $2, $3)",
+      [body.relatorio_advertencia, tempo[0].current_timestamp, body.id]
     );
     console.log("Advertência Salva");
   } catch (e) {
@@ -28,6 +30,22 @@ Advertencia.buscaAdvertenciaPorRA = async (body) => {
     console.log(e);
   }
 };
+
+Advertencia.buscaPorOcorrencia = async (body) => {
+  try {
+    await client.query(
+      `
+        SELECT nome_usuario, nome_usuario_relacionado, nome_estudante, descricao_ocorrencia, data_ocorrencia, relatorio_advertencia, data_resolucao
+        FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios, advertencias
+        WHERE id_estudantes = estudantes.id
+        AND id_ocorrencias = ocorrencias.id
+        AND id_usuarios = usuarios.id 
+        WHERE id_ocorrenciasestudantes = $1
+      `, [body.id]);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 Advertencia.deletePorRA = async (body) => {
   try {

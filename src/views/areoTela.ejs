@@ -1,0 +1,47 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+<div class="first_part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8 my-3">
+        <h1 class="text-center">Ocorrências</h1>
+        <p class="text-center lead">Todas ocorrências registradas</p>
+        <div class="form-group">
+          <form action="/administracao/advertencias" method="post">
+            <input type="text" name="opcao" value="Reprovado" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-danger">Reprovadas</button>
+          </form>
+          <form action="/administracao/advertencias" method="post">
+            <input type="text" name="opcao" value="Aprovado" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-success">Aprovadas</button>
+          </form>
+          <form action="/administracao/advertencias" method="post">
+            <input type="text" name="opcao" value="Encaminhado" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-warning">Encaminhadas</button>
+          </form>
+          <form action="/administracao/advertencias" method="post">
+            <input type="text" name="opcao" value="Observação" hidden>
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-info">Observações</button>
+          </form>
+        </div>
+        <hr>
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+      </div>
+      <div class="col-lg-2"></div>
+    </div>
+  </div>
+</div>
+<%- include('includes/footer');%>

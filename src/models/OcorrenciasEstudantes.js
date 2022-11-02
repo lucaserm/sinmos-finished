@@ -10,9 +10,11 @@ class OcorrenciaEstudante{
 OcorrenciaEstudante.save = async (body) => {
   try {
     const user = await Usuario.buscaPorCodigo(body.codigo_servidor);
+    let tempo = await client.query("SELECT CURRENT_TIMESTAMP");
+    tempo = tempo.rows;
     await client.query(
-      "INSERT INTO ocorrenciasestudantes VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4)",
-      [user[0].id, body.id_ocorrencias, body.id_estudantes, body.nome_usuario_relacionado]
+      "INSERT INTO ocorrenciasestudantes VALUES($1, $2, $3, $4, $5, $6)",
+      [user[0].id, body.id_ocorrencias, body.id_estudantes, tempo[0].current_timestamp, body.nome_usuario_relacionado, body.status]
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);

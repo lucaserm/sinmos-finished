@@ -99,19 +99,22 @@ exports.responsavel = async(req, res) => {
 //pega os horários do estudante
 exports.horarios = async(req, res) => {
     const horarios = 
-        // se cpf não está vazio, pesquisa pelo cpf 
-        req.body.cpf != '' ? await Estudante.buscaHorarios(req.body, 'null') :
-        // se ra não está vazio, pesquisa pelo ra 
-        req.body.ra != '' ? await Estudante.buscaHorarios(req.body, 'null') :
-        // se nome não está vazio, pesquisa pelo nome 
-        req.body.nome != '' ? await Estudante.buscaHorarios(req.body, 'null') :
+        typeof req.body.cpf != 'undefined' || 
+        typeof req.body.ra != 'undefined' || 
+        typeof req.body.nome != 'undefined' && 
+        req.body.cpf != '' || 
+        req.body.ra != '' || 
+        req.body.nome != '' ?
+        await Estudante.buscaHorarios(req.body, 'null') :
         //se a imagem não está vazia
         //typeof req.file == 'undefined' ? await Estudante.buscaHorariosPorRA('null', req.file.filename) : {};
         {};
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     let repetir = [];
-    if(req.body.nome != ''){ repetir = await Estudante.buscaPorNome(req.body) };
+    if(typeof req.body.nome != 'undefined' && req.body.nome != ''){ 
+        repetir = await Estudante.buscaPorNome(req.body);
+    };
     res.render('horarios', { horarios, repetir, codigo_servidor, senha });
 }
 
@@ -126,15 +129,20 @@ exports.requisicoes = async(req, res) => {
 
 exports.advertencias = async(req, res) => {
     const id = req.body.id;
+    const opcao = req.body.opcao; 
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     let ocorrencias = await OcorrenciaEstudante.buscar();
-    if(typeof req.body.id == 'undefined'){
-        res.render('advertencias', {ocorrencias, codigo_servidor, senha})
-    } else {
+    if(typeof req.body.opcao == 'undefined' && typeof req.body.id == 'undefined' && typeof req.body.status == 'undefined'){
+        res.render('areoTela', {ocorrencias, codigo_servidor, senha})
+    } else if (typeof req.body.opcao != 'undefined'){
+        res.render('advertencias', {ocorrencias, codigo_servidor, senha, opcao})
+    } else if (typeof req.body.id != 'undefined'){
         ocorrencias = await OcorrenciaEstudante.buscarPorID(req.body.id);
         res.render('cadastro_advertencia', {ocorrencias, codigo_servidor, senha, id})
-
+    } else if(req.body.status != 'undefined'){
+        const advertencias = await Advertencia.buscaPorOcorrencia(req.body.id);
+        res.render('relatorio', {advertencias, codigo_servidor, senha, id});
     }
 }
 
