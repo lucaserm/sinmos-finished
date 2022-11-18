@@ -14,7 +14,6 @@ Advertencia.save = async (body) => {
       "INSERT INTO advertencias(descricao, data_advertencia, id_estudantes) VALUES ($1, $2, $3)",
       [body.relatorio_advertencia, tempo[0].current_timestamp, body.id]
     );
-    console.log("Advertência Salva");
   } catch (e) {
     console.log(e);
   }
@@ -50,7 +49,6 @@ Advertencia.buscaPorOcorrencia = async (body) => {
 Advertencia.deletePorRA = async (body) => {
   try {
     await client.query("DELETE FROM advertencias WHERE id = $1", [body.id]);
-    console.log("Advertência deletada");
   } catch (e) {
     console.log(e);
   }

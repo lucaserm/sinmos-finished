@@ -100,23 +100,10 @@ Estudante.buscaEstudantes = async () => {
   }
 };
 
-Estudante.buscaHorarios = async (body, ra) => {
+Estudante.buscaHorarios = async (body) => {
   try {
     let estudantes;
-    if (ra != 'null') {
-      console.log(ra)
-      estudantes = await client.query(
-        `
-          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE ra = $1 
-          AND id_estudantes = estudantes.id
-          AND id_horarios = horarios.id
-          AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
-        `,
-        [ra]);
-    }
+    
     if(typeof body == 'object'){
       if (body.ra != '') {
         body.ra = String(body.ra).trim();
@@ -164,23 +151,9 @@ Estudante.buscaHorarios = async (body, ra) => {
   }
 };
 
-Estudante.liberacao = async (body, ra) => {
+Estudante.liberacao = async (body) => {
   try {
     let estudantes;
-    if (ra != 'null') {
-      console.log(ra)
-      estudantes = await client.query(
-        `
-          SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE ra = $1 
-          AND id_estudantes = estudantes.id
-          AND id_horarios = horarios.id
-          AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
-        `,
-        [ra]);
-    }
     
     if(typeof body == 'object'){
       if(typeof body.nome != 'undefined'){

@@ -9,7 +9,6 @@ class Ocorrencia{
 Ocorrencia.save = async(body) => {
   try{
     await client.query('INSERT INTO ocorrencias VALUES ($1)', [body.descricao_ocorrencia]);
-    console.log('Ocorrência Salva');
   }catch(e){
     console.log(e);
   }

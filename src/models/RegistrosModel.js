@@ -1,5 +1,5 @@
 const client = require("../../server");
-const Advertencia = require("../models/AdvertenciasModel");
+const OcorrenciaEstudante = require("../models/OcorrenciasEstudantes");
 
 class Registro{
   constructor(body) {
@@ -27,12 +27,6 @@ Registro.update = async (body) => {
         "UPDATE registros SET dia_hora_saida = CURRENT_TIMESTAMP WHERE id = $1",
         [body.id]
       );
-    } else {
-      let texto = "Tentativa de Saída em Horário de Aula.";
-      return Advertencia.save({
-        descricao: texto,
-        id_estudantes: body.id_estudantes,
-      });
     }
   } catch (e) {
     console.log(`Houve um erro ${e}`);

@@ -7,10 +7,14 @@ class Matricula{
 }
 
 Matricula.save = async (body) => {
-  await client.query(
-    "INSERT INTO Matriculas(ano_matricula, id_estudantes, id_cursos) VALUES ($1, $2, $3)",
-    [body.ano_matricula, body.id_estudantes, body.id_cursos]
-  );
+  try{
+    await client.query(
+      "INSERT INTO Matriculas(ano_matricula, id_estudantes, id_cursos) VALUES ($1, $2, $3)",
+      [body.ano_matricula, body.id_estudantes, body.id_cursos]
+    );
+  }catch(e){
+    console.log(`Houve um erro ${e}`);
+  }
 };
 
 module.exports = Matricula;

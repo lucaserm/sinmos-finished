@@ -13,21 +13,24 @@ const Advertencia = require('../models/AdvertenciasModel');
 const RegistroEstudante = require('../models/RegistrosEstudantes');
 
 exports.cadastros = async (req, res) => {
-    const users = await Usuario.buscaPorCodigo(req.body.codigo_servidor);
-    let codigo_servidor = users[0].codigo_servidor;
-    let senha = users[0].senha;
     //Super User
     if(req.body.codigo_servidor == 'root'){
         let codigo_servidor = 'root'; 
         let senha = '123456'
         res.render('cadastros', { codigo_servidor, senha } );
-    }
-    if(users[0].cargo == 'Coordenacao'){
-        res.render('cadastros', { codigo_servidor, senha } );
-    } else if(users[0].cargo == 'Portaria'){
-        res.render('portaria', { codigo_servidor, senha });
-    } else if(users[0].cargo == 'Assistencia'){
-        res.render('assistencia', { codigo_servidor, senha });
+    } else {
+
+        const users = await Usuario.buscaPorCodigo(req.body.codigo_servidor);
+        let codigo_servidor = users[0].codigo_servidor;
+        let senha = users[0].senha;
+
+        if(users[0].cargo == 'Coordenacao'){
+            res.render('cadastros', { codigo_servidor, senha } );
+        } else if(users[0].cargo == 'Portaria'){
+            res.render('portaria', { codigo_servidor, senha });
+        } else if(users[0].cargo == 'Assistencia'){
+            res.render('assistencia', { codigo_servidor, senha });
+        }
     }
 };
 
@@ -97,7 +100,6 @@ exports.cadastroOcorrenciaEstudante = async(req, res) => {
     const estudantes = await Estudante.buscaEstudantes();
     const ocorrencias = await Ocorrencia.buscarOcorrencias();
     const id = req.body.id;
-    console.log(req.body.senha)
     res.render('cadastro_ocorrenciasestudantes', { estudantes, ocorrencias, codigo_servidor, senha, id });
 }
 

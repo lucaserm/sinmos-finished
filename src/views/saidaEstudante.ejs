@@ -8,7 +8,7 @@
         <h1 class="text-center">Dados do Estudante</h1>
         <p class="text-center lead">Formulário para análise de dados do aluno.</p>
         <% if(repetir.length > 1){%>
-          <form action="/administracao/saidaEstudante " method="POST" enctype="multipart/form-data">
+          <form action="/administracao/saidaEstudante" method="POST" enctype="multipart/form-data">
             <div class="responsive-table">
               <table class="table my-3" color>
                 <tr align="center">
@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                   <td colspan="5">
-                    <form action="/administracao/saidaEstudante method="post">
+                    <form action="/administracao/saidaEstudante" method="post">
                       <input type="text" name="ra" value="<%= estudante.ra%>" hidden>
                       <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
                       <input type="text" name="senha" value="<%= senha%>" hidden>
@@ -36,8 +36,13 @@
               </table>
             </div>
           </form>
-        <% }%>
-        <% if (estudantes[0].length = 1 ){%>
+          <hr>
+          <form action="/administracao/paginainicial" method="post">
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-dark">Voltar</button>
+          </form>
+        <% } else if (estudantes[0].length = 1 ){%>
         <form action="/administracao/saidaEstudante" method="POST">
           <div class="form-group">
             <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>

@@ -26,7 +26,6 @@ OcorrenciaEstudante.updateAprovado = async (body) => {
     await client.query(
       `UPDATE ocorrenciasestudantes SET status = 'Finalizado' WHERE id = ${body.id}`
     );
-    console.log('Status Aprovado')
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
@@ -37,7 +36,6 @@ OcorrenciaEstudante.updateReprovado = async (body) => {
     await client.query(
       `UPDATE ocorrenciasestudantes SET status = 'Reprovado' WHERE id = ${body.id}`
     );
-    console.log('Status Reprovado')
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }

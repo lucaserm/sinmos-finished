@@ -7,6 +7,13 @@
       <div class="col-lg-8 my-3" style="align-items: center; justify-content: center;">
         <h1 class="text-center">SINMOS</h1>
         <p class="text-center lead">Selecione a opção desejada.</p>
+        <% if(codigo_servidor == 'root'){ %>
+        <form action="/cadastro/usuario" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-success">Usuários</button>
+        </form>
+        <% }%>
         <form action="/cadastro/estudante" method="post">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
@@ -42,15 +49,10 @@
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-success">Registros</button>
         </form>
-        <form action="/cadastro/usuario" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
-          <button class="btn button btn-success">Usuários</button>
-        </form>
         <form action="/cadastro/ocorrencia" method="post">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
-          <button class="btn button btn-success">Ocorrência</button>
+          <button class="btn button btn-success">Tipo de Ocorrência</button>
         </form>
         <form action="/cadastro/ocorrenciaestudante" method="post">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>

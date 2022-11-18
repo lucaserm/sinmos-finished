@@ -27,7 +27,6 @@ Usuarios.buscaPorCodigo = async(codigo) => {
 Usuarios.save = async(body) => {
   try {
     await client.query(`INSERT INTO usuarios VALUES($1, $2, $3, $4)`, [body.nome_usuario, body.senha, body.codigo_servido, body.cargo])
-    console.log("Usuário Salvo com Sucesso.")
   } catch (e) {
     console.log(e)
   }
