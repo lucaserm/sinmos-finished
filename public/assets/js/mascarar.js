@@ -1,28 +1,25 @@
-const inputs = document.querySelectorAll('.input');
-const button = document.querySelector('.login__button');
+function formataCPF(cpf){
+  const elementoAlvo = cpf
+  const cpfAtual = cpf.value
 
-const handleFocus = ({ target }) => {
-  const span = target.previousElementSibling;
-  span.classList.add('span-active');
+  let cpfAtualizado;
+
+  cpfAtualizado = cpfAtual.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,
+    function( regex, arg1, arg2, arg3, arg4 ) {
+      return arg1 + '.' + arg2 + '.' + arg3 + '-' + arg4;
+  })
+  elementoAlvo.value = cpfAtualizado;
 }
 
-const handleFocusOut = ({ target }) => {
-  if (target.value === '') {
-    const span = target.previousElementSibling;
-    span.classList.remove('span-active');
-  }
+function formataTelefone(tel){
+  const elementoAlvo = tel
+  const telAtual = tel.value
+
+  let telAtualizado;
+
+  telAtualizado = telAtual.replace(/(\d{2})(\d{5})(\d{4})/,
+    function( regex, arg1, arg2, arg3 ) {
+      return '(' + arg1 + ')' + arg2 + '-' + arg3 ;
+  })
+  elementoAlvo.value = telAtualizado;
 }
-
-const handleChange = () => {
-  const { user, senha }  = inputs;
-
-  if (user.value && senha.value == '123456') {
-    button.removeAttribute('disabled');
-  } else {
-    button.setAttribute('disabled', '');
-  }
-}
-
-inputs.forEach((input) => input.addEventListener('focus', handleFocus));
-inputs.forEach((input) => input.addEventListener('focusout', handleFocusOut));
-inputs.forEach((input) => input.addEventListener('input', handleChange));

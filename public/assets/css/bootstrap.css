@@ -499,8 +499,8 @@ pre code {
   height: fit-content;
   min-height: 100vh;
   color: rgb(207, 217, 221);
-  background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url("../img/openlab_figma.jpeg");
-  background-size: contain;
+  background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url("../img/arquivos/mat-ifms-2.png");
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   display: flex;

@@ -16,7 +16,7 @@
             <label>Email do Responsável</label>
             <input type="email" class="form-control" name="email_responsavel" placeholder="Ex.: responsavel@gmail.com" required autocomplete="off">
             <label>Telefone do Responsável</label>
-            <input type="tel" class="form-control" name="telefone_responsavel" placeholder="Ex.: (67)90000-0000" required autocomplete="off">
+            <input type="tel" class="form-control" name="telefone_responsavel" onblur="formataTelefone(this)" pattern="[0-9]{11}" placeholder="Ex.: (67)90000-0000" required autocomplete="off">
             <br>
             <button type="submit" class="btn button btn-success">Salvar Responsável</button>
           </div>

@@ -121,9 +121,9 @@ table th {
   padding: 1rem 5rem;
   background: linear-gradient(
     135deg,
-    rgb(51, 133, 255) 0%,
-    rgb(48, 79, 255) 0.01%,
-    rgb(102, 207, 255) 100%
+    rgb(85, 255, 51) 0%,
+    rgb(77, 253, 71) 0.01%,
+    rgb(102, 255, 184) 100%
   );
   color: #fff;
   text-align: center;

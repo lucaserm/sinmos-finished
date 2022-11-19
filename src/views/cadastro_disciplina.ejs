@@ -13,6 +13,7 @@
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Curso</label>
             <select name="select" class="form-control" required>
+              <option>Selecione um curso</option>
               <% cursos.forEach(curso => { %>
                 <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
               <% }); %>
@@ -33,7 +34,6 @@
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
       </div>
       <div class="col-lg-2"></div>
     </div>

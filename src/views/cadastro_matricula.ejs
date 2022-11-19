@@ -15,12 +15,14 @@
             <input type="number" name="ano_matricula" class="form-control" value="2022">
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
+              <option value="">Selecione um estudante</option>
               <% estudantes.forEach( estudante => { %>
-                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%= estudante.ra%></option>
               <% });%>
             </select>
             <label>Curso</label>
             <select name="id_cursos" class="form-control">
+              <option >Selecione um curso</option>
               <% cursos.forEach( curso => { %>
                 <option value="<%= curso.id %>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
               <% });%>

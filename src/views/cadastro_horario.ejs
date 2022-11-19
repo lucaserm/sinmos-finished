@@ -13,6 +13,7 @@
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Disciplina</label>
             <select name="id_disciplinas" class="form-control" required>
+              <option>Selecione a disciplina</option>
               <% if(horarios.length > 0){ %>
                 <% let lista = []%>
                 <% horarios.forEach(horario => { %>

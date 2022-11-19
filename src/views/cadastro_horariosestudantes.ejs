@@ -13,13 +13,15 @@
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
+              <option>Selecione um estudante</option>
               <% estudantes.forEach( estudante => { %>
-                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%= estudante.ra%></option>
               <% });%>
             </select>
             <br>
             <label>Disciplina</label>
             <select name="id_horarios" class="form-control">
+              <option>Selecione uma disciplina</option>
               <% horarios.forEach( horario => { %>
                 <option value="<%= horario.id %>"><%= horario.nome_disciplina%>, <%= horario.turma %>, <%= horario.periodo_horarios %>, <%= horario.dia_semana%>, <%= horario.tempo_inicio%>° Tempo até o <%= horario.tempo_fim%>° Tempo</option>
               <% });%>
