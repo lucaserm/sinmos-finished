@@ -94,6 +94,6 @@ CREATE TABLE Advertencias (
     id serial PRIMARY KEY
 );
 
-INSERT INTO Usuarios VALUES('Juninho Portugal', 'bandadejavu', '4422', 'Coordenacao');
-INSERT INTO Usuarios VALUES('ShowMaker', 'fazedordeshow', '0666', 'Assistencia');
-INSERT INTO Usuarios VALUES('Mucalol', 'lolmestre', '01110010', 'Portaria');
+INSERT INTO Usuarios VALUES('Carlos Marques', 'coordenacao', '001', 'Coordenacao');
+INSERT INTO Usuarios VALUES('Maria Rosa', 'assistencia', '002', 'Assistencia');
+INSERT INTO Usuarios VALUES('João Carlos', 'portaria', '003', 'Portaria');

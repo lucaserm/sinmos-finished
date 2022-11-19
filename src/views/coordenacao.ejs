@@ -12,11 +12,10 @@
         <div class="responsive-table">
           <table class="table my-3" color>
             <tr align="center">
-              <td>Id</td><td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
+              <td>Nome</td><td>CPF</td><td>RA</td><td>Foto</td>
             </tr>
             <% estudantes.forEach(estudante => { %>
             <tr class="vertival-align-center" align="center">
-              <td><%= estudante.id%></td>
               <td><%= estudante.nome_estudante%></td>
               <td><%= estudante.cpf%></td>
               <td><%= estudante.ra%></td>

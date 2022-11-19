@@ -3,12 +3,11 @@
 <div class="first_part">
   <div class="container">
     <div class="row">
-      <div class="col-lg-1"></div>
-      <div class="col-lg-10 my-3">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-8 my-3">
         <h1 class="text-center">Dados do Estudante</h1>
         <p class="text-center lead">Formulário para análise de dados do aluno.</p>
         <% if(repetir.length > 1){%>
-          <form action="/administracao/saidaEstudante" method="POST" enctype="multipart/form-data">
             <div class="responsive-table">
               <table class="table my-3" color>
                 <tr align="center">
@@ -35,8 +34,6 @@
                 <% }); %>    
               </table>
             </div>
-          </form>
-          <hr>
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>

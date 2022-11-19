@@ -137,6 +137,8 @@ exports.trataPost = async(req, res) => {
             Advertencia.save(req.body);
         }else{
             id = 0;
+            const codigo_servidor = req.body.codigo_servidor;
+            const senha = req.body.senha;
             OcorrenciaEstudante.updateReprovado(req.body);
             res.render('salvo', { id, codigo_servidor, senha });
         }
