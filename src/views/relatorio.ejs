@@ -5,31 +5,31 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">Registre a Advertência</h1>
+        <h1 class="text-center">Advertência</h1>
         <p class="text-center lead">Formulário para inserção no banco de dados.</p>
-        <form action="/cadastro/advertenciasalvo" method="POST">
-          <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <input type="text" name="id" value="<%= id%>" hidden>
-            <% ocorrencias.forEach( ocorrencia => {%>
-              <label>Servidor que registrou a ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.nome_usuario%>" disabled>
-              <label>Servidor que acompanhou a ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.nome_usuario_relacionado%>" disabled>
-              <label>Estudante relacionado</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.nome_estudante%>" disabled>
-              <label>Tipo de Ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.descricao_ocorrencia%>" disabled>
-              <label>Data da Ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.data_ocorrencia%>" disabled>
-              <label>Relatório da Advertência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.relatorio_advertencia%>" disabled>
-              <label>Data da Resolução</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.data_resolucao%>" disabled>
+        <div class="form-group">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input type="text" name="id" value="<%= id%>" hidden>
+          <% advertencias.forEach( advertencia => {%>
+            <label>Servidor que registrou a ocorrência</label>
+            <input type="text" class="form-control" value="<%= advertencia.nome_usuario%>" disabled>
+            <label>Servidor que acompanhou a ocorrência</label>
+            <input type="text" class="form-control" value="<%= advertencia.nome_usuario_relacionado%>" disabled>
+            <label>Estudante relacionado</label>
+            <input type="text" class="form-control" value="<%= advertencia.nome_estudante%>" disabled>
+            <label>Tipo de Ocorrência</label>
+            <input type="text" class="form-control" value="<%= advertencia.descricao_ocorrencia%>" disabled>
+            <label>Data da Ocorrência</label>
+            <input type="text" class="form-control" value="<%= advertencia.data_ocorrencia%>" disabled>
+            <label>Relatório da Advertência</label>
+            <input type="text" class="form-control" value="<%= advertencia.relatorio_advertencia%>" disabled>
+            <label>Data da Resolução</label>
+            <input type="text" class="form-control" value="<%= advertencia.data_resolucao%>" disabled>
             <% })%>
           </div>
           <hr>
+        <form action="/administracao/paginainicial" method="POST">
           <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>

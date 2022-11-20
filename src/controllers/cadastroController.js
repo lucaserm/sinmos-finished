@@ -132,7 +132,7 @@ exports.trataPost = async(req, res) => {
             id = 1;
         }
     }else if(req.url == '/cadastro/advertenciasalvo'){
-        if(typeof req.body.descricao_advertencia != 'undefined'){
+        if(typeof req.body.relatorio_advertencia != 'undefined'){
             OcorrenciaEstudante.updateAprovado(req.body);
             Advertencia.save(req.body);
         }else{

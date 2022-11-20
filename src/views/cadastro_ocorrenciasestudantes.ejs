@@ -13,6 +13,7 @@
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
+              <option>Selecione o nome do estudante</option>
               <% estudantes.forEach( estudante => { %>
                 <% if(typeof id != 'undefined'){%>
                   <% if(id == estudante.id){%>
@@ -26,6 +27,7 @@
             <br>
             <label>Ocorrência</label>
             <select name="id_ocorrencias" class="form-control">
+              <option>Selecione o tipo de Ocorrência/Observação</option>
               <% ocorrencias.forEach( ocorrencia => { %>
                 <option value="<%= ocorrencia.id%>"><%= ocorrencia.descricao_ocorrencia%></option>
               <% });%>

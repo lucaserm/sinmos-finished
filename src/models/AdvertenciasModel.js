@@ -11,7 +11,7 @@ Advertencia.save = async (body) => {
     let tempo = await client.query("SELECT CURRENT_TIMESTAMP"); 
     tempo = tempo.rows;
     await client.query(
-      "INSERT INTO advertencias(descricao, data_advertencia, id_estudantes) VALUES ($1, $2, $3)",
+      "INSERT INTO advertencias(relatorio_advertencia, data_resolucao, id_ocorrenciasestudantes) VALUES ($1, $2, $3)",
       [body.relatorio_advertencia, tempo[0].current_timestamp, body.id]
     );
   } catch (e) {
@@ -22,8 +22,51 @@ Advertencia.save = async (body) => {
 Advertencia.buscaAdvertenciaPorRA = async (body) => {
   try {
     const advertencias = await client.query(
-      "SELECT advertencias.* FROM advertencias, ocorrenciasestudantes WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id AND ocorrenciasestudantes.status = 'Finalizado' ORDER BY id"
+      `
+      SELECT advertencias.* 
+      FROM advertencias, ocorrenciasestudantes, estudantes
+      WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id 
+      AND ocorrenciasestudantes.status = 'Aprovado'
+      AND id_estudantes = estudantes.id
+      and ra = $1
+      ORDER BY id`, [body.ra]
     );
+    return advertencias.rows;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+Advertencia.buscaAdvertenciaPorID = async (id) => {
+  try {
+    const advertencias = await client.query(
+      `
+      SELECT nome_estudante, nome_usuario, descricao_ocorrencia, relatorio_advertencia, data_resolucao, data_ocorrencia, nome_usuario_relacionado 
+      FROM advertencias, ocorrenciasestudantes, usuarios, estudantes, ocorrencias
+      WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id 
+      AND id_usuarios = usuarios.id 
+      AND id_estudantes = estudantes.id
+      AND id_ocorrencias = ocorrencias.id
+      AND id_ocorrenciasestudantes = ${id}`
+    );
+    return advertencias.rows;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+Advertencia.buscaAdvertenciaAprovadas = async (body) => {
+  try {
+    const advertencias = await client.query(
+      `
+      SELECT id_ocorrenciasestudantes, descricao_ocorrencia, data_resolucao 
+      FROM advertencias, ocorrenciasestudantes, estudantes, ocorrencias
+      WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id
+      AND id_estudantes = estudantes.id
+      AND id_ocorrencias = ocorrencias.id
+      AND ra = $1`, [body.ra]
+    );
+    console.log(advertencias.rows)
     return advertencias.rows;
   } catch (e) {
     console.log(e);

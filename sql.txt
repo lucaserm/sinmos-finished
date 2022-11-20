@@ -89,7 +89,7 @@ CREATE TABLE OcorrenciasEstudantes (
  
 CREATE TABLE Advertencias (
     id_ocorrenciasestudantes integer references OcorrenciasEstudantes(id),
-    descricao_advertencia text,
+    relatorio_advertencia text,
     data_resolucao date,
     id serial PRIMARY KEY
 );

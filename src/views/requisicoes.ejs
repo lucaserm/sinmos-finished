@@ -15,7 +15,7 @@
             </tr>
             <% registros[0].forEach(registro => { %>
             <tr align="center">
-              <td><%= registro.ra%></td>
+              <td><%= ra = registro.ra%></td>
               <td><img src="<%= registro.foto%>" width="70"></td>
               <td><%= registro.descricao%></td>
               <td><%= registro.dia_liberacao%></td>
@@ -23,6 +23,13 @@
             <% }); %>
           </table>
         </div>
+          <% if(users[0].cargo == 'Coordenacao'){ %>
+          <form action="/cadastro/registro" method="post">
+            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <button class="btn button btn-info">Gerar Liberação Especial</button>
+          </form>
+          <% }%>
           <hr>
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
@@ -45,13 +52,7 @@
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
-          <% } else if(users[0].cargo == 'Assistencia'){%>
-            <form action="/administracao/saidaEstudante method="post">
-              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-              <input type="text" name="senha" value="<% senha%>" hidden>
-              <button class="btn button btn-dark">Voltar</button>
-            </form>
-          <% } else if(users[0].cargo == 'Portaria'){%>
+          <% } else {%>
             <form action="/administracao/paginainicial" method="post">
               <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
               <input type="text" name="senha" value="<% senha%>" hidden>

@@ -30,6 +30,11 @@
           <% if(ocorrencias.length > 0) {%>
             <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">Ocorrências</p>
             <br>
+            <form action="/cadastro/ocorrenciaestudante" method="post">
+              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+              <input type="text" name="senha" value="<%= senha%>" hidden>
+              <button class="btn button btn-info small">Registrar Ocorrência</button>
+            </form>
             <div class="responsive-table">
               <table class="table my-3">
                 <tr>
@@ -40,6 +45,7 @@
                   <td>Status</td>
                 </tr>
                 <% ocorrencias.forEach( ocorrencia => {%>
+                  <% if(ocorrencia.status != 'Aprovado'){%>
                   <tr>
                     <td><%= ocorrencia.nome_usuario%></td>
                     <td><%= ocorrencia.nome_usuario_relacionado%></td>
@@ -47,6 +53,7 @@
                     <td><%= ocorrencia.data_ocorrencia%></td>
                     <td><%= ocorrencia.status%></td>
                   </tr>  
+                  <% }%>
                 <% })%>
               </table>
             </div>
@@ -54,6 +61,12 @@
             <p class="text-center lead bg-danger text-white" style="margin: 0; padding: 10px 0;">
               Ocorrências
             </p>
+            <br>
+            <form action="/cadastro/ocorrenciaestudante" method="post">
+              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+              <input type="text" name="senha" value="<%= senha%>" hidden>
+              <button class="btn button btn-info small">Registrar Ocorrência</button>
+            </form>
             <br>
             <p class="text-center lead">Não existem ocorrências nos seus dados.</p>
           <hr />
@@ -64,25 +77,28 @@
           <div class="responsive-table">
             <table class="table my-3" color>
               <tr>
-                <td>Descrição</td>
+                <td>Relatório</td>
                 <td>Data da Advertência</td>
                 <td>Enviar</td>
-                <td>Excluir</td>
+                <td>Ver</td>
               </tr>
               <% advertencias.forEach(advertencia => { %>
+                <% id = advertencia.id_ocorrenciasestudantes%>
               <tr>
-                <td><%= advertencia.descricao%></td>
-                <td><%= advertencia.data_advertencia%></td>
+                <td><%= advertencia.descricao_ocorrencia%></td>
+                <td><%= advertencia.data_resolucao%></td>
                 <td>         
                   <a href="mailto:<%= responsaveis[0][0].email_responsavel%>?CC=diren.cg@ifms.edu.br&Subject=Advertencia%20do%20Aluno&Body=Tentativa%20de%20Saida%20em%20Horario%20de%20Aula.">
                     Enviar Advertência ao Responsável
                   </a>
                 </td>
                 <td>
-                  <form action="/administracao/deleteAdvertencia" method="post">
-                    <input type="text" name="id" value="<%= advertencia.id%>" hidden>
+                  <form action="/administracao/advertencias" method="post">
+                    <input type="text" name="id" value="<%= id%>" hidden>
+                    <input type="text" name="status" value="Aprovado" hidden>
                     <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-                    <button class="btn button btn-danger">Excluir</button>
+                    <input type="text" name="senha" value="<%= senha%>" hidden>
+                    <button class="btn button btn-info">Ver</button>
                   </form>
                 </td>
               </tr>

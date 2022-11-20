@@ -92,7 +92,7 @@ exports.responsavel = async(req, res) => {
     const senha = req.body.senha;
     const responsaveis = await Responsavel.buscaResponsavelPorRA(req.body);
     const ocorrencias = await OcorrenciaEstudante.buscarPorRa(req.body);
-    const advertencias = await Advertencia.buscaAdvertenciaPorRA(req.body);
+    const advertencias = await Advertencia.buscaAdvertenciaAprovadas(req.body);
     res.render('responsavel', { responsaveis, ocorrencias, advertencias, codigo_servidor, senha });
 }
 
@@ -137,11 +137,12 @@ exports.advertencias = async(req, res) => {
         res.render('areoTela', {ocorrencias, codigo_servidor, senha})
     } else if (typeof req.body.opcao != 'undefined'){
         res.render('advertencias', {ocorrencias, codigo_servidor, senha, opcao})
-    } else if (typeof req.body.id != 'undefined'){
+    } else if (typeof req.body.id != 'undefined' && req.body.status != 'Aprovado'){
         ocorrencias = await OcorrenciaEstudante.buscarPorID(req.body.id);
         res.render('cadastro_advertencia', {ocorrencias, codigo_servidor, senha, id})
-    } else if(req.body.status != 'undefined'){
-        const advertencias = await Advertencia.buscaPorOcorrencia(req.body.id);
+    } else{
+        const advertencias = await Advertencia.buscaAdvertenciaPorID(id);
+        console.log(advertencias)
         res.render('relatorio', {advertencias, codigo_servidor, senha, id});
     }
 }
