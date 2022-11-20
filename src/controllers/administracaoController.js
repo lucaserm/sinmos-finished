@@ -16,19 +16,17 @@ exports.paginaAdm = async(req, res) => {
     //variável para manipulação de páginas
     const users = await Usuario.buscaUsuarios();
     //Super User
-    const estudantes = await Estudante.buscaEstudantes();
     if(req.body.codigo_servidor == 'root' && req.body.senha == '123456'){
         let codigo_servidor = 'root'; 
         let senha = '123456'
-        const estudantes = await Estudante.buscaEstudantes();
-        res.render('coordenacao', { estudantes, codigo_servidor, senha } );
+        res.render('coordenacao', { codigo_servidor, senha } );
     }else if(users.length > 0){
         users.forEach( usuario => {
             if (req.body.codigo_servidor == usuario.codigo_servidor && req.body.senha == usuario.senha){
                 let codigo_servidor = usuario.codigo_servidor;
                 let senha = usuario.senha;
                 if(usuario.cargo == 'Coordenacao'){
-                    res.render('coordenacao', { estudantes, codigo_servidor, senha } );
+                    res.render('coordenacao', { codigo_servidor, senha } );
                 } else if(usuario.cargo == 'Portaria'){
                     res.render('portaria', { codigo_servidor, senha });
                 } else if(usuario.cargo == 'Assistencia'){
@@ -99,12 +97,12 @@ exports.responsavel = async(req, res) => {
 //pega os horários do estudante
 exports.horarios = async(req, res) => {
     const horarios = 
-        typeof req.body.cpf != 'undefined' || 
+        (typeof req.body.cpf != 'undefined' || 
         typeof req.body.ra != 'undefined' || 
-        typeof req.body.nome != 'undefined' && 
-        req.body.cpf != '' || 
+        typeof req.body.nome != 'undefined') && 
+        (req.body.cpf != '' || 
         req.body.ra != '' || 
-        req.body.nome != '' ?
+        req.body.nome != '') ?
         await Estudante.buscaHorarios(req.body, 'null') :
         //se a imagem não está vazia
         //typeof req.file == 'undefined' ? await Estudante.buscaHorariosPorRA('null', req.file.filename) : {};
@@ -142,7 +140,6 @@ exports.advertencias = async(req, res) => {
         res.render('cadastro_advertencia', {ocorrencias, codigo_servidor, senha, id})
     } else{
         const advertencias = await Advertencia.buscaAdvertenciaPorID(id);
-        console.log(advertencias)
         res.render('relatorio', {advertencias, codigo_servidor, senha, id});
     }
 }
@@ -152,4 +149,11 @@ exports.ocorrencias = async(req, res) => {
     const senha = req.body.senha;
     const ocorrencias = await OcorrenciaEstudante.buscaPorServidor(codigo_servidor);
     res.render('ocorrencias', {ocorrencias, codigo_servidor, senha})
+}
+
+exports.estudantes = async(req, res) => {
+    const codigo_servidor = req.body.codigo_servidor;
+    const senha = req.body.senha;
+    const estudantes = await Estudante.buscaEstudantes();
+    res.render('estudantes', { estudantes, codigo_servidor, senha })
 }

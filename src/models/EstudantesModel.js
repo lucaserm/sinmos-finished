@@ -116,8 +116,7 @@ Estudante.buscaHorarios = async (body) => {
           `,
             [body.ra]
           );
-      }
-      if(body.cpf != ''){
+      }else if(body.cpf != ''){
         body.cpf = String(body.cpf).trim();
         estudantes = await client.query(
           `
@@ -128,8 +127,7 @@ Estudante.buscaHorarios = async (body) => {
           `,
             [body.cpf]
           );
-      }
-      if(body.nome != ''){
+      }else if(body.nome != ''){
         body.nome = String(body.nome).trim();
         body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
@@ -172,8 +170,7 @@ Estudante.liberacao = async (body) => {
           `
         );
         }
-      }
-      if(typeof body.cpf != 'undefined'){
+      }else if(typeof body.cpf != 'undefined'){
         if(body.cpf != ''){
           body.cpf =  String(body.cpf).trim();
           estudantes = await client.query(
@@ -189,8 +186,7 @@ Estudante.liberacao = async (body) => {
               [body.cpf]
           );
         }
-      }
-      if (typeof body.ra != 'undefined'){
+      }else if (typeof body.ra != 'undefined'){
         if(body.ra != '') {
           body.ra = String(body.ra).trim();
           estudantes = await client.query(
@@ -266,6 +262,7 @@ Estudante.liberacao = async (body) => {
                 }else{
                   status = [estudantes.rows, { aula: "Estudante sem aula!" }];
                 }
+              //Se a aula não termina no mesmo tempo que começa
               }else{
                 //horaAtual <= hora que aula termina, e horaAtual >= hora que aula começa
                 if (hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora && hoje.getHours() <= listas[j][estudante.tempo_fim - 1].hora) {

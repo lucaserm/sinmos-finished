@@ -8,11 +8,9 @@ class Advertencia{
 
 Advertencia.save = async (body) => {
   try {
-    let tempo = await client.query("SELECT CURRENT_TIMESTAMP"); 
-    tempo = tempo.rows;
     await client.query(
-      "INSERT INTO advertencias(relatorio_advertencia, data_resolucao, id_ocorrenciasestudantes) VALUES ($1, $2, $3)",
-      [body.relatorio_advertencia, tempo[0].current_timestamp, body.id]
+      "INSERT INTO advertencias(relatorio_advertencia, data_resolucao, id_ocorrenciasestudantes) VALUES ($1, CURRENT_TIMESTAMP, $2)",
+      [body.relatorio_advertencia, body.id]
     );
   } catch (e) {
     console.log(e);
@@ -66,7 +64,6 @@ Advertencia.buscaAdvertenciaAprovadas = async (body) => {
       AND id_ocorrencias = ocorrencias.id
       AND ra = $1`, [body.ra]
     );
-    console.log(advertencias.rows)
     return advertencias.rows;
   } catch (e) {
     console.log(e);

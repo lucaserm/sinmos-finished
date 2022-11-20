@@ -62,6 +62,7 @@ route.post('/administracao/horarios', administracaoController.horarios);
 route.post('/administracao/requisicoes', administracaoController.requisicoes);
 route.post('/administracao/advertencias', administracaoController.advertencias);
 route.post('/administracao/ocorrencias', administracaoController.ocorrencias);
+route.post('/administracao/estudantes', administracaoController.estudantes);
 route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editar', administracaoController.editar);
 storage = multer.diskStorage({
@@ -83,6 +84,5 @@ upload = multer({ storage });
 route.post('/administracao/saidaEstudante', upload.single('avatar'), administracaoController.saidaEstudante);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
-route.post('/administracao/deleteAdvertencia', administracaoController.trataEditado);
 
 module.exports = route;

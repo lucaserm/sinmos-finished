@@ -48,6 +48,7 @@
           <hr>
           <% if(users[0].cargo == 'Coordenacao'){%>
           <form action="/administracao/horarios" method="post">
+            <input type="text" name="ra" value="<%= ra%>" hidden>
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
