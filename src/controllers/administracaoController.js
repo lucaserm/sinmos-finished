@@ -143,8 +143,10 @@ exports.advertencias = async(req, res) => {
 exports.ocorrencias = async(req, res) => {
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    const ocorrencias = await OcorrenciaEstudante.buscaPorServidor(codigo_servidor);
-    res.render('ocorrencias', {ocorrencias, codigo_servidor, senha})
+    const users = await Usuario.buscaPorCodigo(codigo_servidor);
+    const ocorrencias = await OcorrenciaEstudante.buscaPorServidor(users[0].id);
+    const ocorrenciasRelacionado = await OcorrenciaEstudante.buscaPorServidorRelacionado(users[0].nome_usuario);
+    res.render('ocorrencias', { ocorrencias, ocorrenciasRelacionado, codigo_servidor, senha})
 }
 
 exports.estudantes = async(req, res) => {

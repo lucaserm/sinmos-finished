@@ -95,6 +95,26 @@ OcorrenciaEstudante.buscarPorRa = async (body) => {
   }
 };
 
+OcorrenciaEstudante.buscaPorServidorRelacionado = async(nome) => {
+  try {
+    const ocorrencias = await client.query(
+      `
+      SELECT codigo_servidor, nome_usuario, ra, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
+      FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
+      WHERE id_estudantes = estudantes.id
+      AND id_ocorrencias = ocorrencias.id
+      AND id_usuarios = usuarios.id
+      AND nome_usuario_relacionado = $1
+      ORDER BY ocorrenciasestudantes.id
+      `,
+      [nome]
+    );
+    return ocorrencias.rows;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
   try {
     const ocorrencias = await client.query(
@@ -104,7 +124,7 @@ OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
       WHERE id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
       AND id_usuarios = usuarios.id
-      AND codigo_servidor = $1 or nome_usuario_relacionado = nome_usuario
+      AND id_usuarios = $1
       ORDER BY ocorrenciasestudantes.id
       `,
       [codigo]

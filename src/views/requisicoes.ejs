@@ -5,9 +5,10 @@
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
+        <hr style="background-color: #FFF; margin: 1rem;">
         <h1 class="text-center">Requisições</h1>
-        <p class="text-center lead">Todos as requisições registradas: </p>
         <% if (registros[0].length > 0){ %>
+          <p class="text-center lead">Todos as requisições registradas </p>
         <div class="responsive-table">
           <table class="table my-3">
             <tr align="center">
@@ -30,7 +31,7 @@
             <button class="btn button btn-info">Gerar Liberação Especial</button>
           </form>
           <% }%>
-          <hr>
+          <hr style="background-color: #FFF; margin: 1rem;">
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
@@ -45,7 +46,7 @@
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-success">Cadastros</button>
           </form>
-          <hr>
+          <hr style="background-color: #FFF; margin: 1rem;">
           <% if(users[0].cargo == 'Coordenacao'){%>
           <form action="/administracao/horarios" method="post">
             <input type="text" name="ra" value="<%= ra%>" hidden>
@@ -54,6 +55,7 @@
             <button class="btn button btn-dark">Voltar</button>
           </form>
           <% } else {%>
+            <hr style="background-color: #FFF; margin: 1rem;">
             <form action="/administracao/paginainicial" method="post">
               <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
               <input type="text" name="senha" value="<% senha%>" hidden>

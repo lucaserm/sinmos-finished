@@ -17,6 +17,15 @@
               <td>Descrição</td>
               <td>Data Ocorrência</td>
             </tr>
+            <% ocorrenciasRelacionado.forEach(ocorrencia => { %>
+            <tr align="center">
+              <td><%= ocorrencia.nome_usuario%></td>
+              <td><%= ocorrencia.ra%></td>
+              <td><%= ocorrencia.nome_estudante%></td>
+              <td><%= ocorrencia.descricao_ocorrencia%></td>
+              <td><%= ocorrencia.data_ocorrencia%></td>
+            </tr>
+            <% }); %>
             <% ocorrencias.forEach(ocorrencia => { %>
             <tr align="center">
               <td><%= ocorrencia.nome_usuario_relacionado%></td>
@@ -28,13 +37,12 @@
             <% }); %>
           </table>
         </div>
-          <hr>
+          <hr style="background-color: #FFF; margin: 1rem;">
           <form action="/cadastro/ocorrenciaestudante" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <button class="btn button btn-success">Registrar Ocorrência</button>
-          </form>
-          <hr>
+          </form><hr style="background-color: #FFF; margin: 1rem;">
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
@@ -49,7 +57,7 @@
             <input type="text" name="senha" value="<% senha%>" hidden>
             <button class="btn button btn-success">Cadastros</button>
           </form>
-          <hr>
+          <hr style="background-color: #FFF; margin: 1rem;">
           <form action="/administracao/paginainicial" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
