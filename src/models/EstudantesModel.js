@@ -170,7 +170,8 @@ Estudante.liberacao = async (body) => {
           `
         );
         }
-      }else if(typeof body.cpf != 'undefined'){
+      }
+      if(typeof body.cpf != 'undefined'){
         if(body.cpf != ''){
           body.cpf =  String(body.cpf).trim();
           estudantes = await client.query(
@@ -186,7 +187,8 @@ Estudante.liberacao = async (body) => {
               [body.cpf]
           );
         }
-      }else if (typeof body.ra != 'undefined'){
+      }
+      if (typeof body.ra != 'undefined'){
         if(body.ra != '') {
           body.ra = String(body.ra).trim();
           estudantes = await client.query(

@@ -47,24 +47,6 @@ exports.editar = async(req, res) => {
     res.render('editar', { estudantes, codigo_servidor, senha });
 }
 
-//página para liberar o estudante
-exports.saidaEstudante = async(req, res) => {
-    
-    const { lerQR } = require('./../middlewares/middleware');
-
-    const estudantes =
-    // se o body não está vazio, pesquisa pelo que tiver 
-    req.body.cpf != '' || req.body.ra != '' || req.body.nome != '' ? await Estudante.liberacao(req.body, 'null') :
-    //se a imagem não está vazia
-    typeof req.file != 'undefined' ? await Estudante.liberacao('null', await lerQR(req.file.filename)) : {};
-    const codigo_servidor = req.body.codigo_servidor;
-    const senha = req.body.senha;
-    const users = await Usuario.buscaPorCodigo(codigo_servidor);
-    let repetir = [];
-    if(req.body.nome != ''){ repetir = await Estudante.buscaPorNome(req.body) };
-    res.render('saidaEstudante', { estudantes, repetir, users, codigo_servidor, senha });
-}
-
 exports.trataEditado = async(req, res) => {
     const id = req.body.id;
     const codigo_servidor = req.body.codigo_servidor;
@@ -94,6 +76,24 @@ exports.responsavel = async(req, res) => {
     res.render('responsavel', { responsaveis, ocorrencias, advertencias, codigo_servidor, senha });
 }
 
+exports.saidaEstudante = async(req, res) => {
+    const estudantes = 
+        (typeof req.body.cpf != 'undefined' || 
+        typeof req.body.ra != 'undefined' || 
+        typeof req.body.nome != 'undefined') && 
+        (req.body.cpf != '' || 
+        req.body.ra != '' || 
+        req.body.nome != '') ?
+        await Estudante.liberacao(req.body) :
+        {};
+    const codigo_servidor = req.body.codigo_servidor;
+    const senha = req.body.senha;
+    const users = await Usuario.buscaPorCodigo(codigo_servidor);
+    let repetir = typeof req.body.nome != 'undefined' && req.body.nome != '' ? 
+        await Estudante.buscaPorNome(req.body) : [];
+    res.render('saidaEstudante', { estudantes, repetir, users, codigo_servidor, senha });
+}
+
 //pega os horários do estudante
 exports.horarios = async(req, res) => {
     const horarios = 
@@ -103,16 +103,12 @@ exports.horarios = async(req, res) => {
         (req.body.cpf != '' || 
         req.body.ra != '' || 
         req.body.nome != '') ?
-        await Estudante.buscaHorarios(req.body, 'null') :
-        //se a imagem não está vazia
-        //typeof req.file == 'undefined' ? await Estudante.buscaHorariosPorRA('null', req.file.filename) : {};
+        await Estudante.buscaHorarios(req.body) :
         {};
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    let repetir = [];
-    if(typeof req.body.nome != 'undefined' && req.body.nome != ''){ 
-        repetir = await Estudante.buscaPorNome(req.body);
-    };
+    let repetir = typeof req.body.nome != 'undefined' && req.body.nome != '' ? 
+        await Estudante.buscaPorNome(req.body) : [];
     res.render('horarios', { horarios, repetir, codigo_servidor, senha });
 }
 

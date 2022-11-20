@@ -10,7 +10,7 @@
           <form action="/administracao/saidaEstudante " method="POST" enctype="multipart/form-data">
             <p class="text-center lead">Insira o RA do aluno que deseja verificar:</p>
             <input type="text" class="form-control" id="ra" name="ra" autocomplete="off" placeholder="RA">
-            <input type="text" class="form-control" id="cpf" name="cpf" autocomplete="off" placeholder="CPF">
+            <input type="text" class="form-control" id="cpf" name="cpf" autocomplete="off" placeholder="CPF" onblur="formataCPF(this)">
             <input type="text" class="form-control" id="nome" name="nome" autocomplete="off" placeholder="NOME COMPLETO">
             <input type="text" class="form-control" name="codigo_servidor" value="<%= codigo_servidor%>" hidden/>
             <input type="text" class="form-control" name="senha" value="<%= senha%>" hidden/>

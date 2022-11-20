@@ -52,7 +52,7 @@ CREATE TABLE HorariosEstudantes (
 );
 
 CREATE TABLE Registros (
-    dia_hora_saida date,
+    dia_hora_saida timestamp,
     descricao text,
     dia_liberacao varchar(10),
 	id serial PRIMARY KEY
@@ -81,7 +81,7 @@ CREATE TABLE OcorrenciasEstudantes (
     id_usuarios integer references Usuarios(id),
     id_ocorrencias integer references Ocorrencias(id),
     id_estudantes integer references Estudantes(id),
-    data_ocorrencia date,
+    data_ocorrencia timestamp,
     nome_usuario_relacionado varchar(50),
     status varchar(30),
 	id serial PRIMARY KEY
@@ -90,7 +90,7 @@ CREATE TABLE OcorrenciasEstudantes (
 CREATE TABLE Advertencias (
     id_ocorrenciasestudantes integer references OcorrenciasEstudantes(id),
     relatorio_advertencia text,
-    data_resolucao date,
+    data_resolucao timestamp,
     id serial PRIMARY KEY
 );
 
