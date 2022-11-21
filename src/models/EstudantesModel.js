@@ -206,7 +206,7 @@ Estudante.liberacao = async (body) => {
       }
     }
 
-    const hoje = new Date(2022, 10, 24, 8, 0, 0, 0);
+    const hoje = new Date();
     let status = [estudantes.rows, { aula: "Estudante sem aula!" }];
     let listaMatutino = [
       { hora: 07, minuto: 00 },
