@@ -40,45 +40,46 @@
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <button class="btn button btn-dark">Voltar</button>
           </form>
-        <% } else if (estudantes[0].length = 1 ){%>
-        <form action="/administracao/saidaEstudante" method="POST">
-          <div class="form-group">
-            <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <label>Nome do Estudante</label>
-            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
-            <label>CPF</label>
-            <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0][0].cpf%>" autocomplete="off" disabled>
-            <label>RA</label>
-            <input type="text" class="form-control" name="ra" value="<%= ra = estudantes[0][0].ra%>" autocomplete="off" disabled>
-            <div align="center">
-              <img src="<%=estudantes[0][0].foto%>" height="200">
-            </div>
-          </div>
-        </form>
-        <% if(estudantes[1].aula == 'Estudante em aula!'){%>
-          <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-            <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
-          </div>
-          <hr>
-          <% if(users[0].cargo == 'Assistencia'){%>
-            <form action="/cadastro/ocorrenciaestudante" method="post">
-              <input type="text" name="id" value="<%= estudantes[0][0].id_estudantes%>" hidden>
+        <% } else { %>
+          <%if (estudantes[0].length > 0 ){%>
+          <form action="/administracao/saidaEstudante" method="POST">
+            <div class="form-group">
+              <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>
               <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-              <input type="text" name="senha" value="<%= senha%>" hidden>
-              <button class="btn button btn-success">Registrar Ocorrência</button>
-            </form>
-          <% }%>
-        <%} else if(estudantes[1].aula == 'Aula em breve!'){%>
-            <div class="p-3 mt-3 bg-warning text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-              <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+              <label>Nome do Estudante</label>
+              <input type="text" class="form-control" name="nome_estudante" autocomplete="off" value="<%= estudantes[0][0].nome_estudante%>" disabled>
+              <label>CPF</label>
+              <input type="text" oninput="mascara(this, cpf)" class="form-control" name="cpf" value="<%= estudantes[0][0].cpf%>" autocomplete="off" disabled>
+              <label>RA</label>
+              <input type="text" class="form-control" name="ra" value="<%= ra = estudantes[0][0].ra%>" autocomplete="off" disabled>
+              <div align="center">
+                <img src="<%=estudantes[0][0].foto%>" height="200">
+              </div>
+            </div>
+          </form>
+          <% if(estudantes[1].aula == 'Estudante em aula!'){%>
+            <div class="p-3 mt-3 bg-danger text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+              <p class="text-center m-0 lead align-items-center"><%= estudantes[1].aula%></p>
             </div>
             <hr>
-        <% }else{%>
+            <% if(users[0].cargo == 'Assistencia'){%>
+              <form action="/cadastro/ocorrenciaestudante" method="post">
+                <input type="text" name="id" value="<%= estudantes[0][0].id_estudantes%>" hidden>
+                <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+                <input type="text" name="senha" value="<%= senha%>" hidden>
+                <button class="btn button btn-success">- Registrar Ocorrência -</button>
+              </form>
+            <% }%>
+          <%} else if(estudantes[1].aula == 'Aula em breve!'){%>
+            <div class="p-3 mt-3 bg-warning text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+              <p class="text-center m-0 lead align-items-center"><%= estudantes[1].aula%></p>
+            </div>
+            <hr>
+          <% } else{%>
           <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
-            <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+            <p class="text-center m-0 lead align-items-center"><%= estudantes[1].aula%></p>
           </div>
-        <%}%>
+          <%}%>
         
         <hr style="background-color: #FFF; margin: 1rem;">
         <p class="text-center lead">Requisições para Liberação</p>
@@ -94,17 +95,19 @@
           <input type="text" name="senha" value="<%= senha%>" hidden>
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <% } else { %>
-          <hr>
-          <p class="text-center lead">Não existe estudante com esse RA.</p>
-          <hr>
-          <hr style="background-color: #FFF; margin: 1rem;">
-          <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-dark">Voltar</button>
-          </form>
-        <% } %>
+          <% } else { %>
+            <hr>
+            <p class="text-center lead">Não existe estudante com esse RA.</p>
+            <hr>
+            <hr style="background-color: #FFF; margin: 1rem;">
+            <form action="/administracao/paginainicial" method="post">
+              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+              <input type="text" name="senha" value="<%= senha%>" hidden>
+              <button class="btn button btn-dark">Voltar</button>
+            </form>
+          <% } %>
+        
+        <% }%>
       </div>
       <div class="col-lg-2"></div>
     </div>

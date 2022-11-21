@@ -290,6 +290,8 @@ Estudante.liberacao = async (body) => {
       }
     }
     });
+
+    status = [estudantes.rows, { aula: "Estudante em aula!" }];
     return status;
   } catch (e) {
     console.log(`Houve um erro ${e}`);

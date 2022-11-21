@@ -15,24 +15,10 @@
             <select name="id_disciplinas" class="form-control" required>
               <option>Selecione a disciplina</option>
               <% if(horarios.length > 0){ %>
-                <% let lista = []%>
-                <% horarios.forEach(horario => { %>
-                  <% disciplinas.forEach(disciplina => { %>
-                    <% if(horario.id_disciplinas == disciplina.id) {%>
-                      <% lista.push(disciplina.id)%>
-                    <% }%>
-                  <% })%>
-                <% })%>
-                <% disciplinas.forEach(disciplina => { %>
-                  <% if(lista.findIndex(e => e = disciplina.id) == -1){%>
-                      <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
-                  <% }%>
-                <% })%>
-              <% }else{ %>
                 <% disciplinas.forEach(disciplina => { %>
                   <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
                 <% })%>
-              <% }%>
+              <% } %>
             </select>
             <br>
             <label>Período da Disciplina</label>
