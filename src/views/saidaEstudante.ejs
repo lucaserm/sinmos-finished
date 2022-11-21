@@ -69,11 +69,17 @@
               <button class="btn button btn-success">Registrar Ocorrência</button>
             </form>
           <% }%>
+        <%} else if(estudantes[1].aula == 'Aula em breve!'){%>
+            <div class="p-3 mt-3 bg-warning text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
+              <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
+            </div>
+            <hr>
         <% }else{%>
           <div class="p-3 mt-3 bg-success text-white align-items-center" style="border-radius: 1rem; justify-content: center;">
             <p class="text-center m-0 lead align-items-center">----- <%= estudantes[1].aula%> -----</p>
           </div>
         <%}%>
+        
         <hr style="background-color: #FFF; margin: 1rem;">
         <p class="text-center lead">Requisições para Liberação</p>
         <form action="/administracao/requisicoes" method="POST">

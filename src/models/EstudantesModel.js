@@ -206,7 +206,7 @@ Estudante.liberacao = async (body) => {
       }
     }
 
-    const hoje = new Date();
+    const hoje = new Date(2022, 10, 24, 8, 0, 0, 0);
     let status = [estudantes.rows, { aula: "Estudante sem aula!" }];
     let listaMatutino = [
       { hora: 07, minuto: 00 },
@@ -248,39 +248,47 @@ Estudante.liberacao = async (body) => {
     let periodo = ["Matutino", "Vespertino", "Noturno"];
 
     estudantes.rows.forEach((estudante) => {
-      for (let i = 1; i < 6; i++) {
-        //Define dia da semana
-        if (hoje.getDay() == i && estudante.dia_semana == diaSemana[i - 1]) {
-          for (let j = 0; j <= 2; j++) {
-            //Periodo, matutino, vespertino, noturno
-            if (estudante.periodo_horarios == periodo[j]) {
-              //Se a aula termina no mesmo tempo que começa
-              if(estudante.tempo_inicio == estudante.tempo_fim){
-                if(hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora){
-                  //verifica os minutos
-                  if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto) {
-                    status = [estudantes.rows, { aula: "Estudante em aula!" }];
-                  }
-                }else{
-                  status = [estudantes.rows, { aula: "Estudante sem aula!" }];
-                }
-              //Se a aula não termina no mesmo tempo que começa
-              }else{
-                //horaAtual <= hora que aula termina, e horaAtual >= hora que aula começa
-                if (hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora && hoje.getHours() <= listas[j][estudante.tempo_fim - 1].hora) {
-                  // hora igual a hora que começa
+    for (let i = 1; i < 6; i++) {
+      //Define dia da semana
+      if (hoje.getDay() == i && estudante.dia_semana == diaSemana[i - 1]) {
+        //Periodo, matutino, vespertino, noturno
+        for(let j = 0; j < 2; j++){
+          for(let k = 0; k < 7; k++){
+            if(hoje.getHours() == listas[j][k].hora && estudante.periodo_horarios == periodo[j]){
+              //se a horaAtual >= hora que aula começa, e, a horaAtual <= hora que aula termina
+              if (hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora && 
+                  hoje.getHours() <= listas[j][estudante.tempo_fim].hora) {
+                  // hora atual for igual a hora que começa o tempo
                   if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
-                    //verifica os minutos
-                    if (hoje.getMinutes() > listas[j][estudante.tempo_fim - 1].minuto){
+                    //verifica se os minutos são maiores
+                    if (hoje.getMinutes() > listas[j][estudante.tempo_inicio - 1].minuto){
+                      status = [estudantes.rows, { aula: "Estudante em aula!" }];
+                    }
+                  } 
+                  // hora atual for igual a hora que termina o tempo
+                  if (hoje.getHours() == listas[j][estudante.tempo_fim].hora) {
+                    //verifica se os minutos são menores
+                    if (hoje.getMinutes() < listas[j][estudante.tempo_fim].minuto){
                       status = [estudantes.rows, { aula: "Estudante em aula!" }];
                     }
                   }
-                } 
+              } else if(hoje.getHours() <= listas[j][estudante.tempo_inicio - 1].hora){
+                if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
+                  //verifica se a aula começou pelos minutos
+                  if (hoje.getMinutes() > listas[j][tempo_inicio - 1].minuto){
+                    status = [estudantes.rows, { aula: "Estudante em aula!" }];
+                  }
+                } else {
+                  //avisa que o estudante terá aula nesse turno
+                  status = [estudantes.rows, { aula: "Aula em breve!" }];
+                }
               }
+              
             }
           }
         }
       }
+    }
     });
     return status;
   } catch (e) {
