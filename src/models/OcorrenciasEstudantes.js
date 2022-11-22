@@ -99,7 +99,7 @@ OcorrenciaEstudante.buscaPorServidorRelacionado = async(nome) => {
   try {
     const ocorrencias = await client.query(
       `
-      SELECT codigo_servidor, nome_usuario, ra, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
+      SELECT ocorrenciasestudantes.id codigo_servidor, nome_usuario, ra, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
       FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
       WHERE id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
@@ -119,7 +119,7 @@ OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
   try {
     const ocorrencias = await client.query(
       `
-      SELECT codigo_servidor, nome_usuario_relacionado, ra, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
+      SELECT ocorrenciasestudantes.id codigo_servidor, nome_usuario_relacionado, ra, nome_estudante, descricao_ocorrencia, data_ocorrencia, ocorrenciasestudantes.status, ocorrenciasestudantes.id
       FROM ocorrenciasestudantes, ocorrencias, estudantes, usuarios
       WHERE id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id

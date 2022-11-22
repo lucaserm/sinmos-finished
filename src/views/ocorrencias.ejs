@@ -7,7 +7,7 @@
       <div class="col-lg-8 my-3">
         <h1 class="text-center">Ocorrências</h1>
         <p class="text-center lead">Minhas ocorrências registradas </p>
-        <% if (ocorrencias.length > 0){ %>
+        <% if (ocorrencias.length > 0 || ocorrenciasRelacionado.length > 0){ %>
         <div class="responsive-table">
           <table class="table my-3">
             <tr align="center">
@@ -16,6 +16,7 @@
               <td>Nome do Estudante</td>
               <td>Descrição</td>
               <td>Data Ocorrência</td>
+              <td>Status</td>
             </tr>
             <% ocorrenciasRelacionado.forEach(ocorrencia => { %>
             <tr align="center">
@@ -24,6 +25,20 @@
               <td><%= ocorrencia.nome_estudante%></td>
               <td><%= ocorrencia.descricao_ocorrencia%></td>
               <td><%= ocorrencia.data_ocorrencia%></td>
+              <td><%= ocorrencia.status%></td>
+              <% if(ocorrencia.status == 'Aprovado') {%>
+                <tr>
+                  <td colspan="6">
+                    <form action="/administracao/advertencias" method="post">
+                      <input type="text" name="id" value="<%= ocorrencia.id%>" hidden>
+                      <input type="text" name="status" value="<%= ocorrencia.status%>" hidden>
+                      <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+                      <input type="text" name="senha" value="<%= senha%>" hidden>
+                      <button class="btn button btn-info">Ver</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }%>
             </tr>
             <% }); %>
             <% ocorrencias.forEach(ocorrencia => { %>
@@ -33,6 +48,18 @@
               <td><%= ocorrencia.nome_estudante%></td>
               <td><%= ocorrencia.descricao_ocorrencia%></td>
               <td><%= ocorrencia.data_ocorrencia%></td>
+              <td><%= ocorrencia.status%></td>
+              <% if(ocorrencia.status == 'Aprovado') {%>
+                <td>
+                  <form action="/administracao/advertencias" method="post">
+                    <input type="text" name="id" value="<%= ocorrencia.id%>" hidden>
+                    <input type="text" name="status" value="Aprovado" hidden>
+                    <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+                    <input type="text" name="senha" value="<%= senha%>" hidden>
+                    <button class="btn button btn-info">Ver</button>
+                  </form>
+                </td>
+              <% }%>
             </tr>
             <% }); %>
           </table>
@@ -55,7 +82,7 @@
           <form action="/cadastro/ocorrenciaestudante" method="post">
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<% senha%>" hidden>
-            <button class="btn button btn-success">Cadastros</button>
+            <button class="btn button btn-success">Registrar Ocorrência</button>
           </form>
           <hr style="background-color: #FFF; margin: 1rem;">
           <form action="/administracao/paginainicial" method="post">

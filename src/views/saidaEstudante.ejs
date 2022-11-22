@@ -7,7 +7,6 @@
       <div class="col-lg-8 my-3">
         <hr style="background-color: #FFF; margin: 1rem;">
         <h1 class="text-center">Dados do Estudante</h1>
-        <p class="text-center lead">Formulário para análise de dados do aluno.</p>
         <% if(repetir.length > 1){%>
             <div class="responsive-table">
               <table class="table my-3" color>
@@ -97,7 +96,7 @@
         </form>
           <% } else { %>
             <hr>
-            <p class="text-center lead">Não existe estudante com esse RA.</p>
+            <p class="text-center lead">Não existe estudante com esses dados.</p>
             <hr>
             <hr style="background-color: #FFF; margin: 1rem;">
             <form action="/administracao/paginainicial" method="post">
