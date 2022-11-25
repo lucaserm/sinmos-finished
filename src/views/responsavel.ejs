@@ -50,11 +50,19 @@
                     <td><%= ocorrencia.nome_usuario%></td>
                     <td><%= ocorrencia.nome_usuario_relacionado%></td>
                     <td><%= ocorrencia.descricao_ocorrencia%></td>
+                    <%ocorrencia.data_ocorrencia = 
+                      ocorrencia.data_ocorrencia.toString().split(' ')[4].slice(0, 2) + 'h'+
+                      ocorrencia.data_ocorrencia.toString().split(' ')[4].slice(2, 5) + 'min [' +
+                      ocorrencia.data_ocorrencia.toString().split(' ')[2] + '/' +
+                      (ocorrencia.data_ocorrencia.getMonth()+1) + '/' +
+                      ocorrencia.data_ocorrencia.toString().split(' ')[3] + ']'
+                    %>
                     <td><%= ocorrencia.data_ocorrencia%></td>
                     <td><%= ocorrencia.status%></td>
                   </tr>  
                   <% }%>
                 <% })%>
+                <tr><td></td><td></td><td></td><td></td><td></td></tr>
               </table>
             </div>
           <% } else { %>
@@ -86,6 +94,13 @@
                 <% id = advertencia.id_ocorrenciasestudantes%>
               <tr>
                 <td><%= advertencia.descricao_ocorrencia%></td>
+                <%advertencia.data_resolucao = 
+                  advertencia.data_resolucao.toString().split(' ')[4].slice(0, 2) + 'h'+
+                  advertencia.data_resolucao.toString().split(' ')[4].slice(2, 5) + 'min [' +
+                  advertencia.data_resolucao.toString().split(' ')[2] + '/' +
+                  (advertencia.data_resolucao.getMonth()+1) + '/' +
+                  advertencia.data_resolucao.toString().split(' ')[3] + ']'
+                %>
                 <td><%= advertencia.data_resolucao%></td>
                 <td>
                   <div style="background-color: rgb(245, 250, 252); border-radius: 0.5rem; padding: 0.5rem;">

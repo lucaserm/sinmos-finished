@@ -64,6 +64,7 @@ Advertencia.buscaAdvertenciaAprovadas = async (body) => {
       AND id_ocorrencias = ocorrencias.id
       AND ra = $1`, [body.ra]
     );
+
     return advertencias.rows;
   } catch (e) {
     console.log(e);
@@ -81,14 +82,6 @@ Advertencia.buscaPorOcorrencia = async (body) => {
         AND id_usuarios = usuarios.id 
         WHERE id_ocorrenciasestudantes = $1
       `, [body.id]);
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-Advertencia.deletePorRA = async (body) => {
-  try {
-    await client.query("DELETE FROM advertencias WHERE id = $1", [body.id]);
   } catch (e) {
     console.log(e);
   }

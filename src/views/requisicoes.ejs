@@ -19,6 +19,11 @@
               <td><%= ra = registro.ra%></td>
               <td><img src="<%= registro.foto%>" width="70"></td>
               <td><%= registro.descricao%></td>
+              <%registro.dia_liberacao= 
+                registro.dia_liberacao.slice(8, 10) + '/' +
+                registro.dia_liberacao.slice(5, 7) + '/' +
+                registro.dia_liberacao.slice(0, 4)
+              %>
               <td><%= registro.dia_liberacao%></td>
             </tr>
             <% }); %>

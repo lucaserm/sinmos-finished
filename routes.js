@@ -16,7 +16,7 @@ route.post('/cadastro/disciplina', cadastroController.cadastroDisciplina);
 route.post('/cadastro/horario', cadastroController.cadastroHorario);
 route.post('/cadastro/estudante', cadastroController.cadastroEstudante);
 route.post('/cadastro/responsavel', cadastroController.cadastroResponsavel);
-route.post('/cadastro/horarioestudante', cadastroController.cadastroHorarioEstudante);
+route.post('/cadastro/disciplinasestudante', cadastroController.cadastroDisciplinaEstudante);
 route.post('/cadastro/registro', cadastroController.cadastroRegistro);
 route.post('/cadastro/usuario', cadastroController.cadastroUsuario);
 route.post('/cadastro/ocorrencia', cadastroController.cadastroOcorrencia);
@@ -62,26 +62,9 @@ route.post('/administracao/horarios', administracaoController.horarios);
 route.post('/administracao/requisicoes', administracaoController.requisicoes);
 route.post('/administracao/advertencias', administracaoController.advertencias);
 route.post('/administracao/ocorrencias', administracaoController.ocorrencias);
-route.post('/administracao/estudantes', administracaoController.estudantes);
 route.post('/administracao/responsavel', administracaoController.responsavel);
 route.post('/administracao/editar', administracaoController.editar);
-storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/assets/img/crachas/')
-    },
-    filename: function (req, file, cb) {
-        // Extração da extensão do arquivo original:
-        const extensaoArquivo = file.originalname.split('.')[1];
-        // Cria um código randômico que será o nome do arquivo
-        const novoNomeArquivo = require('crypto')
-            .randomBytes(64)
-            .toString('hex');
-        // Indica o novo nome do arquivo:
-        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
-    }
-});
-upload = multer({ storage });
-route.post('/administracao/saidaEstudante', upload.single('avatar'), administracaoController.saidaEstudante);
+route.post('/administracao/saidaEstudante', administracaoController.saidaEstudante);
 route.post('/administracao/editadoEstudante', administracaoController.trataEditado);
 route.post('/administracao/editadoSaida', administracaoController.trataEditado);
 

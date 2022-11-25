@@ -71,7 +71,7 @@ exports.cadastroResponsavel = (req, res) => {
     const senha = req.body.senha;
     res.render('cadastro_responsavel', { codigo_servidor, senha });
 };
-exports.cadastroHorarioEstudante = async(req,res) => {
+exports.cadastroDisciplinaEstudante = async(req,res) => {
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const estudantes = await Estudante.buscaEstudantes();
