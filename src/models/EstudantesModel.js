@@ -112,7 +112,7 @@ Estudante.buscaHorarios = async (body) => {
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
           FROM estudantes, horarios, disciplinas, horariosestudantes
           WHERE ra = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
+          ORDER BY periodo_horarios
           `,
             [body.ra]
           );
@@ -123,7 +123,7 @@ Estudante.buscaHorarios = async (body) => {
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
           FROM estudantes, horarios, disciplinas, horariosestudantes
           WHERE cpf = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
+          ORDER BY periodo_horarios
           `,
             [body.cpf]
           );
@@ -138,7 +138,7 @@ Estudante.buscaHorarios = async (body) => {
           AND id_estudantes = estudantes.id
           AND id_horarios = horarios.id
           AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
+          ORDER BY periodo_horarios
           `
         );
       }
@@ -166,7 +166,7 @@ Estudante.liberacao = async (body) => {
           AND id_estudantes = estudantes.id
           AND id_horarios = horarios.id
           AND id_disciplinas = disciplinas.id
-          ORDER BY estudantes.id
+          ORDER BY periodo_horarios
           `
         );
         }
@@ -182,7 +182,7 @@ Estudante.liberacao = async (body) => {
             AND id_estudantes = estudantes.id
             AND id_horarios = horarios.id
             AND id_disciplinas = disciplinas.id
-            ORDER BY estudantes.id
+            ORDER BY periodo_horarios
             `,
               [body.cpf]
           );
@@ -199,16 +199,17 @@ Estudante.liberacao = async (body) => {
             AND id_estudantes = estudantes.id
             AND id_horarios = horarios.id
             AND id_disciplinas = disciplinas.id
-            ORDER BY estudantes.id
+            ORDER BY periodo_horarios
             `, [body.ra]
           );
         }
       }
     }
 
-    const hoje = new Date();
+    
     let status = [estudantes.rows, { aula: "Estudante sem aula!" }];
     let listaMatutino = [
+      "Matutino",
       { hora: 07, minuto: 00 },
       { hora: 07, minuto: 45 },
       { hora: 08, minuto: 30 },
@@ -218,6 +219,7 @@ Estudante.liberacao = async (body) => {
       { hora: 11, minuto: 50 },
     ];
     let listaVespertino = [
+      "Vespertino",
       { hora: 13, minuto: 00 },
       { hora: 13, minuto: 45 },
       { hora: 14, minuto: 30 },
@@ -227,6 +229,7 @@ Estudante.liberacao = async (body) => {
       { hora: 17, minuto: 50 },
     ];
     let listaNoturno = [
+      "Noturno",
       { hora: 19, minuto: 00 },
       { hora: 19, minuto: 45 },
       { hora: 20, minuto: 30 },
@@ -245,49 +248,88 @@ Estudante.liberacao = async (body) => {
       "Quinta-Feira",
       "Sexta-Feira",
     ];
-    let periodo = ["Matutino", "Vespertino", "Noturno"];
+    const hoje = new Date();
+    let verifica_hora = 0;
+    let verifica_min = 0;
 
     estudantes.rows.forEach((estudante) => {
-    for (let i = 1; i < 6; i++) {
       //Define dia da semana
-      if (hoje.getDay() == i && estudante.dia_semana == diaSemana[i - 1]) {
+      if (estudante.dia_semana == diaSemana[diaDaSemana(estudante) - 1]) {
         //Periodo, matutino, vespertino, noturno
+        let turno_atual = 0;
+        let primeiro_tempo_inicio = [6, 6, 'Inalterado'];
+
         for(let j = 0; j < 2; j++){
-          for(let k = 0; k < 7; k++){
-            if(hoje.getHours() == listas[j][k].hora && estudante.periodo_horarios == periodo[j]){
-              //se a horaAtual >= hora que aula começa, e, a horaAtual <= hora que aula termina
-              if (hoje.getHours() >= listas[j][estudante.tempo_inicio - 1].hora && 
-                  hoje.getHours() <= listas[j][estudante.tempo_fim].hora) {
-                  // hora atual for igual a hora que começa o tempo
-                  if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
-                    //verifica se os minutos são maiores
-                    if (hoje.getMinutes() > listas[j][estudante.tempo_inicio - 1].minuto){
-                      status = [estudantes.rows, { aula: "Estudante em aula!" }];
-                    }
-                  } 
-                  // hora atual for igual a hora que termina o tempo
-                  if (hoje.getHours() == listas[j][estudante.tempo_fim].hora) {
-                    //verifica se os minutos são menores
-                    if (hoje.getMinutes() < listas[j][estudante.tempo_fim].minuto){
-                      status = [estudantes.rows, { aula: "Estudante em aula!" }];
-                    }
-                  }
-              } else if(hoje.getHours() <= listas[j][estudante.tempo_inicio - 1].hora){
-                if (hoje.getHours() == listas[j][estudante.tempo_inicio - 1].hora) {
-                  //verifica se a aula começou pelos minutos
-                  if (hoje.getMinutes() > listas[j][tempo_inicio - 1].minuto){
-                    status = [estudantes.rows, { aula: "Estudante em aula!" }];
-                  }
-                } else {
-                  //avisa que o estudante terá aula nesse turno
-                  status = [estudantes.rows, { aula: "Aula em breve!" }];
-                }
-              }
+          if(estudante.periodo_horarios == listas[j][0]){
+            //se a horaAtual >= hora que aula começa, e, a horaAtual <= hora que aula termina
+            if(hoje.getHours() >= listas[j][estudante.tempo_inicio].hora && hoje.getHours() <= listas[j][estudante.tempo_fim + 1].hora) {
+              status = estudanteEmAula(estudante.tempo_inicio, estudante.tempo_fim, j);
             }
+
+            if(hoje.getHours() <= listas[j][estudante.tempo_inicio].hora){
+              status = aulaEmBreve(estudante, turno_atual, primeiro_tempo_inicio);
+            }
+          }else{
+            turno_atual = j;
           }
         }
       }
-    }});
+    });
+
+    function diaDaSemana(estudante){
+      for(let i = 1; i < 6; i++){
+        if (hoje.getDay() == i && estudante.dia_semana == diaSemana[i - 1]){
+          return i;
+        }
+      }
+    }
+
+    function aulaEmBreve(estudante, turno_atual, primeiro_tempo_inicio){
+      if(listas[turno_atual][0] == estudante.periodo_horarios){
+                  
+        primeiro_tempo_inicio = 
+        estudante.tempo_inicio < primeiro_tempo_inicio[0] 
+        ? [estudante.tempo_inicio, estudante.tempo_fim, 'Alterado']
+        : primeiro_tempo_inicio;
+        
+        if(hoje.getHours() < listas[turno_atual][primeiro_tempo_inicio[0]].hora && verifica_hora == 0 && primeiro_tempo_inicio[2] == 'Alterado'){
+          verifica_hora = 1;
+          status = [estudantes.rows, { aula: `Aula em breve!` }];
+        }
+
+        if(hoje.getHours() == listas[turno_atual][primeiro_tempo_inicio[0]].hora){
+          if(hoje.getMinutes() < listas[turno_atual][primeiro_tempo_inicio[0]].minuto && verifica_min == 0 && primeiro_tempo_inicio[2] == 'Alterado'){
+            verifica_min = 1;
+            status = [estudantes.rows, { aula: `Aula em breve!` }];
+          }
+        }
+      }
+      return status;
+    }
+
+    function estudanteEmAula(tempo_inicio, tempo_fim, j){
+      // hora atual for igual a hora que começa o tempo
+      if (hoje.getHours() == listas[j][tempo_inicio].hora) {
+        //verifica se os minutos são maiores
+        if (hoje.getMinutes() >= listas[j][tempo_inicio].minuto){
+          status = [estudantes.rows, { aula: "Estudante em aula!" }];
+        }
+      }               
+      // hora atual for igual a hora que termina o tempo
+      if (hoje.getHours() == listas[j][tempo_fim + 1].hora) {
+        //verifica se os minutos são menores
+        if (hoje.getMinutes() <= listas[j][tempo_fim + 1].minuto){
+          status = [estudantes.rows, { aula: "Estudante em aula!" }];
+        }
+      }
+
+      if(hoje.getHours() > listas[j][tempo_inicio].hora 
+      && hoje.getHours() < listas[j][tempo_fim + 1].hora){
+        status = [estudantes.rows, { aula: "Estudante em aula!" }];
+      }
+      return status;
+    }
+
     return status;
   } catch (e) {
     console.log(`Houve um erro ${e}`);
