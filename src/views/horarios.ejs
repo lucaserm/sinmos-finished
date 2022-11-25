@@ -69,37 +69,53 @@
           </table>
         </div>
         <hr style="background-color: #FFF; margin: 1rem;">
-          <form action="/administracao/responsavel" method="POST">
-            <input type="text" name="ra" value="<%= ra%>" hidden>
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-danger" style="margin:0">Advertências</button>
-          </form>
-          <hr style="background-color: #FFF; margin: 1rem;">
-          <p class="text-center lead">Requisições para Liberação</p>
-          <form action="/administracao/requisicoes" method="POST">
-            <input type="text" name="ra" value="<%= ra%>" hidden>
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-info small">Ver</button>
-          </form>
-          <hr style="background-color: #FFF; margin: 1rem;">
-          <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-dark">Voltar</button>
-          </form>
-        </div>
-        <% } else { %>
-          <hr>
-          <p class="text-center lead">Não existem horários registrados à esse aluno ou insira um aluno válido.</p>
-          <hr style="background-color: #FFF; margin: 1rem;">
-          <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-dark">Voltar</button>
-          </form>
-        <% } %>
+        <form action="/administracao/responsavel" method="POST">
+          <input type="text" name="ra" value="<%= ra%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-danger" style="margin:0">Advertências</button>
+        </form>
+        <hr style="background-color: #FFF; margin: 1rem;">
+        <p class="text-center lead">Requisições para Liberação</p>
+        <form action="/administracao/requisicoes" method="POST">
+          <input type="text" name="ra" value="<%= ra%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-info small">Ver</button>
+        </form>
+        <hr style="background-color: #FFF; margin: 1rem;">
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+      <% } else { %>
+        <% repetir.forEach(estudante => { %>  
+          <% ra = estudante.ra%>
+        <% }); %> 
+        <p class="text-center lead">Não existem horários registrados à esse aluno ou insira um aluno válido.</p>
+        <hr style="background-color: #FFF; margin: 1rem;">
+        <form action="/administracao/responsavel" method="POST">
+          <input type="text" name="ra" value="<%= ra%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-danger" style="margin:0">Advertências</button>
+        </form>
+        <hr style="background-color: #FFF; margin: 1rem;">
+        <p class="text-center lead">Requisições para Liberação</p>
+        <form action="/administracao/requisicoes" method="POST">
+          <input type="text" name="ra" value="<%= ra%>" hidden>
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-info small">Ver</button>
+        </form>
+        <hr style="background-color: #FFF; margin: 1rem;">
+        <form action="/administracao/paginainicial" method="post">
+          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+      <% } %>
       </div>
       <div class="col-lg-2"></div>
     </div>
