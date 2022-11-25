@@ -45,8 +45,8 @@ CREATE TABLE Horarios (
 	id serial PRIMARY KEY
 );
 
-CREATE TABLE HorariosEstudantes (
-    id_horarios integer references Horarios(id),
+CREATE TABLE DisciplinasEstudantes (
+    id_disciplinas integer references Disciplinas(id),
     id_estudantes integer references Estudantes(id),
 	id serial PRIMARY KEY
 );

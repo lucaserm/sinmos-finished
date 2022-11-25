@@ -7,14 +7,15 @@ class Disciplina{
 }
 
 Disciplina.buscarDisciplinas = async () => {
-  const disciplinas = await client.query("SELECT * FROM disciplinas ORDER BY id");
+  const disciplinas = await client.query(
+    `
+    SELECT disciplinas.*
+    FROM disciplinas 
+    ORDER BY id`);
+    
   return disciplinas.rows;
 };
 
-Disciplina.buscarDisciplinasNaoRegistradas = async () => {
-  const disciplinas = await client.query("SELECT * FROM disciplinas ORDER BY id");
-  return disciplinas.rows;
-};
 
 Disciplina.save = async (body) => {
   try {

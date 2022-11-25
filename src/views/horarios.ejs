@@ -55,8 +55,8 @@
               <td><b>INÍCIO</b></td>
               <td><b>FIM</b></td>
             </tr>
+            
             <% horarios.forEach(horario => { %>
-              <% if(horario.dia_semana == 'Segunda-Feira'){ %>
               <tr align="center">
                 <% ra = horario.ra%>
                 <td><%= horario.nome_disciplina%></td>
@@ -65,55 +65,6 @@
                 <td><%= horario.tempo_inicio%>° Tempo</td>
                 <td><%= horario.tempo_fim%>° Tempo</td>
               </tr>
-              <% }%>
-            <% }); %>
-            <% horarios.forEach(horario => { %>
-              <% if(horario.dia_semana == 'Terça-Feira'){ %>
-              <tr align="center">
-                <% ra = horario.ra%>
-                <td><%= horario.nome_disciplina%></td>
-                <td><%= horario.periodo_horarios%></td>
-                <td><%= horario.dia_semana%></td>
-                <td><%= horario.tempo_inicio%>° Tempo</td>
-                <td><%= horario.tempo_fim%>° Tempo</td>
-              </tr>
-              <% }%>
-              <% }); %>
-            <% horarios.forEach(horario => { %>
-              <% if(horario.dia_semana == 'Quarta-Feira'){ %>
-              <tr align="center">
-                <% ra = horario.ra%>
-                <td><%= horario.nome_disciplina%></td>
-                <td><%= horario.periodo_horarios%></td>
-                <td><%= horario.dia_semana%></td>
-                <td><%= horario.tempo_inicio%>° Tempo</td>
-                <td><%= horario.tempo_fim%>° Tempo</td>
-              </tr>
-              <% }%>
-            <% }); %>
-            <% horarios.forEach(horario => { %>
-              <% if(horario.dia_semana == 'Quinta-Feira'){ %>
-              <tr align="center">
-                <% ra = horario.ra%>
-                <td><%= horario.nome_disciplina%></td>
-                <td><%= horario.periodo_horarios%></td>
-                <td><%= horario.dia_semana%></td>
-                <td><%= horario.tempo_inicio%>° Tempo</td>
-                <td><%= horario.tempo_fim%>° Tempo</td>
-              </tr>
-              <% }%>
-            <% }); %>
-            <% horarios.forEach(horario => { %>
-              <% if(horario.dia_semana == 'Sexta-Feira'){ %>
-              <tr align="center">
-                <% ra = horario.ra%>
-                <td><%= horario.nome_disciplina%></td>
-                <td><%= horario.periodo_horarios%></td>
-                <td><%= horario.dia_semana%></td>
-                <td><%= horario.tempo_inicio%>° Tempo</td>
-                <td><%= horario.tempo_fim%>° Tempo</td>
-              </tr>
-              <% }%>
             <% }); %>
           </table>
         </div>

@@ -110,8 +110,10 @@ Estudante.buscaHorarios = async (body) => {
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE ra = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
+          FROM estudantes, horarios, disciplinas, disciplinasestudantes
+          WHERE ra = $1 AND id_estudantes = estudantes.id 
+          AND horarios.id_disciplinas = disciplinas.id
+          AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
           `,
             [body.ra]
@@ -121,8 +123,10 @@ Estudante.buscaHorarios = async (body) => {
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
-          WHERE cpf = $1 AND id_estudantes = estudantes.id AND id_horarios = horarios.id AND id_disciplinas = disciplinas.id
+          FROM estudantes, horarios, disciplinas, disciplinasestudantes
+          WHERE cpf = $1 AND id_estudantes = estudantes.id 
+          AND horarios.id_disciplinas = disciplinas.id
+          AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
           `,
             [body.cpf]
@@ -133,17 +137,85 @@ Estudante.buscaHorarios = async (body) => {
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
+          FROM estudantes, horarios, disciplinas, disciplinasestudantes
           WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
           AND id_estudantes = estudantes.id
-          AND id_horarios = horarios.id
-          AND id_disciplinas = disciplinas.id
+          AND horarios.id_disciplinas = disciplinas.id
+          AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
           `
         );
       }
     }
-    return estudantes.rows;
+
+    let ordem = [];
+    estudantes.rows.forEach(horario => { 
+      if(horario.dia_semana == 'Segunda-Feira'){ 
+        if(horario.periodo_horarios == 'Matutino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Vespertino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Noturno'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+      }
+    }); 
+    estudantes.rows.forEach(horario => { 
+      if(horario.dia_semana == 'Terça-Feira'){ 
+        if(horario.periodo_horarios == 'Matutino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Vespertino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Noturno'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+      }
+    }); 
+    estudantes.rows.forEach(horario => { 
+      if(horario.dia_semana == 'Quarta-Feira'){ 
+        if(horario.periodo_horarios == 'Matutino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Vespertino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Noturno'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+      }
+    }); 
+    estudantes.rows.forEach(horario => { 
+      if(horario.dia_semana == 'Quinta-Feira'){ 
+        if(horario.periodo_horarios == 'Matutino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Vespertino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Noturno'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+      }
+    }); 
+    estudantes.rows.forEach(horario => { 
+      if(horario.dia_semana == 'Sexta-Feira'){ 
+        if(horario.periodo_horarios == 'Matutino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Vespertino'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+        if(horario.periodo_horarios == 'Noturno'){
+        for(let i = 1; i < 7; i++){if(horario.tempo_inicio == i){ ordem.push(horario) }}
+        }
+      }
+    }); 
+
+    return ordem;
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
@@ -161,11 +233,11 @@ Estudante.liberacao = async (body) => {
         estudantes = await client.query(
           `
           SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-          FROM estudantes, horarios, disciplinas, horariosestudantes
+          FROM estudantes, horarios, disciplinas, disciplinasestudantes
           WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
           AND id_estudantes = estudantes.id
-          AND id_horarios = horarios.id
-          AND id_disciplinas = disciplinas.id
+          AND horarios.id_disciplinas = disciplinas.id
+          AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
           `
         );
@@ -177,11 +249,11 @@ Estudante.liberacao = async (body) => {
           estudantes = await client.query(
             `
             SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-            FROM estudantes, horarios, disciplinas, horariosestudantes
+            FROM estudantes, horarios, disciplinas, disciplinasestudantes
             WHERE cpf = $1 
             AND id_estudantes = estudantes.id
-            AND id_horarios = horarios.id
-            AND id_disciplinas = disciplinas.id
+            AND horarios.id_disciplinas = disciplinas.id
+            AND disciplinasestudantes.id_disciplinas = disciplinas.id
             ORDER BY periodo_horarios
             `,
               [body.cpf]
@@ -194,11 +266,11 @@ Estudante.liberacao = async (body) => {
           estudantes = await client.query(
             `
             SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
-            FROM estudantes, horarios, disciplinas, horariosestudantes
+            FROM estudantes, horarios, disciplinas, disciplinasestudantes
             WHERE ra = $1 
             AND id_estudantes = estudantes.id
-            AND id_horarios = horarios.id
-            AND id_disciplinas = disciplinas.id
+            AND horarios.id_disciplinas = disciplinas.id
+            AND disciplinasestudantes.id_disciplinas = disciplinas.id
             ORDER BY periodo_horarios
             `, [body.ra]
           );
@@ -248,6 +320,7 @@ Estudante.liberacao = async (body) => {
       "Quinta-Feira",
       "Sexta-Feira",
     ];
+
     const hoje = new Date();
     let verifica_hora = 0;
     let verifica_min = 0;
@@ -265,8 +338,7 @@ Estudante.liberacao = async (body) => {
             if(hoje.getHours() >= listas[j][estudante.tempo_inicio].hora && hoje.getHours() <= listas[j][estudante.tempo_fim + 1].hora) {
               status = estudanteEmAula(estudante.tempo_inicio, estudante.tempo_fim, j);
             }
-
-            if(hoje.getHours() <= listas[j][estudante.tempo_inicio].hora){
+            if(hoje.getHours() <= listas[j][estudante.tempo_inicio].hora && hoje.getHours() >= listas[j][1].hora){
               status = aulaEmBreve(estudante, turno_atual, primeiro_tempo_inicio);
             }
           }else{
@@ -288,9 +360,9 @@ Estudante.liberacao = async (body) => {
       if(listas[turno_atual][0] == estudante.periodo_horarios){
                   
         primeiro_tempo_inicio = 
-        estudante.tempo_inicio < primeiro_tempo_inicio[0] 
-        ? [estudante.tempo_inicio, estudante.tempo_fim, 'Alterado']
-        : primeiro_tempo_inicio;
+          estudante.tempo_inicio < primeiro_tempo_inicio[0] 
+          ? [estudante.tempo_inicio, estudante.tempo_fim, 'Alterado']
+          : primeiro_tempo_inicio;
         
         if(hoje.getHours() < listas[turno_atual][primeiro_tempo_inicio[0]].hora && verifica_hora == 0 && primeiro_tempo_inicio[2] == 'Alterado'){
           verifica_hora = 1;

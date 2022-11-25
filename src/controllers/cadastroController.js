@@ -4,7 +4,7 @@ const Estudante = require('../models/EstudantesModel');
 const Matricula = require('../models/MatriculasModel');
 const Horario = require('../models/HorariosModel');
 const Responsavel = require('../models/ResponsaveisModel');
-const HorarioEstudante = require('../models/HorariosEstudantesModel');
+const HorarioEstudante = require('../models/DisciplinasEstudantesModel');
 const Registro = require('../models/RegistrosModel');
 const Usuario = require('../models/UsuariosModel');
 const Ocorrencia = require('../models/OcorrenciasModel')
@@ -75,8 +75,8 @@ exports.cadastroHorarioEstudante = async(req,res) => {
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const estudantes = await Estudante.buscaEstudantes();
-    const horarios = await Horario.buscaHorariosDiscipinas();
-    res.render('cadastro_horariosestudantes', { estudantes, horarios, codigo_servidor, senha });
+    const disciplinas = await Disciplina.buscarDisciplinas();
+    res.render('cadastro_disciplinasestudantes', { estudantes, disciplinas, codigo_servidor, senha });
 }
 exports.cadastroRegistro = async(req, res) => {
     const codigo_servidor = req.body.codigo_servidor;
