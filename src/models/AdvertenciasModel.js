@@ -57,7 +57,7 @@ Advertencia.buscaAdvertenciaAprovadas = async (body) => {
   try {
     const advertencias = await client.query(
       `
-      SELECT id_ocorrenciasestudantes, descricao_ocorrencia, data_resolucao 
+      SELECT id_ocorrenciasestudantes, descricao_ocorrencia, data_resolucao , relatorio_advertencia
       FROM advertencias, ocorrenciasestudantes, estudantes, ocorrencias
       WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id
       AND id_estudantes = estudantes.id
