@@ -324,28 +324,36 @@ Estudante.liberacao = async (body) => {
     const hoje = new Date();
     let verifica_hora = 0;
     let verifica_min = 0;
+    let estudante_aula = -1;
 
-    estudantes.rows.forEach((estudante) => {
+    estudantes.rows.forEach((estudante, index) => {
       //Define dia da semana
       if (estudante.dia_semana == diaSemana[diaDaSemana(estudante) - 1]) {
         //Periodo, matutino, vespertino, noturno
         let turno_atual = 0;
         let primeiro_tempo_inicio = [6, 6, 'Inalterado'];
-
-        for(let j = 0; j < 2; j++){
-          if(estudante.periodo_horarios == listas[j][0]){
-            //se a horaAtual >= hora que aula começa, e, a horaAtual <= hora que aula termina
-            if(hoje.getHours() >= listas[j][estudante.tempo_inicio].hora && hoje.getHours() <= listas[j][estudante.tempo_fim + 1].hora) {
-              status = estudanteEmAula(estudante.tempo_inicio, estudante.tempo_fim, j);
+        if(estudante_aula == -1){
+          for(let j = 0; j < 2; j++){
+            if(estudante.periodo_horarios == listas[j][0]){
+              //se a horaAtual >= hora que aula começa, e, a horaAtual <= hora que aula termina
+              if(hoje.getHours() >= listas[j][estudante.tempo_inicio].hora && hoje.getHours() <= listas[j][estudante.tempo_fim + 1].hora) {
+                status = estudanteEmAula(estudante.tempo_inicio, estudante.tempo_fim, j);
+              }
+              if(hoje.getHours() <= listas[j][estudante.tempo_inicio].hora && hoje.getHours() >= listas[j][1].hora){
+                status = aulaEmBreve(estudante, turno_atual, primeiro_tempo_inicio);
+              }
+            }else{
+              turno_atual = j;
             }
-            if(hoje.getHours() <= listas[j][estudante.tempo_inicio].hora && hoje.getHours() >= listas[j][1].hora){
-              status = aulaEmBreve(estudante, turno_atual, primeiro_tempo_inicio);
-            }
-          }else{
-            turno_atual = j;
           }
         }
+
+        if(status[1].aula == "Estudante em aula!"){
+          status = status;
+          estudante_aula = index;
+        };
       }
+      
     });
 
     function diaDaSemana(estudante){
@@ -358,7 +366,6 @@ Estudante.liberacao = async (body) => {
 
     function aulaEmBreve(estudante, turno_atual, primeiro_tempo_inicio){
       if(listas[turno_atual][0] == estudante.periodo_horarios){
-                  
         primeiro_tempo_inicio = 
           estudante.tempo_inicio < primeiro_tempo_inicio[0] 
           ? [estudante.tempo_inicio, estudante.tempo_fim, 'Alterado']
@@ -401,7 +408,6 @@ Estudante.liberacao = async (body) => {
       }
       return status;
     }
-
     return status;
   } catch (e) {
     console.log(`Houve um erro ${e}`);

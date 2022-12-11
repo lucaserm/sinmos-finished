@@ -55,7 +55,7 @@ exports.cadastroDisciplina = async(req, res) => {
 exports.cadastroHorario = async(req, res) => {
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    const disciplinas = await Disciplina.buscarDisciplinasNaoRegistradas();
+    const disciplinas = await Disciplina.buscarDisciplinas();
     const horarios = await Horario.buscaHorarios();
     res.render('cadastro_horario', { disciplinas, horarios, codigo_servidor, senha });
 };

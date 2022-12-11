@@ -12,7 +12,7 @@
             <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <input type="text" class="form-control" name="ra" autocomplete="off" placeholder="RA" >
-            <input type="text" class="form-control" name="cpf" autocomplete="off" placeholder="CPF" onblur="formataCPF(this)">
+            <input type="text" class="form-control" name="cpf" autocomplete="off" placeholder="CPF" onchange="formataCPF(this)">
             <input type="text" class="form-control" name="nome" autocomplete="off" placeholder="NOME COMPLETO" >
             <button class="btn button btn-success small">Ver</button>
           </form>

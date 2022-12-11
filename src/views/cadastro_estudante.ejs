@@ -19,6 +19,7 @@
             <input type="text" name="senha" value="<%= senha%>" hidden>
             <label>Responsável</label>
             <select name="id_responsaveis" class="form-control" required>
+              <option value="">Selecione um Responsável</option>
               <% responsaveis.forEach(responsavel=> { %>
                 <option value="<%= responsavel.id%>"><%= responsavel.nome_responsavel%>, <%= responsavel.email_responsavel%>, <%= responsavel.telefone_responsavel%></option>
               <% }); %>
