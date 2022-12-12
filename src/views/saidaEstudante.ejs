@@ -40,7 +40,7 @@
             <button class="btn button btn-dark">Voltar</button>
           </form>
         <% } else { %>
-          <%if (typeof estudantes[0] != 'undefined'){%>
+          <%if (estudantes[0]){%>
           <form action="/administracao/saidaEstudante" method="POST">
             <div class="form-group">
               <input type="number" name="id_estudantes" value="<%= estudantes[0][0].id_estudantes%>" hidden>

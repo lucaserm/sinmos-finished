@@ -78,9 +78,9 @@ exports.responsavel = async(req, res) => {
 
 exports.saidaEstudante = async(req, res) => {
     const estudantes = 
-        (typeof req.body.cpf != 'undefined' || 
-        typeof req.body.ra != 'undefined' || 
-        typeof req.body.nome != 'undefined') && 
+        (!req.body.cpf || 
+        !req.body.ra || 
+        !req.body.nome) && 
         (req.body.cpf != '' || 
         req.body.ra != '' || 
         req.body.nome != '') ?
@@ -89,7 +89,7 @@ exports.saidaEstudante = async(req, res) => {
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
     const users = await Usuario.buscaPorCodigo(codigo_servidor);
-    let repetir = typeof req.body.nome != 'undefined' && req.body.nome != '' ? 
+    let repetir = req.body.nome && req.body.nome != '' ? 
         await Estudante.buscaPorNome(req.body) : [];
     res.render('saidaEstudante', { estudantes, repetir, users, codigo_servidor, senha });
 }
@@ -97,9 +97,9 @@ exports.saidaEstudante = async(req, res) => {
 //pega os horários do estudante
 exports.horarios = async(req, res) => {
     const horarios = 
-        (typeof req.body.cpf != 'undefined' || 
-        typeof req.body.ra != 'undefined' || 
-        typeof req.body.nome != 'undefined') && 
+        (!req.body.cpf || 
+        !req.body.ra || 
+        !req.body.nome) && 
         (req.body.cpf != '' || 
         req.body.ra != '' || 
         req.body.nome != '') ?
@@ -107,7 +107,7 @@ exports.horarios = async(req, res) => {
         {};
     const codigo_servidor = req.body.codigo_servidor;
     const senha = req.body.senha;
-    let repetir = typeof req.body.nome != 'undefined' && req.body.nome != '' ? 
+    let repetir = req.body.nome && req.body.nome != '' ? 
         await Estudante.buscaPorNome(req.body) : [];
     res.render('horarios', { horarios, repetir, codigo_servidor, senha });
 }

@@ -104,7 +104,7 @@ Estudante.buscaHorarios = async (body) => {
   try {
     let estudantes;
     
-    if(typeof body == 'object'){
+    if(body){
       if (body.ra != '') {
         body.ra = String(body.ra).trim();
         estudantes = await client.query(
@@ -225,8 +225,8 @@ Estudante.liberacao = async (body) => {
   try {
     let estudantes;
     
-    if(typeof body == 'object'){
-      if(typeof body.nome != 'undefined'){
+    if(body){
+      if(body.nome){
         if(body.nome != ''){
         body.nome = String(body.nome).trim();
         body.nome = body.nome.replace(' ', '%');
@@ -243,7 +243,7 @@ Estudante.liberacao = async (body) => {
         );
         }
       }
-      if(typeof body.cpf != 'undefined'){
+      if(body.cpf){
         if(body.cpf != ''){
           body.cpf =  String(body.cpf).trim();
           estudantes = await client.query(
@@ -260,7 +260,7 @@ Estudante.liberacao = async (body) => {
           );
         }
       }
-      if (typeof body.ra != 'undefined'){
+      if (body.ra){
         if(body.ra != '') {
           body.ra = String(body.ra).trim();
           estudantes = await client.query(
