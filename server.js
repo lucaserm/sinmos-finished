@@ -4,11 +4,7 @@ const express = require('express');
 const app = express();
 const { Client } = require('pg');
 const client = new Client({
-    user: process.env.user, 
-    password: process.env.password,
-    host: process.env.host,
-    port: process.env.porta,
-    database: process.env.database
+    connectionString: process.env.pghost,
 });
 module.exports = client;
 
