@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js --ignore public",
+    "start": "nodemon index.js --ignore public",
     "init": "node server.js",
     "dev": "webpack -w"
   },
