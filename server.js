@@ -22,9 +22,11 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
+const port = process.env.PORT || 3000;
+
 app.use(routes);
 app.on('Pronto.', () => {
-    app.listen(3000, () => {
+    app.listen(port, () => {
         console.log(`Acessar em https://${process.env.host}:3000/`);
         console.log('Servidor rodando na porta 3000');
     });
