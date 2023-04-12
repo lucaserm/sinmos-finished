@@ -1,35 +1,68 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registro para Liberação de um Aluno</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/registrosalvo" method="post">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
               <% estudantes.forEach( estudante => { %>
-                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+              <option value="<%= estudante.id %>">
+                <%= estudante.nome_estudante %>, <%=
+                estudante.email_institucional%>, <%= estudante.cpf%>, <%=
+                estudante.ra%>
+              </option>
               <% });%>
             </select>
-            <br>
+            <br />
             <label>Descrição</label>
-            <input type="text" name="descricao" class="form-control" placeholder="Ex.: Responsável solicitou a liberação do(a) estudante." required autocomplete="off">
+            <input
+              type="text"
+              name="descricao"
+              class="form-control"
+              placeholder="Ex.: Responsável solicitou a liberação do(a) estudante."
+              required
+              autocomplete="off"
+            />
             <label>Dia que será liberado</label>
-            <input type="date" name="dia_liberacao" class="form-control" required>
+            <input
+              type="date"
+              name="dia_liberacao"
+              class="form-control"
+              required
+            />
           </div>
-          <hr>
-          <button type="submit" class="btn button btn-success" style="margin: 0;">Salvar Registro</button>
-          <hr>
+          <hr />
+          <button
+            type="submit"
+            class="btn button btn-success"
+            style="margin: 0"
+          >
+            Salvar Registro
+          </button>
+          <hr />
         </form>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>

@@ -1,52 +1,88 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre uma Ocorrência para um Estudante</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/ocorrenciaestudantesalvo" method="post">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
               <option>Selecione o nome do estudante</option>
-              <% estudantes.forEach( estudante => { %>
-                <% if(typeof id != 'undefined'){%>
-                  <% if(id == estudante.id){%>
-                    <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
-                  <% }%>
-                <%} else {%>
-                  <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>,  <%= estudante.email_institucional%>, <%= estudante.cpf%>, <%= estudante.ra%></option>
-                <%}%>
-              <% });%>
+              <% estudantes.forEach( estudante => { %> <% if(typeof id !=
+              'undefined'){%> <% if(id == estudante.id){%>
+              <option value="<%= estudante.id %>">
+                <%= estudante.nome_estudante %>, <%=
+                estudante.email_institucional%>, <%= estudante.cpf%>, <%=
+                estudante.ra%>
+              </option>
+              <% }%> <%} else {%>
+              <option value="<%= estudante.id %>">
+                <%= estudante.nome_estudante %>, <%=
+                estudante.email_institucional%>, <%= estudante.cpf%>, <%=
+                estudante.ra%>
+              </option>
+              <%}%> <% });%>
             </select>
-            <br>
+            <br />
             <label>Ocorrência</label>
             <select name="id_ocorrencias" class="form-control">
               <option>Selecione o tipo de Ocorrência/Observação</option>
               <% ocorrencias.forEach( ocorrencia => { %>
-                <option value="<%= ocorrencia.id%>"><%= ocorrencia.descricao_ocorrencia%></option>
+              <option value="<%= ocorrencia.id%>">
+                <%= ocorrencia.descricao_ocorrencia%>
+              </option>
               <% });%>
             </select>
-            <br>
-            <input type="text" name="nome_usuario_relacionado" class="form-control" placeholder="Nome Assistente Auxiliar" autocomplete="off">
+            <br />
+            <input
+              type="text"
+              name="nome_usuario_relacionado"
+              class="form-control"
+              placeholder="Nome Assistente Auxiliar"
+              autocomplete="off"
+            />
             <select name="status" class="form-control">
               <option value="Encaminhado">Encaminhar como Ocorrência</option>
               <option value="Observação">Encaminhar como Observação</option>
             </select>
-            <hr>
-            <input type="password" name="senha_" class="form-control" placeholder="INSIRA SUA SENHA AQUI" style="text-align: center;">
+            <hr />
+            <input
+              type="password"
+              name="senha_"
+              class="form-control"
+              placeholder="INSIRA SUA SENHA AQUI"
+              style="text-align: center"
+            />
           </div>
-          <button type="submit" class="btn button btn-success" style="margin: 0;">Salvar Ocorrência ao Estudante</button>
-          <hr>
+          <button
+            type="submit"
+            class="btn button btn-success"
+            style="margin: 0"
+          >
+            Salvar Ocorrência ao Estudante
+          </button>
+          <hr />
         </form>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>

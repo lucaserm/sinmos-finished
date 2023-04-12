@@ -1,7 +1,7 @@
 const client = require("../../server");
-const Usuario = require('../models/UsuariosModel');
+const Usuario = require("../models/UsuariosModel");
 
-class OcorrenciaEstudante{
+class OcorrenciaEstudante {
   constructor(body) {
     this.body = body;
   }
@@ -12,12 +12,18 @@ OcorrenciaEstudante.save = async (body) => {
     const user = await Usuario.buscaPorCodigo(body.codigo_servidor);
     await client.query(
       "INSERT INTO ocorrenciasestudantes VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4, $5)",
-      [user[0].id, body.id_ocorrencias, body.id_estudantes, body.nome_usuario_relacionado, body.status]
+      [
+        user[0].id,
+        body.id_ocorrencias,
+        body.id_estudantes,
+        body.nome_usuario_relacionado,
+        body.status,
+      ]
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
-}
+};
 
 OcorrenciaEstudante.updateAprovado = async (body) => {
   try {
@@ -27,7 +33,7 @@ OcorrenciaEstudante.updateAprovado = async (body) => {
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
-}
+};
 
 OcorrenciaEstudante.updateReprovado = async (body) => {
   try {
@@ -37,7 +43,7 @@ OcorrenciaEstudante.updateReprovado = async (body) => {
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
-}
+};
 
 OcorrenciaEstudante.buscar = async () => {
   try {
@@ -67,7 +73,8 @@ OcorrenciaEstudante.buscarPorID = async (id) => {
       AND id_ocorrencias = ocorrencias.id
       AND id_usuarios = usuarios.id
       AND ocorrenciasestudantes.id = $1
-      `, [id]
+      `,
+      [id]
     );
     return ocorrencias.rows;
   } catch (e) {
@@ -95,7 +102,7 @@ OcorrenciaEstudante.buscarPorRa = async (body) => {
   }
 };
 
-OcorrenciaEstudante.buscaPorServidorRelacionado = async(nome) => {
+OcorrenciaEstudante.buscaPorServidorRelacionado = async (nome) => {
   try {
     const ocorrencias = await client.query(
       `
@@ -113,9 +120,9 @@ OcorrenciaEstudante.buscaPorServidorRelacionado = async(nome) => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
-OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
+OcorrenciaEstudante.buscaPorServidor = async (codigo) => {
   try {
     const ocorrencias = await client.query(
       `
@@ -133,7 +140,6 @@ OcorrenciaEstudante.buscaPorServidor = async(codigo) => {
   } catch (e) {
     console.log(e);
   }
-}
-
+};
 
 module.exports = OcorrenciaEstudante;

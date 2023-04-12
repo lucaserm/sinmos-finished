@@ -1,40 +1,67 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre um Curso à um Estudante</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/matriculasalvo" method="post">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Ano de Matrícula</label>
-            <input type="number" name="ano_matricula" class="form-control" value="2022">
+            <input
+              type="number"
+              name="ano_matricula"
+              class="form-control"
+              value="2022"
+            />
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
               <option value="">Selecione um estudante</option>
               <% estudantes.forEach( estudante => { %>
-                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+              <option value="<%= estudante.id %>">
+                <%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%=
+                estudante.ra%>
+              </option>
               <% });%>
             </select>
             <label>Curso</label>
             <select name="id_cursos" class="form-control">
-              <option >Selecione um curso</option>
+              <option>Selecione um curso</option>
               <% cursos.forEach( curso => { %>
-                <option value="<%= curso.id %>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
+              <option value="<%= curso.id %>">
+                <%= curso.nome_curso%>, <%= curso.periodo_cursos%>
+              </option>
               <% });%>
             </select>
           </div>
-          <hr>
-          <button type="submit" class="btn button btn-success" style="margin: 0;">Relacionar Matrícula</button>
-          <hr>
+          <hr />
+          <button
+            type="submit"
+            class="btn button btn-success"
+            style="margin: 0"
+          >
+            Relacionar Matrícula
+          </button>
+          <hr />
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>

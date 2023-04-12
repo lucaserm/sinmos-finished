@@ -1,6 +1,6 @@
 const client = require("../../server");
 
-class Horario{
+class Horario {
   constructor(body) {
     this.body = body;
   }

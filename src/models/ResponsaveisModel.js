@@ -1,6 +1,6 @@
 const client = require("../../server");
 
-class Responsavel{
+class Responsavel {
   constructor(body) {
     this.body = body;
   }

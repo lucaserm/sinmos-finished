@@ -1,6 +1,6 @@
 const client = require("../../server");
 
-class DisciplinaEstudante{
+class DisciplinaEstudante {
   constructor(body) {
     this.body = body;
   }

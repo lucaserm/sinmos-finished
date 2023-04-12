@@ -1,7 +1,7 @@
 const client = require("../../server");
 const OcorrenciaEstudante = require("../models/OcorrenciasEstudantes");
 
-class Registro{
+class Registro {
   constructor(body) {
     this.body = body;
   }

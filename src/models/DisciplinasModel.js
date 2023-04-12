@@ -1,7 +1,7 @@
 const client = require("../../server");
 
-class Disciplina{
-  constructor(body){
+class Disciplina {
+  constructor(body) {
     this.body = body;
   }
 }
@@ -11,11 +11,11 @@ Disciplina.buscarDisciplinas = async () => {
     `
     SELECT disciplinas.*
     FROM disciplinas 
-    ORDER BY id`);
-    
+    ORDER BY id`
+  );
+
   return disciplinas.rows;
 };
-
 
 Disciplina.save = async (body) => {
   try {

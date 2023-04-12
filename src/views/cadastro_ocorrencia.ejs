@@ -1,29 +1,48 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre a Ocorrência</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
-        <form action="/cadastro/ocorrenciasalvo" method="POST" ">
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
+        <form action="/cadastro/ocorrenciasalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Tipo de Ocorrência</label>
-            <input type="text" name="descricao_ocorrencia" class="form-control" placeholder="Ex.: Barulhos e Jogos" required>
-            <br>
-            <button type="submit" class="btn button btn-success">Salvar Ocorrência</button>
+            <input
+              type="text"
+              name="descricao_ocorrencia"
+              class="form-control"
+              placeholder="Ex.: Barulhos e Jogos"
+              required
+            />
+            <br />
+            <button type="submit" class="btn button btn-success">
+              Salvar Ocorrência
+            </button>
           </div>
-          <hr>
+          <hr />
         </form>
         <form action="/administracao/paginainicial" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
+        <hr />
       </div>
       <div class="col-lg-2"></div>
     </div>

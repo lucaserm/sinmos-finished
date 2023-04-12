@@ -1,37 +1,73 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre a Disciplina</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/disciplinasalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Curso</label>
             <select name="select" class="form-control" required>
               <option>Selecione um curso</option>
               <% cursos.forEach(curso => { %>
-                <option value="<%= curso.id%>"><%= curso.nome_curso%>, <%= curso.periodo_cursos%></option>
+              <option value="<%= curso.id%>">
+                <%= curso.nome_curso%>, <%= curso.periodo_cursos%>
+              </option>
               <% }); %>
             </select>
-            <br>
+            <br />
             <label>Nome da Disciplina</label>
-            <input type="text" class="form-control" name="nome_disciplina" placeholder="Ex.: Matemática" required autocomplete="off">
+            <input
+              type="text"
+              class="form-control"
+              name="nome_disciplina"
+              placeholder="Ex.: Matemática"
+              required
+              autocomplete="off"
+            />
             <label>Turma</label>
-            <input type="text" class="form-control" name="turma" placeholder="Ex.: 111" required autocomplete="off">
+            <input
+              type="text"
+              class="form-control"
+              name="turma"
+              placeholder="Ex.: 111"
+              required
+              autocomplete="off"
+            />
             <label>Semestre</label>
-            <input type="number" class="form-control" name="semestre" required placeholder="Ex.: 5" autocomplete="off">
+            <input
+              type="number"
+              class="form-control"
+              name="semestre"
+              required
+              placeholder="Ex.: 5"
+              autocomplete="off"
+            />
           </div>
-          <button type="submit" class="btn button btn-success">Salvar Disciplina</button>
-          <hr>
+          <button type="submit" class="btn button btn-success">
+            Salvar Disciplina
+          </button>
+          <hr />
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>

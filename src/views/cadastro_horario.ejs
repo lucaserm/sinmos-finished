@@ -1,33 +1,41 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre o Horário da Disciplina</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/horariosalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Disciplina</label>
             <select name="id_disciplinas" class="form-control" required>
               <option>Selecione a disciplina</option>
-              <% if(horarios.length > 0){ %>
-                <% disciplinas.forEach(disciplina => { %>
-                  <option value="<%= disciplina.id%>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%= disciplina.semestre%> Semestre</option>
-                <% })%>
-              <% } %>
+              <% if(horarios.length > 0){ %> <% disciplinas.forEach(disciplina
+              => { %>
+              <option value="<%= disciplina.id%>">
+                <%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%=
+                disciplina.semestre%> Semestre
+              </option>
+              <% })%> <% } %>
             </select>
-            <br>
+            <br />
             <label>Período da Disciplina</label>
             <select name="periodo" class="form-control" required>
               <option value="Matutino">Matutino</option>
               <option value="Vespertino">Vespertino</option>
               <option value="Noturno">Noturno</option>
             </select>
-            <br>
+            <br />
             <label>Dia da Semana</label>
             <select name="dia_semana" class="form-control" required>
               <option value="Segunda-Feira">Segunda-Feira</option>
@@ -36,7 +44,7 @@
               <option value="Quinta-Feira">Quinta-Feira</option>
               <option value="Sexta-Feira">Sexta-Feira</option>
             </select>
-            <br>
+            <br />
             <label>Tempo que Começa a Aula</label>
             <select name="tempo_inicio" class="form-control" required>
               <option value="1">1</option>
@@ -46,7 +54,7 @@
               <option value="5">5</option>
               <option value="6">6</option>
             </select>
-            <br>
+            <br />
             <label>Tempo que Termina a Aula</label>
             <select name="tempo_fim" class="form-control" required>
               <option value="1">1</option>
@@ -57,15 +65,22 @@
               <option value="6">6</option>
             </select>
           </div>
-          <button type="submit" class="btn button btn-success">Salvar Horário</button>
-          <hr>
+          <button type="submit" class="btn button btn-success">
+            Salvar Horário
+          </button>
+          <hr />
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
+        <hr />
       </div>
       <div class="col-lg-2"></div>
     </div>

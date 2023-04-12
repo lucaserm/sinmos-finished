@@ -1,6 +1,6 @@
 const client = require("../../server");
 
-class RegistroEstudante{
+class RegistroEstudante {
   constructor(body) {
     this.body = body;
   }
@@ -25,7 +25,8 @@ RegistroEstudante.buscar = async (body) => {
       WHERE id_estudantes = estudantes.id 
       AND id_registros = registros.id
       AND ra = $1
-      `, [body.ra]
+      `,
+      [body.ra]
     );
     const hoje = new Date();
     let data = hoje.toISOString().substring(0, 10);
@@ -34,6 +35,6 @@ RegistroEstudante.buscar = async (body) => {
   } catch (e) {
     console.log(`Houve um erro ${e}`);
   }
-}
+};
 
 module.exports = RegistroEstudante;

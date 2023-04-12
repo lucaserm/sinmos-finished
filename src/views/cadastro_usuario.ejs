@@ -1,39 +1,73 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre o Usuário</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/usuariosalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Nome Completo</label>
-            <input type="text" class="form-control" name="nome_usuario" placeholder="NOME COMPLETO" required autocomplete="off">
+            <input
+              type="text"
+              class="form-control"
+              name="nome_usuario"
+              placeholder="NOME COMPLETO"
+              required
+              autocomplete="off"
+            />
             <label>Senha</label>
-            <input type="password" class="form-control" name="senha" placeholder="SENHA" required autocomplete="off">
+            <input
+              type="password"
+              class="form-control"
+              name="senha"
+              placeholder="SENHA"
+              required
+              autocomplete="off"
+            />
             <label>Código do Servidor</label>
-            <input type="text" class="form-control" name="codigo_servidor" placeholder="Ex.: 44228922" required autocomplete="off">
+            <input
+              type="text"
+              class="form-control"
+              name="codigo_servidor"
+              placeholder="Ex.: 44228922"
+              required
+              autocomplete="off"
+            />
             <label>Cargo na Instituição</label>
-             <select name="cargo" class="form-control">
+            <select name="cargo" class="form-control">
               <option value="Assistente">Assistente de alunos</option>
               <option value="Coordenacao">Coordenação</option>
               <option value="Portaria">Portaria</option>
-             </select>
-            <br>
-            <button type="submit" class="btn button btn-success">Salvar Usuário</button>
+            </select>
+            <br />
+            <button type="submit" class="btn button btn-success">
+              Salvar Usuário
+            </button>
           </div>
-          <hr>
+          <hr />
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
+        <hr />
       </div>
       <div class="col-lg-2"></div>
     </div>

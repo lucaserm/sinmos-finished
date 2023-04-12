@@ -1,18 +1,30 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre o Curso</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/cursosalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Nome do Curso</label>
-            <input type="text" class="form-control" name="nome_curso" placeholder="Ex.: Técnico em Informática" required>
+            <input
+              type="text"
+              class="form-control"
+              name="nome_curso"
+              placeholder="Ex.: Técnico em Informática"
+              required
+            />
             <label>Período</label>
             <select name="periodo" class="form-control select" required>
               <option value="Matutino">Matutino</option>
@@ -20,12 +32,19 @@
               <option value="Noturno">Noturno</option>
             </select>
           </div>
-          <button type="submit" class="btn button btn-success">Salvar Curso</button>
+          <button type="submit" class="btn button btn-success">
+            Salvar Curso
+          </button>
         </form>
-        <hr>
+        <hr />
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>

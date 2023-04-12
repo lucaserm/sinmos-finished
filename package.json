@@ -15,7 +15,6 @@
   "dependencies": {
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0-beta1",
-    "connect-flash": "^0.1.1",
     "connect-pg": "^1.1.5",
     "core-js": "^3.6.5",
     "css-loader": "^3.6.0",
@@ -25,10 +24,8 @@
     "express-pg-session": "^1.1.0",
     "express-session": "^1.17.3",
     "glob-parent": "^6.0.2",
-    "jimp": "^0.16.2",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.7.3",
-    "qrcode-reader": "^1.0.4",
     "regenerator-runtime": "^0.13.5",
     "style-loader": "^1.2.1",
     "webrtc-adapter": "^8.1.2"

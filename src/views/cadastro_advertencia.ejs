@@ -1,52 +1,103 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre a Advertência</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/advertenciasalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <input type="text" name="id" value="<%= id%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
+            <input type="text" name="id" value="<%= id%>" hidden />
             <% ocorrencias.forEach( ocorrencia => {%>
-              <label>Servidor que registrou a ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.nome_usuario%>" disabled>
-              <label>Servidor que acompanhou a ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.nome_usuario_relacionado%>" disabled>
-              <label>Estudante relacionado</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.nome_estudante%>" disabled>
-              <label>Tipo de Ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.descricao_ocorrencia%>" disabled>
-              <label>Data Ocorrência</label>
-              <input type="text" class="form-control" value="<%= ocorrencia.data_ocorrencia%>" disabled>
+            <label>Servidor que registrou a ocorrência</label>
+            <input
+              type="text"
+              class="form-control"
+              value="<%= ocorrencia.nome_usuario%>"
+              disabled
+            />
+            <label>Servidor que acompanhou a ocorrência</label>
+            <input
+              type="text"
+              class="form-control"
+              value="<%= ocorrencia.nome_usuario_relacionado%>"
+              disabled
+            />
+            <label>Estudante relacionado</label>
+            <input
+              type="text"
+              class="form-control"
+              value="<%= ocorrencia.nome_estudante%>"
+              disabled
+            />
+            <label>Tipo de Ocorrência</label>
+            <input
+              type="text"
+              class="form-control"
+              value="<%= ocorrencia.descricao_ocorrencia%>"
+              disabled
+            />
+            <label>Data Ocorrência</label>
+            <input
+              type="text"
+              class="form-control"
+              value="<%= ocorrencia.data_ocorrencia%>"
+              disabled
+            />
             <% })%>
 
             <label>Medidas que serão tomadas para a ocorrência</label>
-            <input type="text" name="relatorio_advertencia" class="form-control" placeholder="MEDIDAS QUE SERÃO ADOTADAS" required>
-            <br>
-            <button type="submit" class="btn button btn-success">Aprovar Advertência</button>
+            <input
+              type="text"
+              name="relatorio_advertencia"
+              class="form-control"
+              placeholder="MEDIDAS QUE SERÃO ADOTADAS"
+              required
+            />
+            <br />
+            <button type="submit" class="btn button btn-success">
+              Aprovar Advertência
+            </button>
           </div>
-          <hr>
+          <hr />
         </form>
         <form action="/cadastro/advertenciasalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <input type="text" name="id" value="<%= id%>" hidden>
-            <button type="submit" class="btn button btn-danger">Reprovar Advertência</button>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
+            <input type="text" name="id" value="<%= id%>" hidden />
+            <button type="submit" class="btn button btn-danger">
+              Reprovar Advertência
+            </button>
           </div>
-          <hr>
+          <hr />
         </form>
         <form action="/administracao/advertencias" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
+        <hr />
       </div>
       <div class="col-lg-2"></div>
     </div>

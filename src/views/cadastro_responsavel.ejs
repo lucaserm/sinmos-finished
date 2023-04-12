@@ -1,33 +1,69 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre um Responsável</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/responsavelsalvo" method="POST">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Nome do Responsável</label>
-            <input type="text" class="form-control" name="nome_responsavel" placeholder="Nome Completo" required autocomplete="off">
+            <input
+              type="text"
+              class="form-control"
+              name="nome_responsavel"
+              placeholder="Nome Completo"
+              required
+              autocomplete="off"
+            />
             <label>Email do Responsável</label>
-            <input type="email" class="form-control" name="email_responsavel" placeholder="Ex.: responsavel@gmail.com" required autocomplete="off">
+            <input
+              type="email"
+              class="form-control"
+              name="email_responsavel"
+              placeholder="Ex.: responsavel@gmail.com"
+              required
+              autocomplete="off"
+            />
             <label>Telefone do Responsável</label>
-            <input type="tel" class="form-control" name="telefone_responsavel" onblur="formataTelefone(this)" pattern="[0-9]{11}" placeholder="Ex.: (67)90000-0000" required autocomplete="off">
-            <br>
-            <button type="submit" class="btn button btn-success">Salvar Responsável</button>
+            <input
+              type="tel"
+              class="form-control"
+              name="telefone_responsavel"
+              onblur="formataTelefone(this)"
+              pattern="[0-9]{11}"
+              placeholder="Ex.: (67)90000-0000"
+              required
+              autocomplete="off"
+            />
+            <br />
+            <button type="submit" class="btn button btn-success">
+              Salvar Responsável
+            </button>
           </div>
-          <hr>
+          <hr />
         </form>
         <form action="/cadastro/estudante" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
+        <hr />
       </div>
       <div class="col-lg-2"></div>
     </div>

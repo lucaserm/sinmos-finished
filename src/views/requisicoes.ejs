@@ -1,73 +1,97 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-8 my-3">
-        <hr style="background-color: #FFF; margin: 1rem;">
+        <hr style="background-color: #fff; margin: 1rem" />
         <h1 class="text-center">Requisições</h1>
         <% if (registros[0].length > 0){ %>
-          <p class="text-center lead">Todos as requisições registradas </p>
+        <p class="text-center lead">Todos as requisições registradas</p>
         <div class="responsive-table">
           <table class="table my-3">
             <tr align="center">
-              <td>RA</td><td>Foto</td><td>Descrição</td><td>Dia</td>
+              <td>RA</td>
+              <td>Foto</td>
+              <td>Descrição</td>
+              <td>Dia</td>
             </tr>
             <% registros[0].forEach(registro => { %>
             <tr align="center">
               <td><%= ra = registro.ra%></td>
-              <td><img src="<%= registro.foto%>" width="70"></td>
+              <td><img src="<%= registro.foto%>" width="70" /></td>
               <td><%= registro.descricao%></td>
-              <%registro.dia_liberacao= 
-                registro.dia_liberacao.slice(8, 10) + '/' +
-                registro.dia_liberacao.slice(5, 7) + '/' +
-                registro.dia_liberacao.slice(0, 4)
-              %>
+              <%registro.dia_liberacao= registro.dia_liberacao.slice(8, 10) +
+              '/' + registro.dia_liberacao.slice(5, 7) + '/' +
+              registro.dia_liberacao.slice(0, 4) %>
               <td><%= registro.dia_liberacao%></td>
             </tr>
             <% }); %>
           </table>
         </div>
-          <% if(users[0].cargo == 'Coordenacao'){ %>
-          <form action="/cadastro/registro" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-info">Gerar Liberação Especial</button>
-          </form>
-          <% }%>
-          <hr style="background-color: #FFF; margin: 1rem;">
-          <form action="/administracao/paginainicial" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-dark">Voltar</button>
-          </form>
+        <% if(users[0].cargo == 'Coordenacao'){ %>
+        <form action="/cadastro/registro" method="post">
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
+          <button class="btn button btn-info">Gerar Liberação Especial</button>
+        </form>
+        <% }%>
+        <hr style="background-color: #fff; margin: 1rem" />
+        <form action="/administracao/paginainicial" method="post">
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
         <% } else { %>
-          <hr>
-          <p class="text-center lead">Não existem registros disponíveis.</p>
-          <hr>
-          <form action="/cadastro/registro" method="post">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-success">Cadastros</button>
-          </form>
-          <hr style="background-color: #FFF; margin: 1rem;">
-          <% if(users[0].cargo == 'Coordenacao'){%>
-          <form action="/administracao/horarios" method="post">
-            <input type="text" name="ra" value="<%= ra%>" hidden>
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
-            <button class="btn button btn-dark">Voltar</button>
-          </form>
-          <% } else {%>
-            <hr style="background-color: #FFF; margin: 1rem;">
-            <form action="/administracao/paginainicial" method="post">
-              <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-              <input type="text" name="senha" value="<%= senha%>" hidden>
-              <button class="btn button btn-dark">Voltar</button>
-            </form>
-          <% }%>
-        <% } %>
+        <hr />
+        <p class="text-center lead">Não existem registros disponíveis.</p>
+        <hr />
+        <form action="/cadastro/registro" method="post">
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
+          <button class="btn button btn-success">Cadastros</button>
+        </form>
+        <hr style="background-color: #fff; margin: 1rem" />
+        <% if(users[0].cargo == 'Coordenacao'){%>
+        <form action="/administracao/horarios" method="post">
+          <input type="text" name="ra" value="<%= ra%>" hidden />
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+        <% } else {%>
+        <hr style="background-color: #fff; margin: 1rem" />
+        <form action="/administracao/paginainicial" method="post">
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
+          <button class="btn button btn-dark">Voltar</button>
+        </form>
+        <% }%> <% } %>
       </div>
       <div class="col-lg-2"></div>
     </div>

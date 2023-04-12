@@ -1,50 +1,106 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre o Estudante</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <label>Não achou seu responsável? Cadastre aqui</label>
         <form action="/cadastro/responsavel" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
           <button class="btn button btn-info">Cadastrar Responsável</button>
         </form>
-        <br>
-        <form action="/cadastro/estudantesalvo" method="POST" enctype="multipart/form-data">
+        <br />
+        <form
+          action="/cadastro/estudantesalvo"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Responsável</label>
             <select name="id_responsaveis" class="form-control" required>
               <option value="">Selecione um Responsável</option>
               <% responsaveis.forEach(responsavel=> { %>
-                <option value="<%= responsavel.id%>"><%= responsavel.nome_responsavel%>, <%= responsavel.email_responsavel%>, <%= responsavel.telefone_responsavel%></option>
+              <option value="<%= responsavel.id%>">
+                <%= responsavel.nome_responsavel%>, <%=
+                responsavel.email_responsavel%>, <%=
+                responsavel.telefone_responsavel%>
+              </option>
               <% }); %>
             </select>
-            <br>
+            <br />
             <label>Nome do Estudante</label>
-            <input type="text" class="form-control" name="nome_estudante" autocomplete="off" placeholder="Nome Completo" required>
+            <input
+              type="text"
+              class="form-control"
+              name="nome_estudante"
+              autocomplete="off"
+              placeholder="Nome Completo"
+              required
+            />
             <label>Email Institucional</label>
-            <input type="email" class="form-control" name="email_institucional" autocomplete="off" placeholder="Ex.: nome.sobrenome@estudante.ifms.edu.br" required>
+            <input
+              type="email"
+              class="form-control"
+              name="email_institucional"
+              autocomplete="off"
+              placeholder="Ex.: nome.sobrenome@estudante.ifms.edu.br"
+              required
+            />
             <label>CPF</label>
-            <input type="text input" class="form-control" name="cpf" placeholder="Ex.: 000.000.000-00" autocomplete="off" onblur="formataCPF(this)" pattern="[0-9]{11}" required>
+            <input
+              type="text input"
+              class="form-control"
+              name="cpf"
+              placeholder="Ex.: 000.000.000-00"
+              autocomplete="off"
+              onblur="formataCPF(this)"
+              pattern="[0-9]{11}"
+              required
+            />
             <label>RA</label>
-            <input type="text" class="form-control" name="ra" autocomplete="off" placeholder="Ex.: 123456" required>
+            <input
+              type="text"
+              class="form-control"
+              name="ra"
+              autocomplete="off"
+              placeholder="Ex.: 123456"
+              required
+            />
             <label>Foto</label>
-            <input type="file" name="avatar" class="form-control" required>
-            <button type="submit" class="btn button btn-success">Salvar Estudante</button>
+            <input type="file" name="avatar" class="form-control" required />
+            <button type="submit" class="btn button btn-success">
+              Salvar Estudante
+            </button>
           </div>
-          <hr>
+          <hr />
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <hr>
+        <hr />
       </div>
       <div class="col-lg-2"></div>
     </div>

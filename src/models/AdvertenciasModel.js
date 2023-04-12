@@ -1,7 +1,7 @@
 const client = require("../../server");
 
-class Advertencia{
-  constructor(body){
+class Advertencia {
+  constructor(body) {
     this.body = body;
   }
 }
@@ -27,7 +27,8 @@ Advertencia.buscaAdvertenciaPorRA = async (body) => {
       AND ocorrenciasestudantes.status = 'Aprovado'
       AND id_estudantes = estudantes.id
       and ra = $1
-      ORDER BY id`, [body.ra]
+      ORDER BY id`,
+      [body.ra]
     );
     return advertencias.rows;
   } catch (e) {
@@ -62,7 +63,8 @@ Advertencia.buscaAdvertenciaAprovadas = async (body) => {
       WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id
       AND id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
-      AND ra = $1`, [body.ra]
+      AND ra = $1`,
+      [body.ra]
     );
 
     return advertencias.rows;
@@ -81,7 +83,9 @@ Advertencia.buscaPorOcorrencia = async (body) => {
         AND id_ocorrencias = ocorrencias.id
         AND id_usuarios = usuarios.id 
         WHERE id_ocorrenciasestudantes = $1
-      `, [body.id]);
+      `,
+      [body.id]
+    );
   } catch (e) {
     console.log(e);
   }

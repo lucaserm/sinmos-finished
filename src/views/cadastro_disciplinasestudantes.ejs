@@ -1,39 +1,62 @@
-<%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/head') %> <%- include('includes/nav') %>
 <div class="first_part">
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
         <h1 class="text-center">Registre uma Disciplina para um Estudante</h1>
-        <p class="text-center lead">Formulário para inserção no banco de dados.</p>
+        <p class="text-center lead">
+          Formulário para inserção no banco de dados.
+        </p>
         <form action="/cadastro/horarioestudantesalvo" method="post">
           <div class="form-group">
-            <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-            <input type="text" name="senha" value="<%= senha%>" hidden>
+            <input
+              type="text"
+              name="codigo_servidor"
+              value="<%= codigo_servidor%>"
+              hidden
+            />
+            <input type="text" name="senha" value="<%= senha%>" hidden />
             <label>Nome do Estudante</label>
             <select name="id_estudantes" class="form-control">
               <option>Selecione um estudante</option>
               <% estudantes.forEach( estudante => { %>
-                <option value="<%= estudante.id %>"><%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%= estudante.ra%></option>
+              <option value="<%= estudante.id %>">
+                <%= estudante.nome_estudante %>, <%= estudante.cpf%>, <%=
+                estudante.ra%>
+              </option>
               <% });%>
             </select>
-            <br>
+            <br />
             <label>Disciplina</label>
             <select name="id_disciplinas" class="form-control">
               <option>Selecione uma disciplina</option>
               <% disciplinas.forEach( disciplina => { %>
-                <option value="<%= disciplina.id %>"><%= disciplina.nome_disciplina%>, <%= disciplina.turma %>, <%= disciplina.semestre%>° Semestre </option>
+              <option value="<%= disciplina.id %>">
+                <%= disciplina.nome_disciplina%>, <%= disciplina.turma %>, <%=
+                disciplina.semestre%>° Semestre
+              </option>
               <% });%>
             </select>
           </div>
-          <hr>
-          <button type="submit" class="btn button btn-success" style="margin: 0;">Salvar Disciplina ao Estudante</button>
-          <hr>
+          <hr />
+          <button
+            type="submit"
+            class="btn button btn-success"
+            style="margin: 0"
+          >
+            Salvar Disciplina ao Estudante
+          </button>
+          <hr />
         </form>
         <form action="/cadastro" method="post">
-          <input type="text" name="codigo_servidor" value="<%= codigo_servidor%>" hidden>
-          <input type="text" name="senha" value="<%= senha%>" hidden>
+          <input
+            type="text"
+            name="codigo_servidor"
+            value="<%= codigo_servidor%>"
+            hidden
+          />
+          <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
       </div>
