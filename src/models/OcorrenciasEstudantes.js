@@ -1,4 +1,4 @@
-const client = require("../../server");
+const client = require("../../index");
 const Usuario = require("../models/UsuariosModel");
 
 class OcorrenciaEstudante {
