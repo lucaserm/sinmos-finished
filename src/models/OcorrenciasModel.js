@@ -1,4 +1,4 @@
-const client = require("../../server");
+const client = require("../../index");
 
 class Ocorrencia {
   constructor(body) {
