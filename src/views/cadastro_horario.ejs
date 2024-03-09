@@ -20,11 +20,11 @@
             <label>Disciplina</label>
             <select name="id_disciplinas" class="form-control" required>
               <option>Selecione a disciplina</option>
-              <% if(horarios.length > 0){ %> <% disciplinas.forEach(disciplina
-              => { %>
+              <% if(disciplinas.length > 0){ %> 
+                <% disciplinas.forEach((disciplina) => { %>
               <option value="<%= disciplina.id%>">
-                <%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, <%=
-                disciplina.semestre%> Semestre
+                <%= disciplina.nome_disciplina%>, <%= disciplina.turma%>, 
+                <%= disciplina.semestre%> Semestre
               </option>
               <% })%> <% } %>
             </select>
