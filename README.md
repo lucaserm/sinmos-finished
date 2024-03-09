@@ -22,4 +22,3 @@ npm run dev
 
 2 terminal
 npm run start
-
