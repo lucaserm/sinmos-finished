@@ -1,5 +1,5 @@
-const client = require("../../index");
-const Usuario = require("../models/UsuariosModel");
+const client = require('../../index');
+const Usuario = require('../models/UsuariosModel');
 
 class OcorrenciaEstudante {
   constructor(body) {
@@ -11,14 +11,14 @@ OcorrenciaEstudante.save = async (body) => {
   try {
     const user = await Usuario.buscaPorCodigo(body.codigo_servidor);
     await client.query(
-      "INSERT INTO ocorrenciasestudantes VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4, $5)",
+      'INSERT INTO ocorrenciasestudantes VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4, $5)',
       [
         user[0].id,
         body.id_ocorrencias,
         body.id_estudantes,
         body.nome_usuario_relacionado,
         body.status,
-      ]
+      ],
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -28,7 +28,7 @@ OcorrenciaEstudante.save = async (body) => {
 OcorrenciaEstudante.updateAprovado = async (body) => {
   try {
     await client.query(
-      `UPDATE ocorrenciasestudantes SET status = 'Aprovado' WHERE id = ${body.id}`
+      `UPDATE ocorrenciasestudantes SET status = 'Aprovado' WHERE id = ${body.id}`,
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -38,7 +38,7 @@ OcorrenciaEstudante.updateAprovado = async (body) => {
 OcorrenciaEstudante.updateReprovado = async (body) => {
   try {
     await client.query(
-      `UPDATE ocorrenciasestudantes SET status = 'Reprovado' WHERE id = ${body.id}`
+      `UPDATE ocorrenciasestudantes SET status = 'Reprovado' WHERE id = ${body.id}`,
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -55,7 +55,7 @@ OcorrenciaEstudante.buscar = async () => {
       AND id_ocorrencias = ocorrencias.id
       AND id_usuarios = usuarios.id
       ORDER BY ocorrenciasestudantes.id
-      `
+      `,
     );
     return ocorrencias.rows;
   } catch (e) {
@@ -74,7 +74,7 @@ OcorrenciaEstudante.buscarPorID = async (id) => {
       AND id_usuarios = usuarios.id
       AND ocorrenciasestudantes.id = $1
       `,
-      [id]
+      [id],
     );
     return ocorrencias.rows;
   } catch (e) {
@@ -94,7 +94,7 @@ OcorrenciaEstudante.buscarPorRa = async (body) => {
       AND ra = $1
       ORDER BY ocorrenciasestudantes.id
       `,
-      [body.ra]
+      [body.ra],
     );
     return ocorrencias.rows;
   } catch (e) {
@@ -114,7 +114,7 @@ OcorrenciaEstudante.buscaPorServidorRelacionado = async (nome) => {
       AND nome_usuario_relacionado = $1
       ORDER BY ocorrenciasestudantes.id
       `,
-      [nome]
+      [nome],
     );
     return ocorrencias.rows;
   } catch (e) {
@@ -134,7 +134,7 @@ OcorrenciaEstudante.buscaPorServidor = async (codigo) => {
       AND id_usuarios = $1
       ORDER BY ocorrenciasestudantes.id
       `,
-      [codigo]
+      [codigo],
     );
     return ocorrencias.rows;
   } catch (e) {

@@ -1,4 +1,4 @@
-const client = require("../../index");
+const client = require('../../index');
 
 class Estudante {
   constructor(body) {
@@ -8,9 +8,9 @@ class Estudante {
 
 Estudante.save = async (body, filename) => {
   try {
-    filename = "/assets/img/" + filename;
+    filename = '/assets/img/' + filename;
     await client.query(
-      "INSERT INTO estudantes(nome_estudante, email_institucional, cpf, ra, foto, id_responsaveis) VALUES($1,$2,$3,$4,$5,$6)",
+      'INSERT INTO estudantes(nome_estudante, email_institucional, cpf, ra, foto, id_responsaveis) VALUES($1,$2,$3,$4,$5,$6)',
       [
         body.nome_estudante,
         body.email_institucional,
@@ -18,7 +18,7 @@ Estudante.save = async (body, filename) => {
         body.ra,
         filename,
         body.id_responsaveis,
-      ]
+      ],
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -27,9 +27,9 @@ Estudante.save = async (body, filename) => {
 
 Estudante.salvarSaida = async (body) => {
   try {
-    let horario = await client.query("SELECT CURRENT_TIMESTAMP");
-    if (body.liberacao == "on") {
-      await client.query("UPDATE estudantes SET saida_anormal = $1", [horario]);
+    let horario = await client.query('SELECT CURRENT_TIMESTAMP');
+    if (body.liberacao == 'on') {
+      await client.query('UPDATE estudantes SET saida_anormal = $1', [horario]);
     }
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -39,8 +39,8 @@ Estudante.salvarSaida = async (body) => {
 Estudante.update = async (body) => {
   try {
     await client.query(
-      "UPDATE estudantes SET nome_estudante = $1, cpf = $2, ra = $3 WHERE ra = $4",
-      [body.nome_estudante, body.cpf, body.ra, body.ra2]
+      'UPDATE estudantes SET nome_estudante = $1, cpf = $2, ra = $3 WHERE ra = $4',
+      [body.nome_estudante, body.cpf, body.ra, body.ra2],
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -51,7 +51,7 @@ Estudante.buscaPorRA = async (body) => {
   try {
     const estudantes = await client.query(
       `SELECT * FROM estudantes WHERE ra = $1 ORDER BY id`,
-      [body.ra]
+      [body.ra],
     );
     return estudantes.rows;
   } catch (e) {
@@ -63,7 +63,7 @@ Estudante.buscaPorCPF = async (body) => {
   try {
     const estudantes = await client.query(
       `SELECT * FROM estudantes WHERE cpf = $1 ORDER BY id`,
-      [body.cpf]
+      [body.cpf],
     );
     return estudantes.rows;
   } catch (e) {
@@ -74,14 +74,14 @@ Estudante.buscaPorCPF = async (body) => {
 Estudante.buscaPorNome = async (body) => {
   try {
     body.nome = String(body.nome).trim();
-    body.nome = body.nome.replace(" ", "%");
+    body.nome = body.nome.replace(' ', '%');
     const estudantes = await client.query(
       `
       SELECT *
       FROM estudantes
       WHERE upper(nome_estudante) LIKE upper('%${body.nome}%')
       ORDER BY estudantes.id
-      `
+      `,
     );
     return estudantes.rows;
   } catch (e) {
@@ -92,7 +92,7 @@ Estudante.buscaPorNome = async (body) => {
 Estudante.buscaEstudantes = async () => {
   try {
     const estudantes = await client.query(
-      `SELECT * FROM estudantes ORDER BY id`
+      `SELECT * FROM estudantes ORDER BY id`,
     );
     return estudantes.rows;
   } catch (e) {
@@ -105,7 +105,7 @@ Estudante.buscaHorarios = async (body) => {
     let estudantes;
 
     if (body) {
-      if (body.ra != "") {
+      if (body.ra != '') {
         body.ra = String(body.ra).trim();
         estudantes = await client.query(
           `
@@ -116,9 +116,9 @@ Estudante.buscaHorarios = async (body) => {
           AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
           `,
-          [body.ra]
+          [body.ra],
         );
-      } else if (body.cpf != "") {
+      } else if (body.cpf != '') {
         body.cpf = String(body.cpf).trim();
         estudantes = await client.query(
           `
@@ -129,11 +129,11 @@ Estudante.buscaHorarios = async (body) => {
           AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
           `,
-          [body.cpf]
+          [body.cpf],
         );
-      } else if (body.nome != "") {
+      } else if (body.nome != '') {
         body.nome = String(body.nome).trim();
-        body.nome = body.nome.replace(" ", "%");
+        body.nome = body.nome.replace(' ', '%');
         estudantes = await client.query(
           `
           SELECT ra, cpf, nome_estudante, nome_disciplina, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -143,54 +143,29 @@ Estudante.buscaHorarios = async (body) => {
           AND horarios.id_disciplinas = disciplinas.id
           AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
-          `
+          `,
         );
       }
     }
 
     let ordem = [];
     estudantes.rows.forEach((horario) => {
-      if (horario.dia_semana == "Segunda-Feira") {
-        if (horario.periodo_horarios == "Matutino") {
+      if (horario.dia_semana == 'Segunda-Feira') {
+        if (horario.periodo_horarios == 'Matutino') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
             }
           }
         }
-        if (horario.periodo_horarios == "Vespertino") {
+        if (horario.periodo_horarios == 'Vespertino') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
             }
           }
         }
-        if (horario.periodo_horarios == "Noturno") {
-          for (let i = 1; i < 7; i++) {
-            if (horario.tempo_inicio == i) {
-              ordem.push(horario);
-            }
-          }
-        }
-      }
-    });
-    estudantes.rows.forEach((horario) => {
-      if (horario.dia_semana == "Terça-Feira") {
-        if (horario.periodo_horarios == "Matutino") {
-          for (let i = 1; i < 7; i++) {
-            if (horario.tempo_inicio == i) {
-              ordem.push(horario);
-            }
-          }
-        }
-        if (horario.periodo_horarios == "Vespertino") {
-          for (let i = 1; i < 7; i++) {
-            if (horario.tempo_inicio == i) {
-              ordem.push(horario);
-            }
-          }
-        }
-        if (horario.periodo_horarios == "Noturno") {
+        if (horario.periodo_horarios == 'Noturno') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
@@ -200,47 +175,22 @@ Estudante.buscaHorarios = async (body) => {
       }
     });
     estudantes.rows.forEach((horario) => {
-      if (horario.dia_semana == "Quarta-Feira") {
-        if (horario.periodo_horarios == "Matutino") {
+      if (horario.dia_semana == 'Terça-Feira') {
+        if (horario.periodo_horarios == 'Matutino') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
             }
           }
         }
-        if (horario.periodo_horarios == "Vespertino") {
+        if (horario.periodo_horarios == 'Vespertino') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
             }
           }
         }
-        if (horario.periodo_horarios == "Noturno") {
-          for (let i = 1; i < 7; i++) {
-            if (horario.tempo_inicio == i) {
-              ordem.push(horario);
-            }
-          }
-        }
-      }
-    });
-    estudantes.rows.forEach((horario) => {
-      if (horario.dia_semana == "Quinta-Feira") {
-        if (horario.periodo_horarios == "Matutino") {
-          for (let i = 1; i < 7; i++) {
-            if (horario.tempo_inicio == i) {
-              ordem.push(horario);
-            }
-          }
-        }
-        if (horario.periodo_horarios == "Vespertino") {
-          for (let i = 1; i < 7; i++) {
-            if (horario.tempo_inicio == i) {
-              ordem.push(horario);
-            }
-          }
-        }
-        if (horario.periodo_horarios == "Noturno") {
+        if (horario.periodo_horarios == 'Noturno') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
@@ -250,22 +200,72 @@ Estudante.buscaHorarios = async (body) => {
       }
     });
     estudantes.rows.forEach((horario) => {
-      if (horario.dia_semana == "Sexta-Feira") {
-        if (horario.periodo_horarios == "Matutino") {
+      if (horario.dia_semana == 'Quarta-Feira') {
+        if (horario.periodo_horarios == 'Matutino') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
             }
           }
         }
-        if (horario.periodo_horarios == "Vespertino") {
+        if (horario.periodo_horarios == 'Vespertino') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
             }
           }
         }
-        if (horario.periodo_horarios == "Noturno") {
+        if (horario.periodo_horarios == 'Noturno') {
+          for (let i = 1; i < 7; i++) {
+            if (horario.tempo_inicio == i) {
+              ordem.push(horario);
+            }
+          }
+        }
+      }
+    });
+    estudantes.rows.forEach((horario) => {
+      if (horario.dia_semana == 'Quinta-Feira') {
+        if (horario.periodo_horarios == 'Matutino') {
+          for (let i = 1; i < 7; i++) {
+            if (horario.tempo_inicio == i) {
+              ordem.push(horario);
+            }
+          }
+        }
+        if (horario.periodo_horarios == 'Vespertino') {
+          for (let i = 1; i < 7; i++) {
+            if (horario.tempo_inicio == i) {
+              ordem.push(horario);
+            }
+          }
+        }
+        if (horario.periodo_horarios == 'Noturno') {
+          for (let i = 1; i < 7; i++) {
+            if (horario.tempo_inicio == i) {
+              ordem.push(horario);
+            }
+          }
+        }
+      }
+    });
+    estudantes.rows.forEach((horario) => {
+      if (horario.dia_semana == 'Sexta-Feira') {
+        if (horario.periodo_horarios == 'Matutino') {
+          for (let i = 1; i < 7; i++) {
+            if (horario.tempo_inicio == i) {
+              ordem.push(horario);
+            }
+          }
+        }
+        if (horario.periodo_horarios == 'Vespertino') {
+          for (let i = 1; i < 7; i++) {
+            if (horario.tempo_inicio == i) {
+              ordem.push(horario);
+            }
+          }
+        }
+        if (horario.periodo_horarios == 'Noturno') {
           for (let i = 1; i < 7; i++) {
             if (horario.tempo_inicio == i) {
               ordem.push(horario);
@@ -287,9 +287,9 @@ Estudante.liberacao = async (body) => {
 
     if (body) {
       if (body.nome) {
-        if (body.nome != "") {
+        if (body.nome != '') {
           body.nome = String(body.nome).trim();
-          body.nome = body.nome.replace(" ", "%");
+          body.nome = body.nome.replace(' ', '%');
           estudantes = await client.query(
             `
           SELECT id_estudantes, ra, cpf, nome_estudante, foto, periodo_horarios, dia_semana, tempo_inicio, tempo_fim
@@ -299,12 +299,12 @@ Estudante.liberacao = async (body) => {
           AND horarios.id_disciplinas = disciplinas.id
           AND disciplinasestudantes.id_disciplinas = disciplinas.id
           ORDER BY periodo_horarios
-          `
+          `,
           );
         }
       }
       if (body.cpf) {
-        if (body.cpf != "") {
+        if (body.cpf != '') {
           body.cpf = String(body.cpf).trim();
           estudantes = await client.query(
             `
@@ -316,12 +316,12 @@ Estudante.liberacao = async (body) => {
             AND disciplinasestudantes.id_disciplinas = disciplinas.id
             ORDER BY periodo_horarios
             `,
-            [body.cpf]
+            [body.cpf],
           );
         }
       }
       if (body.ra) {
-        if (body.ra != "") {
+        if (body.ra != '') {
           body.ra = String(body.ra).trim();
           estudantes = await client.query(
             `
@@ -333,15 +333,15 @@ Estudante.liberacao = async (body) => {
             AND disciplinasestudantes.id_disciplinas = disciplinas.id
             ORDER BY periodo_horarios
             `,
-            [body.ra]
+            [body.ra],
           );
         }
       }
     }
 
-    let status = [estudantes.rows, { aula: "Estudante sem aula!" }];
+    let status = [estudantes.rows, { aula: 'Estudante sem aula!' }];
     let listaMatutino = [
-      "Matutino",
+      'Matutino',
       { hora: 07, minuto: 00 },
       { hora: 07, minuto: 45 },
       { hora: 08, minuto: 30 },
@@ -351,7 +351,7 @@ Estudante.liberacao = async (body) => {
       { hora: 11, minuto: 50 },
     ];
     let listaVespertino = [
-      "Vespertino",
+      'Vespertino',
       { hora: 13, minuto: 00 },
       { hora: 13, minuto: 45 },
       { hora: 14, minuto: 30 },
@@ -361,7 +361,7 @@ Estudante.liberacao = async (body) => {
       { hora: 17, minuto: 50 },
     ];
     let listaNoturno = [
-      "Noturno",
+      'Noturno',
       { hora: 19, minuto: 00 },
       { hora: 19, minuto: 45 },
       { hora: 20, minuto: 30 },
@@ -374,11 +374,11 @@ Estudante.liberacao = async (body) => {
     let listas = [listaMatutino, listaVespertino, listaNoturno];
 
     let diaSemana = [
-      "Segunda-Feira",
-      "Terça-Feira",
-      "Quarta-Feira",
-      "Quinta-Feira",
-      "Sexta-Feira",
+      'Segunda-Feira',
+      'Terça-Feira',
+      'Quarta-Feira',
+      'Quinta-Feira',
+      'Sexta-Feira',
     ];
 
     const hoje = new Date();
@@ -391,7 +391,7 @@ Estudante.liberacao = async (body) => {
       if (estudante.dia_semana == diaSemana[diaDaSemana(estudante) - 1]) {
         //Periodo, matutino, vespertino, noturno
         let turno_atual = 0;
-        let primeiro_tempo_inicio = [6, 6, "Inalterado"];
+        let primeiro_tempo_inicio = [6, 6, 'Inalterado'];
         if (estudante_aula == -1) {
           for (let j = 0; j < 2; j++) {
             if (estudante.periodo_horarios == listas[j][0]) {
@@ -403,7 +403,7 @@ Estudante.liberacao = async (body) => {
                 status = estudanteEmAula(
                   estudante.tempo_inicio,
                   estudante.tempo_fim,
-                  j
+                  j,
                 );
               }
               if (
@@ -413,7 +413,7 @@ Estudante.liberacao = async (body) => {
                 status = aulaEmBreve(
                   estudante,
                   turno_atual,
-                  primeiro_tempo_inicio
+                  primeiro_tempo_inicio,
                 );
               }
             } else {
@@ -422,7 +422,7 @@ Estudante.liberacao = async (body) => {
           }
         }
 
-        if (status[1].aula == "Estudante em aula!") {
+        if (status[1].aula == 'Estudante em aula!') {
           status = status;
           estudante_aula = index;
         }
@@ -441,14 +441,14 @@ Estudante.liberacao = async (body) => {
       if (listas[turno_atual][0] == estudante.periodo_horarios) {
         primeiro_tempo_inicio =
           estudante.tempo_inicio < primeiro_tempo_inicio[0]
-            ? [estudante.tempo_inicio, estudante.tempo_fim, "Alterado"]
+            ? [estudante.tempo_inicio, estudante.tempo_fim, 'Alterado']
             : primeiro_tempo_inicio;
 
         if (
           hoje.getHours() <
             listas[turno_atual][primeiro_tempo_inicio[0]].hora &&
           verifica_hora == 0 &&
-          primeiro_tempo_inicio[2] == "Alterado"
+          primeiro_tempo_inicio[2] == 'Alterado'
         ) {
           verifica_hora = 1;
           status = [estudantes.rows, { aula: `Aula em breve!` }];
@@ -461,7 +461,7 @@ Estudante.liberacao = async (body) => {
             hoje.getMinutes() <
               listas[turno_atual][primeiro_tempo_inicio[0]].minuto &&
             verifica_min == 0 &&
-            primeiro_tempo_inicio[2] == "Alterado"
+            primeiro_tempo_inicio[2] == 'Alterado'
           ) {
             verifica_min = 1;
             status = [estudantes.rows, { aula: `Aula em breve!` }];
@@ -476,14 +476,14 @@ Estudante.liberacao = async (body) => {
       if (hoje.getHours() == listas[j][tempo_inicio].hora) {
         //verifica se os minutos são maiores
         if (hoje.getMinutes() >= listas[j][tempo_inicio].minuto) {
-          status = [estudantes.rows, { aula: "Estudante em aula!" }];
+          status = [estudantes.rows, { aula: 'Estudante em aula!' }];
         }
       }
       // hora atual for igual a hora que termina o tempo
       if (hoje.getHours() == listas[j][tempo_fim + 1].hora) {
         //verifica se os minutos são menores
         if (hoje.getMinutes() <= listas[j][tempo_fim + 1].minuto) {
-          status = [estudantes.rows, { aula: "Estudante em aula!" }];
+          status = [estudantes.rows, { aula: 'Estudante em aula!' }];
         }
       }
 
@@ -491,7 +491,7 @@ Estudante.liberacao = async (body) => {
         hoje.getHours() > listas[j][tempo_inicio].hora &&
         hoje.getHours() < listas[j][tempo_fim + 1].hora
       ) {
-        status = [estudantes.rows, { aula: "Estudante em aula!" }];
+        status = [estudantes.rows, { aula: 'Estudante em aula!' }];
       }
       return status;
     }

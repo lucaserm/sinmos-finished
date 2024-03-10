@@ -1,4 +1,4 @@
-const client = require("../../index");
+const client = require('../../index');
 
 class Disciplina {
   constructor(body) {
@@ -11,7 +11,7 @@ Disciplina.buscarDisciplinas = async () => {
     `
     SELECT disciplinas.*
     FROM disciplinas 
-    ORDER BY id`
+    ORDER BY id`,
   );
 
   return disciplinas.rows;
@@ -20,8 +20,8 @@ Disciplina.buscarDisciplinas = async () => {
 Disciplina.save = async (body) => {
   try {
     await client.query(
-      "INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES($1, $2, $3, $4);",
-      [body.select, body.nome_disciplina, body.turma, body.semestre]
+      'INSERT INTO disciplinas(id_cursos, nome_disciplina, turma, semestre) VALUES($1, $2, $3, $4);',
+      [body.select, body.nome_disciplina, body.turma, body.semestre],
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);

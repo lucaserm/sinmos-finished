@@ -1,4 +1,4 @@
-const client = require("../../index");
+const client = require('../../index');
 
 class RegistroEstudante {
   constructor(body) {
@@ -9,8 +9,8 @@ class RegistroEstudante {
 RegistroEstudante.save = async (body, registro) => {
   try {
     await client.query(
-      "INSERT INTO RegistrosEstudantes(id_estudantes, id_registros) VALUES($1, $2)",
-      [body.id_estudantes, registro[0].id]
+      'INSERT INTO RegistrosEstudantes(id_estudantes, id_registros) VALUES($1, $2)',
+      [body.id_estudantes, registro[0].id],
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);
@@ -26,7 +26,7 @@ RegistroEstudante.buscar = async (body) => {
       AND id_registros = registros.id
       AND ra = $1
       `,
-      [body.ra]
+      [body.ra],
     );
     const hoje = new Date();
     let data = hoje.toISOString().substring(0, 10);

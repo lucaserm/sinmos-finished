@@ -4,24 +4,11 @@
     <div class="row">
       <div class="col-lg-1"></div>
       <div class="col-lg-10 my-3">
-        <h1 class="text-center">
-          Sistema Integrado de Monitoramento e Segurança
-        </h1>
+        <%- include('includes/textCenter')%>
         <br />
         <hr />
         <h4 class="text-center">Salvo com sucesso!</h4>
-        <hr />
-        <br />
-        <form action="/administracao/paginainicial" method="post">
-          <input
-            type="text"
-            name="codigo_servidor"
-            value="<%= codigo_servidor%>"
-            hidden
-          />
-          <input type="text" name="senha" value="<%= senha%>" hidden />
-          <button class="btn button btn-dark">Voltar</button>
-        </form>
+        <%- include('includes/formBackButton')%>
       </div>
       <div class="col-lg-2"></div>
     </div>

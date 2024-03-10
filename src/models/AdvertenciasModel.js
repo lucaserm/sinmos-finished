@@ -1,4 +1,4 @@
-const client = require("../../index");
+const client = require('../../index');
 
 class Advertencia {
   constructor(body) {
@@ -9,8 +9,8 @@ class Advertencia {
 Advertencia.save = async (body) => {
   try {
     await client.query(
-      "INSERT INTO advertencias(relatorio_advertencia, data_resolucao, id_ocorrenciasestudantes) VALUES ($1, CURRENT_TIMESTAMP, $2)",
-      [body.relatorio_advertencia, body.id]
+      'INSERT INTO advertencias(relatorio_advertencia, data_resolucao, id_ocorrenciasestudantes) VALUES ($1, CURRENT_TIMESTAMP, $2)',
+      [body.relatorio_advertencia, body.id],
     );
   } catch (e) {
     console.log(e);
@@ -28,7 +28,7 @@ Advertencia.buscaAdvertenciaPorRA = async (body) => {
       AND id_estudantes = estudantes.id
       and ra = $1
       ORDER BY id`,
-      [body.ra]
+      [body.ra],
     );
     return advertencias.rows;
   } catch (e) {
@@ -46,7 +46,7 @@ Advertencia.buscaAdvertenciaPorID = async (id) => {
       AND id_usuarios = usuarios.id 
       AND id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
-      AND id_ocorrenciasestudantes = ${id}`
+      AND id_ocorrenciasestudantes = ${id}`,
     );
     return advertencias.rows;
   } catch (e) {
@@ -64,7 +64,7 @@ Advertencia.buscaAdvertenciaAprovadas = async (body) => {
       AND id_estudantes = estudantes.id
       AND id_ocorrencias = ocorrencias.id
       AND ra = $1`,
-      [body.ra]
+      [body.ra],
     );
 
     return advertencias.rows;
@@ -84,7 +84,7 @@ Advertencia.buscaPorOcorrencia = async (body) => {
         AND id_usuarios = usuarios.id 
         WHERE id_ocorrenciasestudantes = $1
       `,
-      [body.id]
+      [body.id],
     );
   } catch (e) {
     console.log(e);

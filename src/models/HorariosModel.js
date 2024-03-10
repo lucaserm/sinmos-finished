@@ -1,4 +1,4 @@
-const client = require("../../index");
+const client = require('../../index');
 
 class Horario {
   constructor(body) {
@@ -9,14 +9,14 @@ class Horario {
 Horario.save = async (body) => {
   try {
     await client.query(
-      "INSERT INTO horarios(id_disciplinas, periodo_horarios, dia_semana, tempo_inicio, tempo_fim) VALUES($1, $2, $3, $4, $5)",
+      'INSERT INTO horarios(id_disciplinas, periodo_horarios, dia_semana, tempo_inicio, tempo_fim) VALUES($1, $2, $3, $4, $5)',
       [
         body.id_disciplinas,
         body.periodo,
         body.dia_semana,
         body.tempo_inicio,
         body.tempo_fim,
-      ]
+      ],
     );
   } catch (e) {
     console.log(`Houve um erro ${e}`);

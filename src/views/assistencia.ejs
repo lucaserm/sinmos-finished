@@ -7,51 +7,7 @@
         <hr style="background-color: #fff; margin: 1rem" />
         <h1 class="text-center">Assistência de Alunos</h1>
         <div class="responsive-table">
-          <form action="/administracao/saidaEstudante" method="POST">
-            <p class="text-center lead">
-              Insira o dado do aluno que deseja verificar
-            </p>
-            <input
-              type="text"
-              class="form-control"
-              id="ra"
-              name="ra"
-              autocomplete="off"
-              placeholder="RA"
-            />
-            <input
-              type="text"
-              class="form-control"
-              id="cpf"
-              name="cpf"
-              autocomplete="off"
-              placeholder="CPF"
-              onblur="formataCPF(this)"
-            />
-            <input
-              type="text"
-              class="form-control"
-              id="nome"
-              name="nome"
-              autocomplete="off"
-              placeholder="NOME COMPLETO"
-            />
-            <input
-              type="text"
-              class="form-control"
-              name="codigo_servidor"
-              value="<%= codigo_servidor%>"
-              hidden
-            />
-            <input
-              type="text"
-              class="form-control"
-              name="senha"
-              value="<%= senha%>"
-              hidden
-            />
-            <button class="btn button btn-success small">Ver</button>
-          </form>
+          <%- include('includes/formBuscaEstudante')%>
           <hr />
           <p class="text-center lead">Ocorrências Registradas</p>
           <form action="/administracao/ocorrencias" method="POST">

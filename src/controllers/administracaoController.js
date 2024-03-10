@@ -1,82 +1,77 @@
-const Estudante = require("../models/EstudantesModel");
-const Responsavel = require("../models/ResponsaveisModel");
-const Registro = require("../models/RegistrosModel");
-const RegistroEstudante = require("../models/RegistrosEstudantes");
-const Advertencia = require("../models/AdvertenciasModel");
-const Usuario = require("../models/UsuariosModel");
-const OcorrenciaEstudante = require("../models/OcorrenciasEstudantes");
+const Estudante = require('../models/EstudantesModel');
+const Responsavel = require('../models/ResponsaveisModel');
+const Registro = require('../models/RegistrosModel');
+const RegistroEstudante = require('../models/RegistrosEstudantes');
+const Advertencia = require('../models/AdvertenciasModel');
+const Usuario = require('../models/UsuariosModel');
+const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes');
 
 //página de login
 exports.login = (req, res) => {
-  res.render("login");
+  return res.render('login', { error: false });
 };
 
-//gerenciando todos os users
 exports.paginaAdm = async (req, res) => {
-  //variável para manipulação de páginas
+  //Variável para manipulação de páginas
+  const { codigo_servidor, senha } = req.body;
   const users = await Usuario.buscaUsuarios();
   //Super User
-  if (req.body.codigo_servidor == "root" && req.body.senha == "123456") {
-    let codigo_servidor = "root";
-    let senha = "123456";
-    res.render("coordenacao", { codigo_servidor, senha });
-  } else if (users.length > 0) {
-    users.forEach((usuario) => {
-      if (
-        req.body.codigo_servidor == usuario.codigo_servidor &&
-        req.body.senha == usuario.senha
-      ) {
-        let codigo_servidor = usuario.codigo_servidor;
-        let senha = usuario.senha;
-        if (usuario.cargo == "Coordenacao") {
-          res.render("coordenacao", { codigo_servidor, senha });
-        } else if (usuario.cargo == "Portaria") {
-          res.render("portaria", { codigo_servidor, senha });
-        } else if (usuario.cargo == "Assistencia") {
-          res.render("assistencia", { codigo_servidor, senha });
-        }
-      }
+  if (codigo_servidor == 'root' && senha == '123456') {
+    return res.render('coordenacao', {
+      codigo_servidor: 'root',
+      senha: '123456',
     });
-  } else {
-    res.render("login");
+  }
+
+  const user = users.find((user) => {
+    if (codigo_servidor == user.codigo_servidor && senha == user.senha)
+      return user;
+  });
+
+  if (!user) return res.render('login', { error: true });
+
+  if (user.cargo == 'Coordenacao') {
+    return res.render('coordenacao', { codigo_servidor, senha });
+  } else if (user.cargo == 'Portaria') {
+    return res.render('portaria', { codigo_servidor, senha });
+  } else if (user.cargo == 'Assistencia') {
+    return res.render('assistencia', { codigo_servidor, senha });
   }
 };
 
 //página para editar dados do estudante
 exports.editar = async (req, res) => {
   const estudantes = await Estudante.buscaPorRA(req.body);
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
-  res.render("editar", { estudantes, codigo_servidor, senha });
+  const { codigo_servidor, senha } = req.body;
+  res.render('editar', { estudantes, codigo_servidor, senha });
 };
 
 exports.trataEditado = async (req, res) => {
-  const id = req.body.id;
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
-  if (req.url == "/administracao/editadoEstudante") {
+  const { id, codigo_servidor, senha } = req.body;
+
+  if (req.url == '/administracao/editadoEstudante') {
     Estudante.update(req.body);
-    return res.render("salvo", { req, id, codigo_servidor, senha });
-  } else if (req.url == "/administracao/editadoSaida") {
-    Registro.update(req.body);
-  } else if (req.url == "/administracao/deleteAdvertencia") {
-    Advertencia.deletePorRA(req.body);
-    const id = req.body.id;
-    const codigo_servidor = req.body.codigo_servidor;
-    const senha = req.body.senha;
-    return res.render("delete", { req, id, codigo_servidor, senha });
+    return res.render('salvo', { id, codigo_servidor, senha });
   }
-  res.render("salvoEditado", { req, id, codigo_servidor, senha });
+
+  if (req.url == '/administracao/editadoSaida') {
+    Registro.update(req.body);
+    return res.render('salvoEditado', { id, codigo_servidor, senha });
+  }
+
+  if (req.url == '/administracao/deleteAdvertencia') {
+    Advertencia.deletePorRA(req.body);
+    return res.render('delete', { id, codigo_servidor, senha });
+  }
 };
 
 //busca responsável e advertências de um estudante específico
 exports.responsavel = async (req, res) => {
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
+  const { codigo_servidor, senha } = req.body;
   const responsaveis = await Responsavel.buscaResponsavelPorRA(req.body);
   const ocorrencias = await OcorrenciaEstudante.buscarPorRa(req.body);
   const advertencias = await Advertencia.buscaAdvertenciaAprovadas(req.body);
-  res.render("responsavel", {
+  return res.render('responsavel', {
     responsaveis,
     ocorrencias,
     advertencias,
@@ -86,19 +81,16 @@ exports.responsavel = async (req, res) => {
 };
 
 exports.saidaEstudante = async (req, res) => {
+  const { codigo_servidor, senha, cpf, ra, nome } = req.body;
+
   const estudantes =
-    (!req.body.cpf || !req.body.ra || !req.body.nome) &&
-    (req.body.cpf != "" || req.body.ra != "" || req.body.nome != "")
+    (!cpf || !ra || !nome) && (cpf != '' || ra != '' || nome != '')
       ? await Estudante.liberacao(req.body)
       : {};
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
   const users = await Usuario.buscaPorCodigo(codigo_servidor);
-  let repetir =
-    req.body.nome && req.body.nome != ""
-      ? await Estudante.buscaPorNome(req.body)
-      : [];
-  res.render("saidaEstudante", {
+  const repetir =
+    nome && nome != '' ? await Estudante.buscaPorNome(req.body) : [];
+  return res.render('saidaEstudante', {
     estudantes,
     repetir,
     users,
@@ -109,49 +101,50 @@ exports.saidaEstudante = async (req, res) => {
 
 //pega os horários do estudante
 exports.horarios = async (req, res) => {
+  const { codigo_servidor, senha, cpf, ra, nome } = req.body;
+
   const horarios =
-    (!req.body.cpf || !req.body.ra || !req.body.nome) &&
-    (req.body.cpf != "" || req.body.ra != "" || req.body.nome != "")
+    (!cpf || !ra || !nome) && (cpf != '' || ra != '' || nome != '')
       ? await Estudante.buscaHorarios(req.body)
       : {};
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
-  let repetir =
-    req.body.nome && req.body.nome != ""
-      ? await Estudante.buscaPorNome(req.body)
-      : [];
-  res.render("horarios", { horarios, repetir, codigo_servidor, senha });
+  const repetir =
+    nome && nome != '' ? await Estudante.buscaPorNome(req.body) : [];
+  return res.render('horarios', { horarios, repetir, codigo_servidor, senha });
 };
 
 //todas as requisições de todos os estudantes
 exports.requisicoes = async (req, res) => {
+  const { codigo_servidor, senha } = req.body;
   const registros = await RegistroEstudante.buscar(req.body);
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
   const users = await Usuario.buscaPorCodigo(codigo_servidor);
-  res.render("requisicoes", { registros, users, codigo_servidor, senha });
+  return res.render('requisicoes', {
+    registros,
+    users,
+    codigo_servidor,
+    senha,
+  });
 };
 
 exports.advertencias = async (req, res) => {
-  const id = req.body.id;
-  const opcao = req.body.opcao;
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
-  let ocorrencias = await OcorrenciaEstudante.buscar();
+  const { id, opcao, codigo_servidor, senha, status } = req.body;
+
+  const ocorrencias = await OcorrenciaEstudante.buscar();
   if (
-    typeof req.body.opcao == "undefined" &&
-    typeof req.body.id == "undefined" &&
-    typeof req.body.status == "undefined"
+    typeof opcao == 'undefined' &&
+    typeof id == 'undefined' &&
+    typeof status == 'undefined'
   ) {
-    res.render("areoTela", { ocorrencias, codigo_servidor, senha });
-  } else if (typeof req.body.opcao != "undefined") {
-    res.render("advertencias", { ocorrencias, codigo_servidor, senha, opcao });
-  } else if (
-    typeof req.body.id != "undefined" &&
-    req.body.status != "Aprovado"
-  ) {
-    ocorrencias = await OcorrenciaEstudante.buscarPorID(req.body.id);
-    res.render("cadastro_advertencia", {
+    return res.render('areoTela', { ocorrencias, codigo_servidor, senha });
+  } else if (typeof opcao != 'undefined') {
+    return res.render('advertencias', {
+      ocorrencias,
+      codigo_servidor,
+      senha,
+      opcao,
+    });
+  } else if (typeof id != 'undefined' && status != 'Aprovado') {
+    ocorrencias = await OcorrenciaEstudante.buscarPorID(id);
+    return res.render('cadastro_advertencia', {
       ocorrencias,
       codigo_servidor,
       senha,
@@ -159,20 +152,24 @@ exports.advertencias = async (req, res) => {
     });
   } else {
     const advertencias = await Advertencia.buscaAdvertenciaPorID(id);
-    res.render("relatorio", { advertencias, codigo_servidor, senha, id });
+    return res.render('relatorio', {
+      advertencias,
+      codigo_servidor,
+      senha,
+      id,
+    });
   }
 };
 
 exports.ocorrencias = async (req, res) => {
-  const codigo_servidor = req.body.codigo_servidor;
-  const senha = req.body.senha;
+  const { codigo_servidor, senha } = req.body;
   const users = await Usuario.buscaPorCodigo(codigo_servidor);
   const ocorrencias = await OcorrenciaEstudante.buscaPorServidor(users[0].id);
   const ocorrenciasRelacionado =
     await OcorrenciaEstudante.buscaPorServidorRelacionado(
-      users[0].nome_usuario
+      users[0].nome_usuario,
     );
-  res.render("ocorrencias", {
+  return res.render('ocorrencias', {
     ocorrencias,
     ocorrenciasRelacionado,
     codigo_servidor,

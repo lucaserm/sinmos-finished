@@ -1,5 +1,5 @@
-const client = require("../../index");
-const OcorrenciaEstudante = require("../models/OcorrenciasEstudantes");
+const client = require('../../index');
+const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes');
 
 class Registro {
   constructor(body) {
@@ -11,8 +11,8 @@ Registro.save = async (body) => {
   try {
     let dia_hora_saida = `${body.dia_liberacao} 00:00:00`;
     const id = await client.query(
-      "INSERT INTO Registros(dia_hora_saida, dia_liberacao, descricao) VALUES($1, $2, $3) returning id",
-      [dia_hora_saida, body.dia_liberacao, body.descricao]
+      'INSERT INTO Registros(dia_hora_saida, dia_liberacao, descricao) VALUES($1, $2, $3) returning id',
+      [dia_hora_saida, body.dia_liberacao, body.descricao],
     );
     return id.rows;
   } catch (e) {
@@ -24,8 +24,8 @@ Registro.update = async (body) => {
   try {
     if (body.id > 0) {
       await client.query(
-        "UPDATE registros SET dia_hora_saida = CURRENT_TIMESTAMP WHERE id = $1",
-        [body.id]
+        'UPDATE registros SET dia_hora_saida = CURRENT_TIMESTAMP WHERE id = $1',
+        [body.id],
       );
     }
   } catch (e) {
@@ -41,7 +41,7 @@ Registro.buscaRegistros = async () => {
       FROM registros, estudantes, registrosestudantes 
       WHERE id_estudantes = estudantes.id and id_registros = registros.id
       ORDER BY id
-      `
+      `,
     );
     const hoje = new Date();
     let data = hoje.toISOString().substring(0, 10);

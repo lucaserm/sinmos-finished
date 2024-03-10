@@ -73,7 +73,7 @@ route.post("/administracao/ocorrencias", administracaoController.ocorrencias);
 route.post("/administracao/responsavel", administracaoController.responsavel);
 route.post("/administracao/editar", administracaoController.editar);
 route.post(
-  "/administracao/saidaEstudante",
+  "/administracao/estudante",
   administracaoController.saidaEstudante
 );
 route.post(

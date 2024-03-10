@@ -1,4 +1,4 @@
-const client = require("../../index");
+const client = require('../../index');
 
 class Usuarios {
   constructor(body) {
@@ -18,8 +18,8 @@ Usuarios.buscaUsuarios = async () => {
 Usuarios.buscaPorCodigo = async (codigo) => {
   try {
     const user = await client.query(
-      "SELECT * FROM usuarios WHERE codigo_servidor = $1",
-      [codigo]
+      'SELECT * FROM usuarios WHERE codigo_servidor = $1',
+      [codigo],
     );
     return user.rows;
   } catch (e) {
