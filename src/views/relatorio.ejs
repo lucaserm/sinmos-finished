@@ -70,16 +70,7 @@
           <% })%>
         </div>
         <hr />
-        <form action="/administracao/paginainicial" method="POST">
-          <input
-            type="text"
-            name="codigo_servidor"
-            value="<%= codigo_servidor%>"
-            hidden
-          />
-          <input type="text" name="senha" value="<%= senha%>" hidden />
-          <button class="btn button btn-dark">Voltar</button>
-        </form>
+        <%- include('includes/formBackButton')%>
       </div>
       <div class="col-lg-2"></div>
     </div>

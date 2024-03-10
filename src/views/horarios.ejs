@@ -59,16 +59,7 @@
             <% }); %>
           </table>
         </div>
-        <form action="/administracao/paginainicial" method="post">
-          <input
-            type="text"
-            name="codigo_servidor"
-            value="<%= codigo_servidor%>"
-            hidden
-          />
-          <input type="text" name="senha" value="<%= senha%>" hidden />
-          <button class="btn button btn-dark">Voltar</button>
-        </form>
+        <%- include('includes/formBackButton')%>
         <% }else if (horarios.length > 0){ %>
         <div class="form-group" align="center">
           <label>--- Nome do Estudante ---</label>
@@ -175,16 +166,7 @@
         </form>
         <%}%>
         <hr style="background-color: #fff; margin: 1rem" />
-        <form action="/administracao/paginainicial" method="post">
-          <input
-            type="text"
-            name="codigo_servidor"
-            value="<%= codigo_servidor%>"
-            hidden
-          />
-          <input type="text" name="senha" value="<%= senha%>" hidden />
-          <button class="btn button btn-dark">Voltar</button>
-        </form>
+        <%- include('includes/formBackButton')%>
         <% } %>
       </div>
       <div class="col-lg-2"></div>
