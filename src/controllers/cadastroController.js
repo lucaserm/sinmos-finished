@@ -18,7 +18,7 @@ exports.cadastros = async (req, res) => {
   if (codigo_servidor == 'root') {
     res.render('cadastros', { codigo_servidor: 'root', senha: '123456' });
   } else {
-    const users = await Usuario.buscaPorCodigo(codigo_servidor);
+    const users = await Usuario.findByCodigo(codigo_servidor);
     const user = users[0];
 
     if (users[0].cargo != 'Coordenacao')
@@ -37,8 +37,8 @@ exports.cadastroCurso = (req, res) => {
 };
 exports.cadastroMatricula = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const cursos = await Curso.buscarCursos();
-  const estudantes = await Estudante.buscaEstudantes();
+  const cursos = await Curso.findAll();
+  const estudantes = await Estudante.findAll();
   return res.render('cadastro_matricula', {
     cursos,
     estudantes,
@@ -48,13 +48,13 @@ exports.cadastroMatricula = async (req, res) => {
 };
 exports.cadastroDisciplina = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const cursos = await Curso.buscarCursos();
+  const cursos = await Curso.findAll();
   return res.render('cadastro_disciplina', { cursos, codigo_servidor, senha });
 };
 exports.cadastroHorario = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const disciplinas = await Disciplina.buscarDisciplinas();
-  const horarios = await Horario.buscaHorarios();
+  const disciplinas = await Disciplina.findAll();
+  const horarios = await Horario.findAll();
   return res.render('cadastro_horario', {
     disciplinas,
     horarios,
@@ -64,8 +64,8 @@ exports.cadastroHorario = async (req, res) => {
 };
 exports.cadastroEstudante = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const cursos = await Curso.buscarCursos();
-  const responsaveis = await Responsavel.buscaResponsaveis();
+  const cursos = await Curso.findAll();
+  const responsaveis = await Responsavel.findAll();
   res.render('cadastro_estudante', {
     cursos,
     responsaveis,
@@ -79,8 +79,8 @@ exports.cadastroResponsavel = (req, res) => {
 };
 exports.cadastroDisciplinaEstudante = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const estudantes = await Estudante.buscaEstudantes();
-  const disciplinas = await Disciplina.buscarDisciplinas();
+  const estudantes = await Estudante.findAll();
+  const disciplinas = await Disciplina.findAll();
   res.render('cadastro_disciplinasestudantes', {
     estudantes,
     disciplinas,
@@ -90,7 +90,7 @@ exports.cadastroDisciplinaEstudante = async (req, res) => {
 };
 exports.cadastroRegistro = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const estudantes = await Estudante.buscaEstudantes();
+  const estudantes = await Estudante.findAll();
   res.render('cadastro_registro', { estudantes, codigo_servidor, senha });
 };
 exports.cadastroUsuario = async (req, res) => {
@@ -103,8 +103,8 @@ exports.cadastroOcorrencia = async (req, res) => {
 };
 exports.cadastroOcorrenciaEstudante = async (req, res) => {
   const { id, codigo_servidor, senha } = req.body;
-  const estudantes = await Estudante.buscaEstudantes();
-  const ocorrencias = await Ocorrencia.buscarOcorrencias();
+  const estudantes = await Estudante.findAll();
+  const ocorrencias = await Ocorrencia.findAll();
   res.render('cadastro_ocorrenciasestudantes', {
     estudantes,
     ocorrencias,
@@ -146,11 +146,11 @@ exports.trataPost = async (req, res) => {
     }
   } else if (req.url == '/cadastro/advertenciasalvo') {
     if (typeof relatorio_advertencia != 'undefined') {
-      OcorrenciaEstudante.updateAprovado(req.body);
+      OcorrenciaEstudante.updateApproved(req.body);
       Advertencia.save(req.body);
     } else {
       id = 0;
-      OcorrenciaEstudante.updateReprovado(req.body);
+      OcorrenciaEstudante.updateRepproved(req.body);
       return res.render('salvo', { id, codigo_servidor, senha });
     }
   }

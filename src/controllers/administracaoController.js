@@ -14,7 +14,7 @@ exports.login = (req, res) => {
 exports.paginaAdm = async (req, res) => {
   //Variável para manipulação de páginas
   const { codigo_servidor, senha } = req.body;
-  const users = await Usuario.buscaUsuarios();
+  const users = await Usuario.findAll();
   //Super User
   if (codigo_servidor == 'root' && senha == '123456') {
     return res.render('coordenacao', {
@@ -41,7 +41,7 @@ exports.paginaAdm = async (req, res) => {
 
 //página para editar dados do estudante
 exports.editar = async (req, res) => {
-  const estudantes = await Estudante.buscaPorRA(req.body);
+  const estudantes = await Estudante.findByRA(req.body);
   const { codigo_servidor, senha } = req.body;
   res.render('editar', { estudantes, codigo_servidor, senha });
 };
@@ -55,22 +55,17 @@ exports.trataEditado = async (req, res) => {
   }
 
   if (req.url == '/administracao/editadoSaida') {
-    Registro.update(req.body);
+    if(req.body.id > 0) Registro.update(req.body);
     return res.render('salvoEditado', { id, codigo_servidor, senha });
-  }
-
-  if (req.url == '/administracao/deleteAdvertencia') {
-    Advertencia.deletePorRA(req.body);
-    return res.render('delete', { id, codigo_servidor, senha });
   }
 };
 
 //busca responsável e advertências de um estudante específico
 exports.responsavel = async (req, res) => {
-  const { codigo_servidor, senha } = req.body;
-  const responsaveis = await Responsavel.buscaResponsavelPorRA(req.body);
-  const ocorrencias = await OcorrenciaEstudante.buscarPorRa(req.body);
-  const advertencias = await Advertencia.buscaAdvertenciaAprovadas(req.body);
+  const { ra, codigo_servidor, senha } = req.body;
+  const responsaveis = await Responsavel.findByEstudanteRA(ra);
+  const ocorrencias = await OcorrenciaEstudante.findByRA(ra);
+  const advertencias = await Advertencia.findApproved(ra);
   return res.render('responsavel', {
     responsaveis,
     ocorrencias,
@@ -87,9 +82,9 @@ exports.saidaEstudante = async (req, res) => {
     (!cpf || !ra || !nome) && (cpf != '' || ra != '' || nome != '')
       ? await Estudante.liberacao(req.body)
       : {};
-  const users = await Usuario.buscaPorCodigo(codigo_servidor);
+  const users = await Usuario.findByCodigo(codigo_servidor);
   const repetir =
-    nome && nome != '' ? await Estudante.buscaPorNome(req.body) : [];
+    nome && nome != '' ? await Estudante.findByName(req.body) : [];
   return res.render('saidaEstudante', {
     estudantes,
     repetir,
@@ -105,18 +100,18 @@ exports.horarios = async (req, res) => {
 
   const horarios =
     (!cpf || !ra || !nome) && (cpf != '' || ra != '' || nome != '')
-      ? await Estudante.buscaHorarios(req.body)
+      ? await Estudante.findHorarios(req.body)
       : {};
   const repetir =
-    nome && nome != '' ? await Estudante.buscaPorNome(req.body) : [];
+    nome && nome != '' ? await Estudante.findByName(req.body) : [];
   return res.render('horarios', { horarios, repetir, codigo_servidor, senha });
 };
 
 //todas as requisições de todos os estudantes
 exports.requisicoes = async (req, res) => {
-  const { codigo_servidor, senha } = req.body;
-  const registros = await RegistroEstudante.buscar(req.body);
-  const users = await Usuario.buscaPorCodigo(codigo_servidor);
+  const { ra, codigo_servidor, senha } = req.body;
+  const registros = await RegistroEstudante.findByRA(ra);
+  const users = await Usuario.findByCodigo(codigo_servidor);
   return res.render('requisicoes', {
     registros,
     users,
@@ -128,7 +123,7 @@ exports.requisicoes = async (req, res) => {
 exports.advertencias = async (req, res) => {
   const { id, opcao, codigo_servidor, senha, status } = req.body;
 
-  const ocorrencias = await OcorrenciaEstudante.buscar();
+  const ocorrencias = await OcorrenciaEstudante.findAll();
   if (
     typeof opcao == 'undefined' &&
     typeof id == 'undefined' &&
@@ -143,7 +138,7 @@ exports.advertencias = async (req, res) => {
       opcao,
     });
   } else if (typeof id != 'undefined' && status != 'Aprovado') {
-    ocorrencias = await OcorrenciaEstudante.buscarPorID(id);
+    ocorrencias = await OcorrenciaEstudante.findByID(id);
     return res.render('cadastro_advertencia', {
       ocorrencias,
       codigo_servidor,
@@ -151,7 +146,7 @@ exports.advertencias = async (req, res) => {
       id,
     });
   } else {
-    const advertencias = await Advertencia.buscaAdvertenciaPorID(id);
+    const advertencias = await Advertencia.findByID(id);
     return res.render('relatorio', {
       advertencias,
       codigo_servidor,
@@ -163,10 +158,10 @@ exports.advertencias = async (req, res) => {
 
 exports.ocorrencias = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const users = await Usuario.buscaPorCodigo(codigo_servidor);
-  const ocorrencias = await OcorrenciaEstudante.buscaPorServidor(users[0].id);
+  const users = await Usuario.findByCodigo(codigo_servidor);
+  const ocorrencias = await OcorrenciaEstudante.findByCodigoServidor(users[0].id);
   const ocorrenciasRelacionado =
-    await OcorrenciaEstudante.buscaPorServidorRelacionado(
+    await OcorrenciaEstudante.findByRelatedServidor(
       users[0].nome_usuario,
     );
   return res.render('ocorrencias', {
