@@ -55,7 +55,7 @@ exports.trataEditado = async (req, res) => {
   }
 
   if (req.url == '/administracao/editadoSaida') {
-    if(req.body.id > 0) Registro.update(req.body);
+    if (req.body.id > 0) Registro.update(req.body);
     return res.render('salvoEditado', { id, codigo_servidor, senha });
   }
 };
@@ -159,11 +159,11 @@ exports.advertencias = async (req, res) => {
 exports.ocorrencias = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
   const users = await Usuario.findByCodigo(codigo_servidor);
-  const ocorrencias = await OcorrenciaEstudante.findByCodigoServidor(users[0].id);
+  const ocorrencias = await OcorrenciaEstudante.findByCodigoServidor(
+    users[0].id,
+  );
   const ocorrenciasRelacionado =
-    await OcorrenciaEstudante.findByRelatedServidor(
-      users[0].nome_usuario,
-    );
+    await OcorrenciaEstudante.findByRelatedServidor(users[0].nome_usuario);
   return res.render('ocorrencias', {
     ocorrencias,
     ocorrenciasRelacionado,

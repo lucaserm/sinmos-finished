@@ -57,7 +57,7 @@
           <input type="text" name="senha" value="<%= senha%>" hidden />
           <button class="btn button btn-dark">Voltar</button>
         </form>
-        <% } else { %> <%if (estudantes[0]){%>
+        <% } else { %> <%if (estudantes[0] ){%>
         <form action="/administracao/estudante" method="POST">
           <div class="form-group">
             <input
@@ -172,7 +172,7 @@
         <%- include('includes/formBackButton')%>
         <% } else { %>
         <hr />
-        <p class="text-center lead">Não existe estudante com esses dados.</p>
+        <p class="text-center lead">Não existe estudante com esses dados, caso exista, não está relacionado.</p>
         <hr />
         <hr style="background-color: #fff; margin: 1rem" />
         <%- include('includes/formBackButton')%>

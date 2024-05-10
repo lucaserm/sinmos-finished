@@ -2,13 +2,8 @@ const client = require('../../index');
 
 class Estudante {
   static async save(body, filename) {
-    const {
-      nome_estudante,
-      email_institucional,
-      cpf,
-      ra,
-      id_responsaveis
-    } = body;
+    const { nome_estudante, email_institucional, cpf, ra, id_responsaveis } =
+      body;
 
     filename = '/assets/img/' + filename;
 
@@ -107,7 +102,9 @@ class Estudante {
 
       let params = [];
       if (body.nome) {
-        query += ` AND upper(nome_estudante) LIKE upper($${params.push('%' + body.nome.trim() + '%')}) `;
+        query += ` AND upper(nome_estudante) LIKE upper($${params.push(
+          '%' + body.nome.trim() + '%',
+        )}) `;
       }
       if (body.cpf) {
         query += ` AND cpf = $${params.push(body.cpf.trim())} `;
@@ -116,13 +113,13 @@ class Estudante {
         query += ` AND ra = $${params.push(body.ra.trim())} `;
       }
 
-      query += ' ORDER BY periodo_horarios';
+      query += 'ORDER BY periodo_horarios';
 
       const { rows: estudantes } = await client.query(query, params);
 
       // Verifica se há estudantes
       if (estudantes.length === 0) {
-        return [{}, { aula: 'Estudante não encontrado' }];
+        return [null, { aula: 'Estudante não encontrado' }];
       }
 
       const status = [estudantes, { aula: '' }];
@@ -169,18 +166,25 @@ class Estudante {
       ];
 
       // Percorre a lista de estudantes
-      estudantes.forEach(estudante => {
+      estudantes.forEach((estudante) => {
         const diaSemanaAtual = diaDaSemana(estudante);
-        if (diaSemanaAtual !== -1 && estudante.dia_semana === diaSemana[diaSemanaAtual]) {
-          const turnoAtual = listas.findIndex(lista => lista[0] === estudante.periodo_horarios);
+        if (
+          diaSemanaAtual !== -1 &&
+          estudante.dia_semana === diaSemana[diaSemanaAtual]
+        ) {
+          const turnoAtual = listas.findIndex(
+            (lista) => lista[0] === estudante.periodo_horarios,
+          );
           if (turnoAtual !== -1) {
             const agora = new Date();
             if (estudanteEmAula(estudante, agora, listas[turnoAtual])) {
-              return status[1].aula = "Estudante em aula!";
-            } else if (isEmBreve(listas[turnoAtual], estudante.tempo_inicio, agora)) {
-              return status[1].aula = "Aula em Breve!";
+              return (status[1].aula = 'Estudante em aula!');
+            } else if (
+              isEmBreve(listas[turnoAtual], estudante.tempo_inicio, agora)
+            ) {
+              return (status[1].aula = 'Aula em Breve!');
             } else {
-              return status[1].aula = "Estudante sem aula!";
+              return (status[1].aula = 'Estudante sem aula!');
             }
           }
         }
@@ -189,27 +193,36 @@ class Estudante {
       // Função para determinar o dia da semana
       function diaDaSemana(estudante) {
         const diaAtual = new Date().getDay();
-        return diaSemana.indexOf(estudante.dia_semana) + 1 === diaAtual ? diaAtual - 1 : -1;
+        return diaSemana.indexOf(estudante.dia_semana) + 1 === diaAtual
+          ? diaAtual - 1
+          : -1;
       }
 
       // Função para verificar se o estudante está em aula
       function estudanteEmAula(estudante, agora, listaHorarios) {
         const horaAtualMinutos = agora.getHours() * 60 + agora.getMinutes();
 
-        const horaInicioMinutos = listaHorarios[estudante.tempo_inicio].hora * 60;
-        const minutosHoraInicio = horaInicioMinutos + listaHorarios[estudante.tempo_inicio].minuto;
+        const horaInicioMinutos =
+          listaHorarios[estudante.tempo_inicio].hora * 60;
+        const minutosHoraInicio =
+          horaInicioMinutos + listaHorarios[estudante.tempo_inicio].minuto;
 
-        const horaTerminoMinutos = listaHorarios[estudante.tempo_fim + 1].hora * 60;
-        const minutosHoraTermino = horaTerminoMinutos + listaHorarios[estudante.tempo_fim + 1].minuto;
+        const horaTerminoMinutos =
+          listaHorarios[estudante.tempo_fim + 1].hora * 60;
+        const minutosHoraTermino =
+          horaTerminoMinutos + listaHorarios[estudante.tempo_fim + 1].minuto;
 
-        return horaAtualMinutos >= minutosHoraInicio && horaAtualMinutos <= minutosHoraTermino;
+        return (
+          horaAtualMinutos >= minutosHoraInicio &&
+          horaAtualMinutos <= minutosHoraTermino
+        );
       }
 
       // Define uma função para verificar se um horário está em breve
       function isEmBreve(listaHorarios, tempo_inicio, diaAtual) {
         const diferencaMinutos =
-          (listaHorarios[tempo_inicio].hora * 60 +
-            listaHorarios[tempo_inicio].minuto) -
+          listaHorarios[tempo_inicio].hora * 60 +
+          listaHorarios[tempo_inicio].minuto -
           (diaAtual.getHours() * 60 + diaAtual.getMinutes());
 
         return diferencaMinutos >= 0 && diferencaMinutos <= 15; // Considerando "em breve" como até 15 minutos no futuro
@@ -250,7 +263,10 @@ class Estudante {
         }
 
         queryString += ' ORDER BY periodo_horarios';
-        const { rows: estudantes } = await client.query(queryString, queryParams);
+        const { rows: estudantes } = await client.query(
+          queryString,
+          queryParams,
+        );
         alunos = estudantes;
       }
 
@@ -260,14 +276,14 @@ class Estudante {
         'Terça-Feira': 1,
         'Quarta-Feira': 2,
         'Quinta-Feira': 3,
-        'Sexta-Feira': 4
+        'Sexta-Feira': 4,
       };
 
       // Definimos um objeto para mapear os períodos horários para números
       const periodoNumero = {
-        'Matutino': 0,
-        'Vespertino': 1,
-        'Noturno': 2
+        Matutino: 0,
+        Vespertino: 1,
+        Noturno: 2,
       };
 
       let ordem = [];
@@ -293,17 +309,6 @@ class Estudante {
         }
       });
       return ordem;
-    } catch (e) {
-      console.log(`Houve um erro ${e}`);
-    }
-  }
-
-  static async saveSaida(body) {
-    try {
-      let horario = await client.query('SELECT CURRENT_TIMESTAMP');
-      if (body.liberacao == 'on') {
-        await client.query('UPDATE estudantes SET saida_anormal = $1', [horario]);
-      }
     } catch (e) {
       console.log(`Houve um erro ${e}`);
     }
