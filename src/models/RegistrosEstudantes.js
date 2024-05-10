@@ -21,7 +21,7 @@ class RegistroEstudante {
         FROM RegistrosEstudantes, estudantes, registros 
         WHERE id_estudantes = estudantes.id 
         AND id_registros = registros.id
-        AND ra = ${ra}
+        AND ra = '${ra}'
         `,
       );
       const hoje = new Date();

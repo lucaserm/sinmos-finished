@@ -9,7 +9,7 @@ class OcorrenciaEstudante {
         id_ocorrencias,
         id_estudantes,
         nome_usuario_relacionado,
-        status
+        status,
       } = body;
       const user = await Usuario.findByCodigo(codigo_servidor)[0];
       await client.query(
@@ -72,7 +72,7 @@ class OcorrenciaEstudante {
         WHERE id_estudantes = estudantes.id
         AND id_ocorrencias = ocorrencias.id
         AND id_usuarios = usuarios.id
-        AND ra = ${ra}
+        AND ra = '${ra}'
         ORDER BY ocorrenciasestudantes.id
         `,
       );

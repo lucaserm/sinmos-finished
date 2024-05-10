@@ -7,14 +7,11 @@ class Responsavel {
 
   static async save(body) {
     try {
-      const { nome_responsavel, email_responsavel, telefone_responsavel } = body;
+      const { nome_responsavel, email_responsavel, telefone_responsavel } =
+        body;
       await client.query(
         'INSERT INTO responsaveis(nome_responsavel, email_responsavel, telefone_responsavel) VALUES($1, $2, $3)',
-        [
-          nome_responsavel,
-          email_responsavel,
-          telefone_responsavel,
-        ],
+        [nome_responsavel, email_responsavel, telefone_responsavel],
       );
     } catch (e) {
       console.log(`Houve um erro ${e}`);
@@ -35,9 +32,9 @@ class Responsavel {
   static async findByEstudanteRA(ra) {
     try {
       const responsavel = await client.query(
-        `SELECT responsaveis.* FROM estudantes, responsaveis WHERE estudantes.ra = ${ra} AND id_responsaveis = responsaveis.id ORDER BY id`,
+        `SELECT responsaveis.* FROM estudantes, responsaveis WHERE estudantes.ra = '${ra}' AND id_responsaveis = responsaveis.id ORDER BY id`,
       );
-      let responsavelRA = [responsavel.rows, body.ra];
+      let responsavelRA = [responsavel.rows, ra];
       return responsavelRA;
     } catch (e) {
       console.log(`Houve um erro ${e}`);

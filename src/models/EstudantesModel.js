@@ -39,7 +39,7 @@ class Estudante {
     try {
       const { ra } = body;
       const estudantes = await client.query(
-        `SELECT * FROM estudantes WHERE ra = ${ra} ORDER BY id`,
+        `SELECT * FROM estudantes WHERE ra = '${ra}' ORDER BY id`,
       );
       return estudantes.rows;
     } catch (e) {
