@@ -14,7 +14,7 @@ class Usuarios {
     }
   }
 
-  static async findByCodigo() {
+  static async findByCodigo(codigo) {
     try {
       const user = await client.query(
         'SELECT * FROM usuarios WHERE codigo_servidor = $1',
