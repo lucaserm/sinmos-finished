@@ -23,9 +23,10 @@ exports.paginaAdm = async (req, res) => {
 
   const userBD = await Usuario.findByCodigo(codigo_servidor);
   const user = userBD[0];
-  const isSenhaValid = await bcrypt.compare(senha, user.senha);
 
-  if (!user || !isSenhaValid) return res.render('login', { error: true });
+  if (!user) return res.render('login', { error: true });
+  const isSenhaValid = await bcrypt.compare(senha, user.senha);
+  if (!isSenhaValid) return res.render('login', { error: true });
 
   codigo_servidor = user.codigo_servidor;
   senha = user.senha;
