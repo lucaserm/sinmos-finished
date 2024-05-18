@@ -8,6 +8,14 @@
         <p class="text-center lead">
           Formulário para inserção no banco de dados.
         </p>
+        <% if(error) {%>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Código de Usuário já existente!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <% }%>
         <form action="/cadastro/usuariosalvo" method="POST">
           <div class="form-group">
             <input
@@ -30,7 +38,7 @@
             <input
               type="password"
               class="form-control"
-              name="senha"
+              name="senha_usuario"
               placeholder="SENHA"
               required
               autocomplete="off"
@@ -39,7 +47,7 @@
             <input
               type="text"
               class="form-control"
-              name="codigo_servidor"
+              name="codigo_usuario"
               placeholder="Ex.: 44228922"
               required
               autocomplete="off"

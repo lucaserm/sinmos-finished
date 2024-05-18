@@ -1,11 +1,10 @@
 const Estudante = require('../models/EstudantesModel');
-const Responsavel = require('../models/ResponsaveisModel');
 const Registro = require('../models/RegistrosModel');
 const RegistroEstudante = require('../models/RegistrosEstudantes');
 const Advertencia = require('../models/AdvertenciasModel');
 const Usuario = require('../models/UsuariosModel');
 const OcorrenciaEstudante = require('../models/OcorrenciasEstudantes');
-
+const bcrypt = require('bcrypt');
 //página de login
 exports.login = (req, res) => {
   return res.render('login', { error: false });
@@ -13,8 +12,7 @@ exports.login = (req, res) => {
 
 exports.paginaAdm = async (req, res) => {
   //Variável para manipulação de páginas
-  const { codigo_servidor, senha } = req.body;
-  const users = await Usuario.findAll();
+  let { codigo_servidor, senha } = req.body;
   //Super User
   if (codigo_servidor == 'root' && senha == '123456') {
     return res.render('coordenacao', {
@@ -23,12 +21,14 @@ exports.paginaAdm = async (req, res) => {
     });
   }
 
-  const user = users.find((user) => {
-    if (codigo_servidor == user.codigo_servidor && senha == user.senha)
-      return user;
-  });
+  const userBD = await Usuario.findByCodigo(codigo_servidor);
+  const user = userBD[0];
+  const isSenhaValid = await bcrypt.compare(senha, user.senha);
 
-  if (!user) return res.render('login', { error: true });
+  if (!user || !isSenhaValid) return res.render('login', { error: true });
+
+  codigo_servidor = user.codigo_servidor;
+  senha = user.senha;
 
   if (user.cargo == 'Coordenacao') {
     return res.render('coordenacao', { codigo_servidor, senha });
@@ -55,7 +55,7 @@ exports.trataEditado = async (req, res) => {
   }
 
   if (req.url == '/administracao/editadoSaida') {
-    if(req.body.id > 0) Registro.update(req.body);
+    if (req.body.id > 0) Registro.update(req.body);
     return res.render('salvoEditado', { id, codigo_servidor, senha });
   }
 };
@@ -63,11 +63,11 @@ exports.trataEditado = async (req, res) => {
 //busca responsável e advertências de um estudante específico
 exports.responsavel = async (req, res) => {
   const { ra, codigo_servidor, senha } = req.body;
-  const responsaveis = await Responsavel.findByEstudanteRA(ra);
+  const estudante = await Estudante.findByRA(ra);
   const ocorrencias = await OcorrenciaEstudante.findByRA(ra);
   const advertencias = await Advertencia.findApproved(ra);
   return res.render('responsavel', {
-    responsaveis,
+    estudante,
     ocorrencias,
     advertencias,
     codigo_servidor,
@@ -159,11 +159,11 @@ exports.advertencias = async (req, res) => {
 exports.ocorrencias = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
   const users = await Usuario.findByCodigo(codigo_servidor);
-  const ocorrencias = await OcorrenciaEstudante.findByCodigoServidor(users[0].id);
+  const ocorrencias = await OcorrenciaEstudante.findByCodigoServidor(
+    users[0].id,
+  );
   const ocorrenciasRelacionado =
-    await OcorrenciaEstudante.findByRelatedServidor(
-      users[0].nome_usuario,
-    );
+    await OcorrenciaEstudante.findByRelatedServidor(users[0].nome_usuario);
   return res.render('ocorrencias', {
     ocorrencias,
     ocorrenciasRelacionado,

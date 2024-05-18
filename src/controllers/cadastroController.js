@@ -3,7 +3,6 @@ const Disciplina = require('../models/DisciplinasModel');
 const Estudante = require('../models/EstudantesModel');
 const Matricula = require('../models/MatriculasModel');
 const Horario = require('../models/HorariosModel');
-const Responsavel = require('../models/ResponsaveisModel');
 const HorarioEstudante = require('../models/DisciplinasEstudantesModel');
 const Registro = require('../models/RegistrosModel');
 const Usuario = require('../models/UsuariosModel');
@@ -64,18 +63,10 @@ exports.cadastroHorario = async (req, res) => {
 };
 exports.cadastroEstudante = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  const cursos = await Curso.findAll();
-  const responsaveis = await Responsavel.findAll();
   res.render('cadastro_estudante', {
-    cursos,
-    responsaveis,
     codigo_servidor,
     senha,
   });
-};
-exports.cadastroResponsavel = (req, res) => {
-  const { codigo_servidor, senha } = req.body;
-  res.render('cadastro_responsavel', { codigo_servidor, senha });
 };
 exports.cadastroDisciplinaEstudante = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
@@ -95,7 +86,7 @@ exports.cadastroRegistro = async (req, res) => {
 };
 exports.cadastroUsuario = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
-  res.render('cadastro_usuario', { codigo_servidor, senha });
+  res.render('cadastro_usuario', { codigo_servidor, senha, error: false });
 };
 exports.cadastroOcorrencia = async (req, res) => {
   const { codigo_servidor, senha } = req.body;
@@ -128,14 +119,19 @@ exports.trataPost = async (req, res) => {
     Matricula.save(req.body);
   } else if (req.url == '/cadastro/estudantesalvo') {
     Estudante.save(req.body, req.file.filename);
-  } else if (req.url == '/cadastro/responsavelsalvo') {
-    Responsavel.save(req.body);
   } else if (req.url == '/cadastro/horarioestudantesalvo') {
     HorarioEstudante.save(req.body);
   } else if (req.url == '/cadastro/registrosalvo') {
     RegistroEstudante.save(req.body, await Registro.save(req.body));
   } else if (req.url == '/cadastro/usuariosalvo') {
-    Usuario.save(req.body);
+    const codigo = req.body.codigo_usuario;
+    const user = await Usuario.findByCodigo(codigo);
+    if (user.length <= 0) return Usuario.save(req.body);
+    return res.render('cadastro_usuario', {
+      codigo_servidor,
+      senha,
+      error: true,
+    });
   } else if (req.url == '/cadastro/ocorrenciasalvo') {
     Ocorrencia.save(req.body);
   } else if (req.url == '/cadastro/ocorrenciaestudantesalvo') {

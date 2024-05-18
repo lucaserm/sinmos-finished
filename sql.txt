@@ -66,7 +66,7 @@ CREATE TABLE RegistrosEstudantes (
 
 CREATE TABLE Usuarios (
     nome_usuario varchar(50),
-    senha varchar(20),
+    senha varchar,
     codigo_servidor varchar(20),
     cargo varchar(50),
 	id serial PRIMARY KEY
@@ -94,6 +94,4 @@ CREATE TABLE Advertencias (
     id serial PRIMARY KEY
 );
 
-INSERT INTO Usuarios VALUES('Carlos Marques', 'coordenacao', '001', 'Coordenacao');
-INSERT INTO Usuarios VALUES('Maria Rosa', 'assistencia', '002', 'Assistencia');
-INSERT INTO Usuarios VALUES('João Carlos', 'portaria', '003', 'Portaria');
+INSERT INTO Usuarios VALUES('Carlos Marques', '$2b$04$uYmtFBSPBr65ZCDRdfAxMexMNUhmI4UcFxasipafDeu8tCAprvDta', '001', 'Coordenacao');
