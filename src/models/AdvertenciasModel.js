@@ -14,9 +14,8 @@ class Advertencia {
     }
   }
 
-  static async findByRA(body) {
+  static async findByRA(ra) {
     try {
-      const { ra } = body;
       const advertencias = await client.query(
         `
         SELECT advertencias.* 
@@ -24,7 +23,7 @@ class Advertencia {
         WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id 
         AND ocorrenciasestudantes.status = 'Aprovado'
         AND id_estudantes = estudantes.id
-        and ra = ${ra}
+        and ra = '${ra}'
         ORDER BY id`,
       );
       return advertencias.rows;
@@ -61,7 +60,7 @@ class Advertencia {
         WHERE id_ocorrenciasestudantes = ocorrenciasestudantes.id
         AND id_estudantes = estudantes.id
         AND id_ocorrencias = ocorrencias.id
-        AND ra = ${ra}`,
+        AND ra = '${ra}'`,
       );
 
       return advertencias.rows;
@@ -88,6 +87,5 @@ class Advertencia {
     }
   }
 }
-
 
 module.exports = Advertencia;

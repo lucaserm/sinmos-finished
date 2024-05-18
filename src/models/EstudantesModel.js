@@ -2,47 +2,25 @@ const client = require('../../index');
 
 class Estudante {
   static async save(body, filename) {
-    const {
-      nome_estudante,
-      email_institucional,
-      cpf,
-      ra,
-      nome_responsavel,
-      email_responsavel,
-      telefone_responsavel,
-      nome_curso,
-    } = body;
+    const { nome_estudante, email_institucional, cpf, ra, id_responsaveis } =
+      body;
 
     filename = '/assets/img/' + filename;
 
     try {
       await client.query(
-        ` 
-        INSERT INTO estudantes(
-          nome_estudante, 
-          email_institucional, 
-          cpf, 
-          ra, 
-          foto, 
-          nome_responsavel, 
-          email_responsavel, 
-          telefone_responsavel,
-          nome_curso) 
-          VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)
-        `[
-          (nome_estudante,
+        'INSERT INTO estudantes(nome_estudante, email_institucional, cpf, ra, foto, id_responsaveis) VALUES($1,$2,$3,$4,$5,$6)',
+        [
+          nome_estudante,
           email_institucional,
           cpf,
           ra,
           filename,
-          nome_responsavel,
-          email_responsavel,
-          telefone_responsavel,
-          nome_curso)
+          id_responsaveis,
         ],
       );
     } catch (e) {
-      console.log(`Houve um erro EM: ${e}`);
+      console.log(`Houve um erro ${e}`);
     }
   }
 
@@ -61,7 +39,7 @@ class Estudante {
     try {
       const { ra } = body;
       const estudantes = await client.query(
-        `SELECT * FROM estudantes WHERE ra = ${ra} ORDER BY id`,
+        `SELECT * FROM estudantes WHERE ra = '${ra}' ORDER BY id`,
       );
       return estudantes.rows;
     } catch (e) {
@@ -135,13 +113,13 @@ class Estudante {
         query += ` AND ra = $${params.push(body.ra.trim())} `;
       }
 
-      query += ' ORDER BY periodo_horarios';
+      query += 'ORDER BY periodo_horarios';
 
       const { rows: estudantes } = await client.query(query, params);
 
       // Verifica se há estudantes
       if (estudantes.length === 0) {
-        return [{}, { aula: 'Estudante não encontrado' }];
+        return [null, { aula: 'Estudante não encontrado' }];
       }
 
       const status = [estudantes, { aula: '' }];
