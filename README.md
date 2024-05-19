@@ -26,5 +26,5 @@ O deploy foi realizado pela AWS, no link a seguir você pode conferir uma prévi
 caso confira a documentação, seguirá o passo a passo de execução.
 
 ```https
-3.141.22.207:3000
+18.221.47.43:3000
 ```
