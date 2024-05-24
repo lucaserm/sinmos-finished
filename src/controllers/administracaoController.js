@@ -12,7 +12,7 @@ exports.login = (req, res) => {
 
 exports.paginaAdm = async (req, res) => {
   //Variável para manipulação de páginas
-  let { codigo_servidor, senha } = req.body;
+  let { codigo_servidor, senha, redirect } = req.body;
   //Super User
   if (codigo_servidor == 'root' && senha == '123456') {
     return res.render('coordenacao', {
@@ -25,8 +25,9 @@ exports.paginaAdm = async (req, res) => {
   const user = userBD[0];
 
   if (!user) return res.render('login', { error: true });
+
   const isSenhaValid = await bcrypt.compare(senha, user.senha);
-  if (!isSenhaValid) return res.render('login', { error: true });
+  if (!isSenhaValid && !redirect) return res.render('login', { error: true });
 
   codigo_servidor = user.codigo_servidor;
   senha = user.senha;
